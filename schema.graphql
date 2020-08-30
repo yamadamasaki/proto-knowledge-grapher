@@ -163,13 +163,6 @@ directive @intl on FIELD_DEFINITION
     email: String
   }
 
-type EmailResponse {
-  from: String
-  to: String
-  subject: String
-  success: JSON
-  error: String
-}
 
 type Step {
   step: Int
@@ -214,7 +207,7 @@ input SingleUserInput {
   id: String
 
   # backwards-compatibility
-  # Deprecated (use 'filter/id' fields instead).
+  "Deprecated (use 'filter/id' fields instead)."
   selector: UserSelectorUniqueInput
 
   # options (backwards-compatibility)
@@ -237,7 +230,7 @@ input MultiUserInput {
 
   # backwards-compatibility
   # A JSON object that contains the query terms used to fetch data
-  # Deprecated (use 'filter/id' fields instead).
+  "Deprecated (use 'filter/id' fields instead)."
   terms: JSON
 
   # options (backwards-compatibility)
@@ -247,7 +240,7 @@ input MultiUserInput {
   enableTotal: Boolean
   # An identifier to name the query's execution context
   contextName: String
-
+  
 }
 
 type SingleUserOutput{
@@ -400,37 +393,35 @@ type Mutation {
 
   verifyEmail(input: VerifyEmailInput): VerifyEmailResult
 
-  testEmail(emailName: String) : EmailResponse
-
   # Mutation for creating new User documents
   createUser(
   input: CreateUserInput,
-  # Deprecated (use 'input' field instead).
+  "Deprecated (use 'input' field instead)."
   data: CreateUserDataInput
 ) : UserMutationOutput
 
   # Mutation for updating a User document
   updateUser(
   input: UpdateUserInput,
-  # Deprecated (use 'input' field instead).
+  "Deprecated (use 'input' field instead)."
   selector: UserSelectorUniqueInput,
-  # Deprecated (use 'input' field instead).
-  data: UpdateUserDataInput
+  "Deprecated (use 'input' field instead)."
+  data: UpdateUserDataInput 
 ) : UserMutationOutput
 
   # Mutation for upserting a User document
   upsertUser(
   input: UpsertUserInput,
-  # Deprecated (use 'input' field instead).
+  "Deprecated (use 'input' field instead)."
   selector: UserSelectorUniqueInput,
-  # Deprecated (use 'input' field instead).
+  "Deprecated (use 'input' field instead)."
   data: UpdateUserDataInput
 ) : UserMutationOutput
 
   # Mutation for deleting a User document
   deleteUser(
   input: DeleteUserInput,
-  # Deprecated (use 'input' field instead).
+  "Deprecated (use 'input' field instead)."
   selector: UserSelectorUniqueInput
 ) : UserMutationOutput
 
