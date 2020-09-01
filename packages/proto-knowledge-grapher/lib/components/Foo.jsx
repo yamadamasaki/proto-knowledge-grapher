@@ -1,9 +1,16 @@
 import React from 'react'
-import {registerComponent} from 'meteor/vulcan:core'
+import {Components, registerComponent} from 'meteor/vulcan:core'
 
-const Foo = () => (
-    <div>FOO</div>
-)
+console.log("Components", Components)
+
+const Foo = () => {
+  return (
+      <div>
+        <h1>FOO</h1>
+        <Components.AccountsLoginForm/>
+      </div>
+  )
+}
 
 registerComponent({
   name: 'Foo',

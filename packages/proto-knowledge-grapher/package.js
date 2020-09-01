@@ -5,7 +5,8 @@ Package.describe({
 Package.onUse(api => {
   api.use([
     'promise',
-    'vulcan:core@=1.16.0',
+    'vulcan:core@1.16.0',
+    'vulcan:accounts@1.16.0',
   ])
 
   api.mainModule('lib/server/main.js', 'server')
