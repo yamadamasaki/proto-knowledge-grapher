@@ -14,8 +14,9 @@ accounts-password@1.6.0
 
 ############ Your Packages ############
 
-getting-started
-proto-knowledge-grapher
+# getting-started
+# proto-knowledge-grapher
+proto-knowledge-grapher2
 
 # example-simple
 # example-forms
