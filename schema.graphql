@@ -163,13 +163,14 @@ directive @intl on FIELD_DEFINITION
     email: String
   }
 
-
-type Step {
-  step: Int
-  completed: Boolean
-  progress: [Boolean]
-  title: String
+type EmailResponse {
+  from: String
+  to: String
+  subject: String
+  success: JSON
+  error: String
 }
+union Voteable = Post | Comment
 
 # A user object
 type User {
@@ -190,6 +191,15 @@ type User {
   pageUrl: String 
   pagePath: String 
   editUrl: String 
+  votes(collectionName: String): [Vote] 
+  postCount: Float 
+  posts(limit: Int = 5): [Post] 
+  comments(limit: Int = 5): [Comment] 
+  commentCount: Float 
+  notifications_users: Boolean 
+  notifications_posts: Boolean 
+  notifications_comments: Boolean 
+  notifications_replies: Boolean 
   createdAtFormatted(format: String = "YYYY/MM/DD"): String 
 }
 
@@ -270,6 +280,10 @@ input CreateUserDataInput {
   displayName: String 
   email: String 
   groups: [String] 
+  notifications_users: Boolean 
+  notifications_posts: Boolean 
+  notifications_comments: Boolean 
+  notifications_replies: Boolean 
 }
 
 input UpdateUserInput{
@@ -295,6 +309,10 @@ input UpdateUserDataInput {
   displayName: String 
   email: String 
   groups: [String] 
+  notifications_users: Boolean 
+  notifications_posts: Boolean 
+  notifications_comments: Boolean 
+  notifications_replies: Boolean 
 }
 
 input UserFilterInput {
@@ -319,6 +337,15 @@ input UserFilterInput {
   pageUrl: String_Selector
   pagePath: String_Selector
   editUrl: String_Selector
+
+  postCount: Float_Selector
+
+
+  commentCount: Float_Selector
+  notifications_users: Boolean_Selector
+  notifications_posts: Boolean_Selector
+  notifications_comments: Boolean_Selector
+  notifications_replies: Boolean_Selector
 }
 
 input UserSortInput {
@@ -338,6 +365,15 @@ input UserSortInput {
   pageUrl: SortOptions
   pagePath: SortOptions
   editUrl: SortOptions
+  votes: SortOptions
+  postCount: SortOptions
+  posts: SortOptions
+  comments: SortOptions
+  commentCount: SortOptions
+  notifications_users: SortOptions
+  notifications_posts: SortOptions
+  notifications_comments: SortOptions
+  notifications_replies: SortOptions
 }
 
 input UserSelectorInput {
@@ -354,37 +390,34 @@ input UserSelectorUniqueInput {
 }
 
 
-# Type for Movies
-type Movie {
+# Type for Votes
+type Vote {
   _id: String 
-  createdAt: Date 
+  documentId: String 
+  collectionName: String 
   userId: String 
-  user: User 
-  name(locale: String): String @intl
-  review: String 
-  isWatched: Boolean 
-  imdbId: String 
-  name_intl: [IntlValue] 
-  score: Float 
-  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+  voteType: String 
+  power: Float 
+  votedAt: Date 
+  votedAtFormatted(format: String = "YYYY/MM/DD"): String 
 }
 
 
-input DeleteMovieInput{
-  filter: MovieFilterInput
+input DeleteVoteInput{
+  filter: VoteFilterInput
   id: String
 }
 
-input SingleMovieInput {
+input SingleVoteInput {
   # filtering
-  filter: MovieFilterInput
-  sort: MovieSortInput
+  filter: VoteFilterInput
+  sort: VoteSortInput
   search: String
   id: String
 
   # backwards-compatibility
   "Deprecated (use 'filter/id' fields instead)."
-  selector: MovieSelectorUniqueInput
+  selector: VoteSelectorUniqueInput
 
   # options (backwards-compatibility)
   # Whether to enable caching for this query
@@ -395,11 +428,11 @@ input SingleMovieInput {
   contextName: String
 }
 
-input MultiMovieInput {
+input MultiVoteInput {
 
   # filtering
-  filter: MovieFilterInput
-  sort: MovieSortInput
+  filter: VoteFilterInput
+  sort: VoteSortInput
   search: String
   offset: Int
   limit: Int
@@ -419,89 +452,767 @@ input MultiMovieInput {
   
 }
 
-type SingleMovieOutput{
-  result: Movie
+type SingleVoteOutput{
+  result: Vote
 }
 
-type  MultiMovieOutput{
-  results: [Movie]
+type  MultiVoteOutput{
+  results: [Vote]
   totalCount: Int
 }
 
-type MovieMutationOutput{
-  data: Movie
+type VoteMutationOutput{
+  data: Vote
 }
 
-input CreateMovieInput {
-  data: CreateMovieDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
+input VoteFilterInput {
+  _and: [VoteFilterInput]
+  _not: VoteFilterInput
+  _or: [VoteFilterInput]
+
+
+  _id: String_Selector
+  documentId: String_Selector
+  collectionName: String_Selector
+  userId: String_Selector
+  voteType: String_Selector
+  power: Float_Selector
+  votedAt: Date_Selector
 }
 
-input CreateMovieDataInput {
-  name: String 
-  review: String 
-  isWatched: Boolean 
-  name_intl: [IntlValueInput] 
+input VoteSortInput {
+  _id: SortOptions
+  documentId: SortOptions
+  collectionName: SortOptions
+  userId: SortOptions
+  voteType: SortOptions
+  power: SortOptions
+  votedAt: SortOptions
 }
 
-input UpdateMovieInput{
-  filter: MovieFilterInput
+input VoteSelectorInput {
+  _and: [VoteSelectorInput]
+  _or: [VoteSelectorInput]
+
+}
+
+input VoteSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
+# Type for Posts
+type Post {
+  _id: String 
+  createdAt: Date 
+  url: String 
+  title: String 
+  slug: String 
+  body: String 
+  htmlBody: String 
+  excerpt: String 
+  viewCount: Float 
+  lastCommentedAt: Date 
+  clickCount: Float 
+  status: Float 
+  postedAt: Date 
+  postedAtFormatted: String 
+  sticky: Boolean 
+  userIP: String 
+  userAgent: String 
+  referrer: String 
+  userId: String 
+  user: User 
+  categoriesIds: [String] 
+  categories: [Category] 
+  commentCount: Float 
+  commentersIds: [String] 
+  commenters: [User] 
+  domain: String 
+  pagePath: String 
+  pageUrl: String 
+  linkUrl: String 
+  comments(limit: Int = 5): [Comment] 
+  emailShareUrl: String 
+  twitterShareUrl: String 
+  facebookShareUrl: String 
+  currentUserVotes: [Vote] 
+  allVotes: [Vote] 
+  voters: [User] 
+  baseScore: Float 
+  score: Float 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+  lastCommentedAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeletePostInput{
+  filter: PostFilterInput
   id: String
-  data: UpdateMovieDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
 }
 
-input UpsertMovieInput{
-  filter: MovieFilterInput
+input SinglePostInput {
+  # filtering
+  filter: PostFilterInput
+  sort: PostSortInput
+  search: String
   id: String
-  data: UpdateMovieDataInput!
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: PostSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiPostInput {
+
+  # filtering
+  filter: PostFilterInput
+  sort: PostSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SinglePostOutput{
+  result: Post
+}
+
+type  MultiPostOutput{
+  results: [Post]
+  totalCount: Int
+}
+
+type PostMutationOutput{
+  data: Post
+}
+
+input CreatePostInput {
+  data: CreatePostDataInput!
   # An identifier to name the mutation's execution context
   contextName: String
 }
 
-input UpdateMovieDataInput {
-  name: String 
-  review: String 
-  isWatched: Boolean 
-  name_intl: [IntlValueInput] 
+input CreatePostDataInput {
+  url: String 
+  title: String 
+  body: String 
+  status: Float 
+  postedAt: Date 
+  sticky: Boolean 
+  userId: String 
+  categoriesIds: [String] 
 }
 
-input MovieFilterInput {
-  _and: [MovieFilterInput]
-  _not: MovieFilterInput
-  _or: [MovieFilterInput]
+input UpdatePostInput{
+  filter: PostFilterInput
+  id: String
+  data: UpdatePostDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertPostInput{
+  filter: PostFilterInput
+  id: String
+  data: UpdatePostDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdatePostDataInput {
+  url: String 
+  title: String 
+  body: String 
+  status: Float 
+  postedAt: Date 
+  sticky: Boolean 
+  categoriesIds: [String] 
+}
+
+input PostFilterInput {
+  _and: [PostFilterInput]
+  _not: PostFilterInput
+  _or: [PostFilterInput]
+  _byCategory: PostByCategoryFilterInput
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  url: String_Selector
+  title: String_Selector
+  slug: String_Selector
+  body: String_Selector
+  htmlBody: String_Selector
+  excerpt: String_Selector
+  viewCount: Float_Selector
+  lastCommentedAt: Date_Selector
+  clickCount: Float_Selector
+  status: Float_Selector
+  postedAt: Date_Selector
+  sticky: Boolean_Selector
+  userIP: String_Selector
+  userAgent: String_Selector
+  referrer: String_Selector
+  userId: String_Selector
+  categoriesIds: String_Array_Selector
+  commentCount: Float_Selector
+  commentersIds: String_Array_Selector
+  domain: String_Selector
+  pagePath: String_Selector
+  pageUrl: String_Selector
+  linkUrl: String_Selector
+
+  emailShareUrl: String_Selector
+  twitterShareUrl: String_Selector
+  facebookShareUrl: String_Selector
+
+
+  voters: String_Array_Selector
+  baseScore: Float_Selector
+  score: Float_Selector
+}
+
+input PostByCategoryFilterInput{
+  slug: String
+}
+
+input PostSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  url: SortOptions
+  title: SortOptions
+  slug: SortOptions
+  body: SortOptions
+  htmlBody: SortOptions
+  excerpt: SortOptions
+  viewCount: SortOptions
+  lastCommentedAt: SortOptions
+  clickCount: SortOptions
+  status: SortOptions
+  postedAt: SortOptions
+  sticky: SortOptions
+  userIP: SortOptions
+  userAgent: SortOptions
+  referrer: SortOptions
+  userId: SortOptions
+  categoriesIds: SortOptions
+  commentCount: SortOptions
+  commentersIds: SortOptions
+  domain: SortOptions
+  pagePath: SortOptions
+  pageUrl: SortOptions
+  linkUrl: SortOptions
+  comments: SortOptions
+  emailShareUrl: SortOptions
+  twitterShareUrl: SortOptions
+  facebookShareUrl: SortOptions
+  currentUserVotes: SortOptions
+  allVotes: SortOptions
+  voters: SortOptions
+  baseScore: SortOptions
+  score: SortOptions
+}
+
+input PostSelectorInput {
+  _and: [PostSelectorInput]
+  _or: [PostSelectorInput]
+
+}
+
+input PostSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
+# Type for Comments
+type Comment {
+  _id: String 
+  parentCommentId: String 
+  parentComment: Comment 
+  topLevelCommentId: String 
+  topLevelComment: Comment 
+  createdAt: Date 
+  postedAt: Date 
+  body: String 
+  htmlBody: String 
+  author: String 
+  postId: String 
+  post: Post 
+  userId: String 
+  user: User 
+  isDeleted: Boolean 
+  userIP: String 
+  userAgent: String 
+  referrer: String 
+  pagePath: String 
+  pageUrl: String 
+  currentUserVotes: [Vote] 
+  allVotes: [Vote] 
+  voters: [User] 
+  baseScore: Float 
+  score: Float 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+  postedAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteCommentInput{
+  filter: CommentFilterInput
+  id: String
+}
+
+input SingleCommentInput {
+  # filtering
+  filter: CommentFilterInput
+  sort: CommentSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: CommentSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiCommentInput {
+
+  # filtering
+  filter: CommentFilterInput
+  sort: CommentSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleCommentOutput{
+  result: Comment
+}
+
+type  MultiCommentOutput{
+  results: [Comment]
+  totalCount: Int
+}
+
+type CommentMutationOutput{
+  data: Comment
+}
+
+input CreateCommentInput {
+  data: CreateCommentDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateCommentDataInput {
+  parentCommentId: String 
+  topLevelCommentId: String 
+  body: String 
+  postId: String 
+  userId: String 
+}
+
+input UpdateCommentInput{
+  filter: CommentFilterInput
+  id: String
+  data: UpdateCommentDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertCommentInput{
+  filter: CommentFilterInput
+  id: String
+  data: UpdateCommentDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateCommentDataInput {
+  body: String 
+}
+
+input CommentFilterInput {
+  _and: [CommentFilterInput]
+  _not: CommentFilterInput
+  _or: [CommentFilterInput]
+
+
+  _id: String_Selector
+  parentCommentId: String_Selector
+  topLevelCommentId: String_Selector
+  createdAt: Date_Selector
+  postedAt: Date_Selector
+  body: String_Selector
+  htmlBody: String_Selector
+  author: String_Selector
+  postId: String_Selector
+  userId: String_Selector
+  isDeleted: Boolean_Selector
+  userIP: String_Selector
+  userAgent: String_Selector
+  referrer: String_Selector
+  pagePath: String_Selector
+  pageUrl: String_Selector
+
+
+  voters: String_Array_Selector
+  baseScore: Float_Selector
+  score: Float_Selector
+}
+
+input CommentSortInput {
+  _id: SortOptions
+  parentCommentId: SortOptions
+  topLevelCommentId: SortOptions
+  createdAt: SortOptions
+  postedAt: SortOptions
+  body: SortOptions
+  htmlBody: SortOptions
+  author: SortOptions
+  postId: SortOptions
+  userId: SortOptions
+  isDeleted: SortOptions
+  userIP: SortOptions
+  userAgent: SortOptions
+  referrer: SortOptions
+  pagePath: SortOptions
+  pageUrl: SortOptions
+  currentUserVotes: SortOptions
+  allVotes: SortOptions
+  voters: SortOptions
+  baseScore: SortOptions
+  score: SortOptions
+}
+
+input CommentSelectorInput {
+  _and: [CommentSelectorInput]
+  _or: [CommentSelectorInput]
+
+}
+
+input CommentSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
+# Type for Categories
+type Category {
+  _id: String 
+  name: String 
+  slug: String 
+  pagePath: String 
+  pageUrl: String 
+}
+
+
+input DeleteCategoryInput{
+  filter: CategoryFilterInput
+  id: String
+}
+
+input SingleCategoryInput {
+  # filtering
+  filter: CategoryFilterInput
+  sort: CategorySortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: CategorySelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiCategoryInput {
+
+  # filtering
+  filter: CategoryFilterInput
+  sort: CategorySortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleCategoryOutput{
+  result: Category
+}
+
+type  MultiCategoryOutput{
+  results: [Category]
+  totalCount: Int
+}
+
+type CategoryMutationOutput{
+  data: Category
+}
+
+input CreateCategoryInput {
+  data: CreateCategoryDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateCategoryDataInput {
+  name: String 
+  slug: String 
+}
+
+input UpdateCategoryInput{
+  filter: CategoryFilterInput
+  id: String
+  data: UpdateCategoryDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertCategoryInput{
+  filter: CategoryFilterInput
+  id: String
+  data: UpdateCategoryDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateCategoryDataInput {
+  name: String 
+  slug: String 
+}
+
+input CategoryFilterInput {
+  _and: [CategoryFilterInput]
+  _not: CategoryFilterInput
+  _or: [CategoryFilterInput]
+
+
+  _id: String_Selector
+  name: String_Selector
+  slug: String_Selector
+  pagePath: String_Selector
+  pageUrl: String_Selector
+}
+
+input CategorySortInput {
+  _id: SortOptions
+  name: SortOptions
+  slug: SortOptions
+  pagePath: SortOptions
+  pageUrl: SortOptions
+}
+
+input CategorySelectorInput {
+  _and: [CategorySelectorInput]
+  _or: [CategorySelectorInput]
+
+}
+
+input CategorySelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
+# Type for Sessions
+type Session {
+  _id: String 
+  createdAt: Date 
+  title: String 
+  slug: String 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteSessionInput{
+  filter: SessionFilterInput
+  id: String
+}
+
+input SingleSessionInput {
+  # filtering
+  filter: SessionFilterInput
+  sort: SessionSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: SessionSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiSessionInput {
+
+  # filtering
+  filter: SessionFilterInput
+  sort: SessionSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleSessionOutput{
+  result: Session
+}
+
+type  MultiSessionOutput{
+  results: [Session]
+  totalCount: Int
+}
+
+type SessionMutationOutput{
+  data: Session
+}
+
+input CreateSessionInput {
+  data: CreateSessionDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateSessionDataInput {
+  title: String 
+}
+
+input UpdateSessionInput{
+  filter: SessionFilterInput
+  id: String
+  data: UpdateSessionDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertSessionInput{
+  filter: SessionFilterInput
+  id: String
+  data: UpdateSessionDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateSessionDataInput {
+  title: String 
+}
+
+input SessionFilterInput {
+  _and: [SessionFilterInput]
+  _not: SessionFilterInput
+  _or: [SessionFilterInput]
 
 
   _id: String_Selector
   createdAt: Date_Selector
-  userId: String_Selector
-  name: String_Selector
-  review: String_Selector
-  isWatched: Boolean_Selector
-  imdbId: String_Selector
-
+  title: String_Selector
+  slug: String_Selector
 }
 
-input MovieSortInput {
+input SessionSortInput {
   _id: SortOptions
   createdAt: SortOptions
-  userId: SortOptions
-  name: SortOptions
-  review: SortOptions
-  isWatched: SortOptions
-  imdbId: SortOptions
-  name_intl: SortOptions
+  title: SortOptions
+  slug: SortOptions
 }
 
-input MovieSelectorInput {
-  _and: [MovieSelectorInput]
-  _or: [MovieSelectorInput]
+input SessionSelectorInput {
+  _and: [SessionSelectorInput]
+  _or: [SessionSelectorInput]
 
 }
 
-input MovieSelectorUniqueInput {
+input SessionSelectorUniqueInput {
   _id: String
   documentId: String # OpenCRUD backwards compatibility
   slug: String
@@ -516,23 +1227,35 @@ type Query {
   
   currentUser: User
   
-  schemaContents: String
-  
-  moviesCount: Int
-  
-  steps: [Step]
-  
   # A single User document fetched by ID or slug
   user(input: SingleUserInput!): SingleUserOutput
   
   # A list of User documents matching a set of query terms
   users(input: MultiUserInput):  MultiUserOutput
   
-  # A single Movie document fetched by ID or slug
-  movie(input: SingleMovieInput!): SingleMovieOutput
+  # A single Post document fetched by ID or slug
+  post(input: SinglePostInput!): SinglePostOutput
   
-  # A list of Movie documents matching a set of query terms
-  movies(input: MultiMovieInput):  MultiMovieOutput
+  # A list of Post documents matching a set of query terms
+  posts(input: MultiPostInput):  MultiPostOutput
+  
+  # A single Comment document fetched by ID or slug
+  comment(input: SingleCommentInput!): SingleCommentOutput
+  
+  # A list of Comment documents matching a set of query terms
+  comments(input: MultiCommentInput):  MultiCommentOutput
+  
+  # A single Category document fetched by ID or slug
+  category(input: SingleCategoryInput!): SingleCategoryOutput
+  
+  # A list of Category documents matching a set of query terms
+  categories(input: MultiCategoryInput):  MultiCategoryOutput
+  
+  # A single Session document fetched by ID or slug
+  session(input: SingleSessionInput!): SingleSessionOutput
+  
+  # A list of Session documents matching a set of query terms
+  sessions(input: MultiSessionInput):  MultiSessionOutput
   
 }
   
@@ -554,7 +1277,13 @@ type Mutation {
 
   verifyEmail(input: VerifyEmailInput): VerifyEmailResult
 
-  markAsWatched(movieId: String): Movie
+  vote(documentId: String, voteType: String, collectionName: String, voteId: String) : Voteable
+
+  testEmail(emailName: String) : EmailResponse
+
+  getEmbedData(url: String) : JSON
+
+  increasePostViewCount(postId: String): Float
 
   # Mutation for creating new User documents
   createUser(
@@ -588,37 +1317,133 @@ type Mutation {
   selector: UserSelectorUniqueInput
 ) : UserMutationOutput
 
-  # Mutation for creating new Movie documents
-  createMovie(
-  input: CreateMovieInput,
+  # Mutation for creating new Post documents
+  createPost(
+  input: CreatePostInput,
   "Deprecated (use 'input' field instead)."
-  data: CreateMovieDataInput
-) : MovieMutationOutput
+  data: CreatePostDataInput
+) : PostMutationOutput
 
-  # Mutation for updating a Movie document
-  updateMovie(
-  input: UpdateMovieInput,
+  # Mutation for updating a Post document
+  updatePost(
+  input: UpdatePostInput,
   "Deprecated (use 'input' field instead)."
-  selector: MovieSelectorUniqueInput,
+  selector: PostSelectorUniqueInput,
   "Deprecated (use 'input' field instead)."
-  data: UpdateMovieDataInput 
-) : MovieMutationOutput
+  data: UpdatePostDataInput 
+) : PostMutationOutput
 
-  # Mutation for upserting a Movie document
-  upsertMovie(
-  input: UpsertMovieInput,
+  # Mutation for upserting a Post document
+  upsertPost(
+  input: UpsertPostInput,
   "Deprecated (use 'input' field instead)."
-  selector: MovieSelectorUniqueInput,
+  selector: PostSelectorUniqueInput,
   "Deprecated (use 'input' field instead)."
-  data: UpdateMovieDataInput
-) : MovieMutationOutput
+  data: UpdatePostDataInput
+) : PostMutationOutput
 
-  # Mutation for deleting a Movie document
-  deleteMovie(
-  input: DeleteMovieInput,
+  # Mutation for deleting a Post document
+  deletePost(
+  input: DeletePostInput,
   "Deprecated (use 'input' field instead)."
-  selector: MovieSelectorUniqueInput
-) : MovieMutationOutput
+  selector: PostSelectorUniqueInput
+) : PostMutationOutput
+
+  # Mutation for creating new Comment documents
+  createComment(
+  input: CreateCommentInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateCommentDataInput
+) : CommentMutationOutput
+
+  # Mutation for updating a Comment document
+  updateComment(
+  input: UpdateCommentInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CommentSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCommentDataInput 
+) : CommentMutationOutput
+
+  # Mutation for upserting a Comment document
+  upsertComment(
+  input: UpsertCommentInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CommentSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCommentDataInput
+) : CommentMutationOutput
+
+  # Mutation for deleting a Comment document
+  deleteComment(
+  input: DeleteCommentInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CommentSelectorUniqueInput
+) : CommentMutationOutput
+
+  # Mutation for creating new Category documents
+  createCategory(
+  input: CreateCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateCategoryDataInput
+) : CategoryMutationOutput
+
+  # Mutation for updating a Category document
+  updateCategory(
+  input: UpdateCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CategorySelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCategoryDataInput 
+) : CategoryMutationOutput
+
+  # Mutation for upserting a Category document
+  upsertCategory(
+  input: UpsertCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CategorySelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCategoryDataInput
+) : CategoryMutationOutput
+
+  # Mutation for deleting a Category document
+  deleteCategory(
+  input: DeleteCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CategorySelectorUniqueInput
+) : CategoryMutationOutput
+
+  # Mutation for creating new Session documents
+  createSession(
+  input: CreateSessionInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateSessionDataInput
+) : SessionMutationOutput
+
+  # Mutation for updating a Session document
+  updateSession(
+  input: UpdateSessionInput,
+  "Deprecated (use 'input' field instead)."
+  selector: SessionSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateSessionDataInput 
+) : SessionMutationOutput
+
+  # Mutation for upserting a Session document
+  upsertSession(
+  input: UpsertSessionInput,
+  "Deprecated (use 'input' field instead)."
+  selector: SessionSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateSessionDataInput
+) : SessionMutationOutput
+
+  # Mutation for deleting a Session document
+  deleteSession(
+  input: DeleteSessionInput,
+  "Deprecated (use 'input' field instead)."
+  selector: SessionSelectorUniqueInput
+) : SessionMutationOutput
 
 }
 
