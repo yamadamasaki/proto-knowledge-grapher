@@ -1,8 +1,12 @@
 import React from 'react'
-import {registerComponent} from 'meteor/vulcan:core'
+import {Components, registerComponent} from 'meteor/vulcan:core'
+import Sessions from '../../modules/sessions/collection'
 
 const SessionsHome = () => (
-    <h1>Foo</h1>
+    <div>
+    <h1>Sessions</h1>
+      <Components.Datatable collection={Sessions}/>
+    </div>
 )
 
 registerComponent({name: 'SessionsHome', component: SessionsHome})

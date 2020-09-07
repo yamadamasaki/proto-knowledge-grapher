@@ -946,6 +946,141 @@ input CommentSelectorUniqueInput {
 }
 
 
+# Type for Sessions
+type Session {
+  _id: String 
+  createdAt: Date 
+  title: String 
+  slug: String 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteSessionInput{
+  filter: SessionFilterInput
+  id: String
+}
+
+input SingleSessionInput {
+  # filtering
+  filter: SessionFilterInput
+  sort: SessionSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: SessionSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiSessionInput {
+
+  # filtering
+  filter: SessionFilterInput
+  sort: SessionSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleSessionOutput{
+  result: Session
+}
+
+type  MultiSessionOutput{
+  results: [Session]
+  totalCount: Int
+}
+
+type SessionMutationOutput{
+  data: Session
+}
+
+input CreateSessionInput {
+  data: CreateSessionDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateSessionDataInput {
+  title: String 
+}
+
+input UpdateSessionInput{
+  filter: SessionFilterInput
+  id: String
+  data: UpdateSessionDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertSessionInput{
+  filter: SessionFilterInput
+  id: String
+  data: UpdateSessionDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateSessionDataInput {
+  title: String 
+}
+
+input SessionFilterInput {
+  _and: [SessionFilterInput]
+  _not: SessionFilterInput
+  _or: [SessionFilterInput]
+
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  title: String_Selector
+  slug: String_Selector
+}
+
+input SessionSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  title: SortOptions
+  slug: SortOptions
+}
+
+input SessionSelectorInput {
+  _and: [SessionSelectorInput]
+  _or: [SessionSelectorInput]
+
+}
+
+input SessionSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
 # Type for Categories
 type Category {
   _id: String 
@@ -1085,141 +1220,6 @@ input CategorySelectorUniqueInput {
 }
 
 
-# Type for Sessions
-type Session {
-  _id: String 
-  createdAt: Date 
-  title: String 
-  slug: String 
-  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
-}
-
-
-input DeleteSessionInput{
-  filter: SessionFilterInput
-  id: String
-}
-
-input SingleSessionInput {
-  # filtering
-  filter: SessionFilterInput
-  sort: SessionSortInput
-  search: String
-  id: String
-
-  # backwards-compatibility
-  "Deprecated (use 'filter/id' fields instead)."
-  selector: SessionSelectorUniqueInput
-
-  # options (backwards-compatibility)
-  # Whether to enable caching for this query
-  enableCache: Boolean
-  # Return null instead of throwing MissingDocumentError
-  allowNull: Boolean
-  # An identifier to name the query's execution context
-  contextName: String
-}
-
-input MultiSessionInput {
-
-  # filtering
-  filter: SessionFilterInput
-  sort: SessionSortInput
-  search: String
-  offset: Int
-  limit: Int
-
-  # backwards-compatibility
-  # A JSON object that contains the query terms used to fetch data
-  "Deprecated (use 'filter/id' fields instead)."
-  terms: JSON
-
-  # options (backwards-compatibility)
-  # Whether to enable caching for this query
-  enableCache: Boolean
-  # Whether to calculate totalCount for this query
-  enableTotal: Boolean
-  # An identifier to name the query's execution context
-  contextName: String
-  
-}
-
-type SingleSessionOutput{
-  result: Session
-}
-
-type  MultiSessionOutput{
-  results: [Session]
-  totalCount: Int
-}
-
-type SessionMutationOutput{
-  data: Session
-}
-
-input CreateSessionInput {
-  data: CreateSessionDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
-}
-
-input CreateSessionDataInput {
-  title: String 
-}
-
-input UpdateSessionInput{
-  filter: SessionFilterInput
-  id: String
-  data: UpdateSessionDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
-}
-
-input UpsertSessionInput{
-  filter: SessionFilterInput
-  id: String
-  data: UpdateSessionDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
-}
-
-input UpdateSessionDataInput {
-  title: String 
-}
-
-input SessionFilterInput {
-  _and: [SessionFilterInput]
-  _not: SessionFilterInput
-  _or: [SessionFilterInput]
-
-
-  _id: String_Selector
-  createdAt: Date_Selector
-  title: String_Selector
-  slug: String_Selector
-}
-
-input SessionSortInput {
-  _id: SortOptions
-  createdAt: SortOptions
-  title: SortOptions
-  slug: SortOptions
-}
-
-input SessionSelectorInput {
-  _and: [SessionSelectorInput]
-  _or: [SessionSelectorInput]
-
-}
-
-input SessionSelectorUniqueInput {
-  _id: String
-  documentId: String # OpenCRUD backwards compatibility
-  slug: String
-
-}
-
-
 
 
 type Query {
@@ -1245,17 +1245,17 @@ type Query {
   # A list of Comment documents matching a set of query terms
   comments(input: MultiCommentInput):  MultiCommentOutput
   
-  # A single Category document fetched by ID or slug
-  category(input: SingleCategoryInput!): SingleCategoryOutput
-  
-  # A list of Category documents matching a set of query terms
-  categories(input: MultiCategoryInput):  MultiCategoryOutput
-  
   # A single Session document fetched by ID or slug
   session(input: SingleSessionInput!): SingleSessionOutput
   
   # A list of Session documents matching a set of query terms
   sessions(input: MultiSessionInput):  MultiSessionOutput
+  
+  # A single Category document fetched by ID or slug
+  category(input: SingleCategoryInput!): SingleCategoryOutput
+  
+  # A list of Category documents matching a set of query terms
+  categories(input: MultiCategoryInput):  MultiCategoryOutput
   
 }
   
@@ -1381,38 +1381,6 @@ type Mutation {
   selector: CommentSelectorUniqueInput
 ) : CommentMutationOutput
 
-  # Mutation for creating new Category documents
-  createCategory(
-  input: CreateCategoryInput,
-  "Deprecated (use 'input' field instead)."
-  data: CreateCategoryDataInput
-) : CategoryMutationOutput
-
-  # Mutation for updating a Category document
-  updateCategory(
-  input: UpdateCategoryInput,
-  "Deprecated (use 'input' field instead)."
-  selector: CategorySelectorUniqueInput,
-  "Deprecated (use 'input' field instead)."
-  data: UpdateCategoryDataInput 
-) : CategoryMutationOutput
-
-  # Mutation for upserting a Category document
-  upsertCategory(
-  input: UpsertCategoryInput,
-  "Deprecated (use 'input' field instead)."
-  selector: CategorySelectorUniqueInput,
-  "Deprecated (use 'input' field instead)."
-  data: UpdateCategoryDataInput
-) : CategoryMutationOutput
-
-  # Mutation for deleting a Category document
-  deleteCategory(
-  input: DeleteCategoryInput,
-  "Deprecated (use 'input' field instead)."
-  selector: CategorySelectorUniqueInput
-) : CategoryMutationOutput
-
   # Mutation for creating new Session documents
   createSession(
   input: CreateSessionInput,
@@ -1444,6 +1412,38 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: SessionSelectorUniqueInput
 ) : SessionMutationOutput
+
+  # Mutation for creating new Category documents
+  createCategory(
+  input: CreateCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateCategoryDataInput
+) : CategoryMutationOutput
+
+  # Mutation for updating a Category document
+  updateCategory(
+  input: UpdateCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CategorySelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCategoryDataInput 
+) : CategoryMutationOutput
+
+  # Mutation for upserting a Category document
+  upsertCategory(
+  input: UpsertCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CategorySelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCategoryDataInput
+) : CategoryMutationOutput
+
+  # Mutation for deleting a Category document
+  deleteCategory(
+  input: DeleteCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CategorySelectorUniqueInput
+) : CategoryMutationOutput
 
 }
 
