@@ -1081,6 +1081,289 @@ input SessionSelectorUniqueInput {
 }
 
 
+# Type for Programs
+type Program {
+  _id: String 
+  createdAt: Date 
+  title: String 
+  slug: String 
+  structure: JSON 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteProgramInput{
+  filter: ProgramFilterInput
+  id: String
+}
+
+input SingleProgramInput {
+  # filtering
+  filter: ProgramFilterInput
+  sort: ProgramSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: ProgramSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiProgramInput {
+
+  # filtering
+  filter: ProgramFilterInput
+  sort: ProgramSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleProgramOutput{
+  result: Program
+}
+
+type  MultiProgramOutput{
+  results: [Program]
+  totalCount: Int
+}
+
+type ProgramMutationOutput{
+  data: Program
+}
+
+input CreateProgramInput {
+  data: CreateProgramDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateProgramDataInput {
+  title: String 
+  structure: JSON 
+}
+
+input UpdateProgramInput{
+  filter: ProgramFilterInput
+  id: String
+  data: UpdateProgramDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertProgramInput{
+  filter: ProgramFilterInput
+  id: String
+  data: UpdateProgramDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateProgramDataInput {
+  title: String 
+  structure: JSON 
+}
+
+input ProgramFilterInput {
+  _and: [ProgramFilterInput]
+  _not: ProgramFilterInput
+  _or: [ProgramFilterInput]
+
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  title: String_Selector
+  slug: String_Selector
+
+}
+
+input ProgramSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  title: SortOptions
+  slug: SortOptions
+  structure: SortOptions
+}
+
+input ProgramSelectorInput {
+  _and: [ProgramSelectorInput]
+  _or: [ProgramSelectorInput]
+
+}
+
+input ProgramSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
+# Type for Sections
+type Section {
+  _id: String 
+  createdAt: Date 
+  path: String 
+  programId: String 
+  program: Program 
+  type: String 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteSectionInput{
+  filter: SectionFilterInput
+  id: String
+}
+
+input SingleSectionInput {
+  # filtering
+  filter: SectionFilterInput
+  sort: SectionSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: SectionSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiSectionInput {
+
+  # filtering
+  filter: SectionFilterInput
+  sort: SectionSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleSectionOutput{
+  result: Section
+}
+
+type  MultiSectionOutput{
+  results: [Section]
+  totalCount: Int
+}
+
+type SectionMutationOutput{
+  data: Section
+}
+
+input CreateSectionInput {
+  data: CreateSectionDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateSectionDataInput {
+  path: String 
+  programId: String 
+  type: String 
+}
+
+input UpdateSectionInput{
+  filter: SectionFilterInput
+  id: String
+  data: UpdateSectionDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertSectionInput{
+  filter: SectionFilterInput
+  id: String
+  data: UpdateSectionDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateSectionDataInput {
+  path: String 
+  programId: String 
+  type: String 
+}
+
+input SectionFilterInput {
+  _and: [SectionFilterInput]
+  _not: SectionFilterInput
+  _or: [SectionFilterInput]
+
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  path: String_Selector
+  programId: String_Selector
+  type: String_Selector
+}
+
+input SectionSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  path: SortOptions
+  programId: SortOptions
+  type: SortOptions
+}
+
+input SectionSelectorInput {
+  _and: [SectionSelectorInput]
+  _or: [SectionSelectorInput]
+
+}
+
+input SectionSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
 # Type for Categories
 type Category {
   _id: String 
@@ -1251,6 +1534,18 @@ type Query {
   # A list of Session documents matching a set of query terms
   sessions(input: MultiSessionInput):  MultiSessionOutput
   
+  # A single Program document fetched by ID or slug
+  program(input: SingleProgramInput!): SingleProgramOutput
+  
+  # A list of Program documents matching a set of query terms
+  programs(input: MultiProgramInput):  MultiProgramOutput
+  
+  # A single Section document fetched by ID or slug
+  section(input: SingleSectionInput!): SingleSectionOutput
+  
+  # A list of Section documents matching a set of query terms
+  sections(input: MultiSectionInput):  MultiSectionOutput
+  
   # A single Category document fetched by ID or slug
   category(input: SingleCategoryInput!): SingleCategoryOutput
   
@@ -1412,6 +1707,70 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: SessionSelectorUniqueInput
 ) : SessionMutationOutput
+
+  # Mutation for creating new Program documents
+  createProgram(
+  input: CreateProgramInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateProgramDataInput
+) : ProgramMutationOutput
+
+  # Mutation for updating a Program document
+  updateProgram(
+  input: UpdateProgramInput,
+  "Deprecated (use 'input' field instead)."
+  selector: ProgramSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateProgramDataInput 
+) : ProgramMutationOutput
+
+  # Mutation for upserting a Program document
+  upsertProgram(
+  input: UpsertProgramInput,
+  "Deprecated (use 'input' field instead)."
+  selector: ProgramSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateProgramDataInput
+) : ProgramMutationOutput
+
+  # Mutation for deleting a Program document
+  deleteProgram(
+  input: DeleteProgramInput,
+  "Deprecated (use 'input' field instead)."
+  selector: ProgramSelectorUniqueInput
+) : ProgramMutationOutput
+
+  # Mutation for creating new Section documents
+  createSection(
+  input: CreateSectionInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateSectionDataInput
+) : SectionMutationOutput
+
+  # Mutation for updating a Section document
+  updateSection(
+  input: UpdateSectionInput,
+  "Deprecated (use 'input' field instead)."
+  selector: SectionSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateSectionDataInput 
+) : SectionMutationOutput
+
+  # Mutation for upserting a Section document
+  upsertSection(
+  input: UpsertSectionInput,
+  "Deprecated (use 'input' field instead)."
+  selector: SectionSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateSectionDataInput
+) : SectionMutationOutput
+
+  # Mutation for deleting a Section document
+  deleteSection(
+  input: DeleteSectionInput,
+  "Deprecated (use 'input' field instead)."
+  selector: SectionSelectorUniqueInput
+) : SectionMutationOutput
 
   # Mutation for creating new Category documents
   createCategory(

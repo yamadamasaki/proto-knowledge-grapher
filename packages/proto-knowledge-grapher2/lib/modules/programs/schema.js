@@ -66,6 +66,9 @@ const schema = {
   structure: {
     type: Object,
     optional: true,
+    canRead: ['guests'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
   }
 }
 

@@ -3,6 +3,10 @@ import {addRoute} from 'meteor/vulcan:core'
 addRoute([
   // sessions
   {name: 'sessions.top', path: '/sessions', componentName: 'SessionsHome'},
+  // sections
+  {name: 'sections.top', path: '/sections', componentName: 'SectionsHome'},
+  // programs
+  {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome'},
 
   // posts
 

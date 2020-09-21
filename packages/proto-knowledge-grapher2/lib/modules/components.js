@@ -10,6 +10,12 @@ import '../components/common/Vote.jsx'
 // sessions
 import '../components/sessions/SessionsHome'
 
+// programs
+import '../components/programs/ProgramsHome'
+
+// sections
+import '../components/sections/SectionsHome'
+
 // posts
 import '../components/posts/PostsHome.jsx'
 import '../components/posts/PostsCategory.jsx'

@@ -27,6 +27,9 @@ const schema = {
    */
   path: {
     type: String,
+    canRead: ['guests'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
   },
   /**
    * Program
@@ -38,12 +41,18 @@ const schema = {
       typeName: 'Program',
       kind: 'hasOne',
     },
+    canRead: ['guests'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
   },
   /**
    * Type
    */
   type: {
     type: String,
+    canRead: ['guests'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
   },
 }
 
