@@ -12,6 +12,7 @@ import '../components/sessions/SessionsHome'
 
 // programs
 import '../components/programs/ProgramsHome'
+import '../components/programs/ProgramsPage'
 
 // sections
 import '../components/sections/SectionsHome'

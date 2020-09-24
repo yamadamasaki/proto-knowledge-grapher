@@ -7,6 +7,7 @@ addRoute([
   {name: 'sections.top', path: '/sections', componentName: 'SectionsHome'},
   // programs
   {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome'},
+  {name: 'programs.item', path: '/programs/:id', componentName: 'ProgramsPage'},
 
   // posts
 
