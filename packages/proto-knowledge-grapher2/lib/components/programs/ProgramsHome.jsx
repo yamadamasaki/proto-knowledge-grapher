@@ -8,13 +8,13 @@ const LinkedTitle = ({document}) => (
 )
 
 const ProgramsHome = () => (
-    <div>
+    <React.Fragment>
       <h1>Programs</h1>
       <Components.Datatable collection={Programs} columns={[
         {name: 'title', component: LinkedTitle},
-        'structure',
+        {name: 'structureAsJson', label: 'structure'},
       ]}/>
-    </div>
+    </React.Fragment>
 )
 
 registerComponent({name: 'ProgramsHome', component: ProgramsHome})

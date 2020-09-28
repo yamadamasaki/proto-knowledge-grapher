@@ -63,13 +63,30 @@ const schema = {
   /**
    * Structure: TOC by JSON
    */
-  structure: {
-    type: Object,
+  structureAsJson: {
+    type: String,
     optional: true,
     canRead: ['guests'],
     canCreate: ['members'],
     canUpdate: ['members'],
-  }
+    input: 'textarea',
+  },
+  /**
+   * Structure: TOC as an Object
+   */
+  structure: {
+    type: Object,
+    optional: true,
+    canRead: ['guests'],
+    onCreate: ({document}) => {
+      console.log(document)
+      if (document.structureAsJson) return JSON.parse(document.structureAsJson)
+    },
+    onUpdate: ({data}) => {
+      console.log({data})
+      if (data.structureAsJson) return JSON.parse(data.structureAsJson)
+    },
+  },
 }
 
 export default schema

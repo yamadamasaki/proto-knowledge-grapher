@@ -1087,6 +1087,7 @@ type Program {
   createdAt: Date 
   title: String 
   slug: String 
+  structureAsJson: String 
   structure: JSON 
   createdAtFormatted(format: String = "YYYY/MM/DD"): String 
 }
@@ -1162,7 +1163,7 @@ input CreateProgramInput {
 
 input CreateProgramDataInput {
   title: String 
-  structure: JSON 
+  structureAsJson: String 
 }
 
 input UpdateProgramInput{
@@ -1183,7 +1184,7 @@ input UpsertProgramInput{
 
 input UpdateProgramDataInput {
   title: String 
-  structure: JSON 
+  structureAsJson: String 
 }
 
 input ProgramFilterInput {
@@ -1196,6 +1197,7 @@ input ProgramFilterInput {
   createdAt: Date_Selector
   title: String_Selector
   slug: String_Selector
+  structureAsJson: String_Selector
 
 }
 
@@ -1204,6 +1206,7 @@ input ProgramSortInput {
   createdAt: SortOptions
   title: SortOptions
   slug: SortOptions
+  structureAsJson: SortOptions
   structure: SortOptions
 }
 
