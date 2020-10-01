@@ -3,6 +3,7 @@
 import '../components/common/Footer.jsx'
 import '../components/common/Header.jsx'
 import '../components/common/Layout.jsx'
+import '../components/common/EJ2Layout.jsx'
 import '../components/common/Logo.jsx'
 import '../components/common/SearchForm.jsx'
 import '../components/common/Vote.jsx'
