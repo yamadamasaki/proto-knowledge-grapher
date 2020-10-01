@@ -57,6 +57,7 @@ Package.onUse(function (api) {
     [
       // 'lib/stylesheets/bootstrap.css',
       "lib/stylesheets/main.scss",
+      "lib/stylesheets/style.css",
     ],
     ["client"]
   );
