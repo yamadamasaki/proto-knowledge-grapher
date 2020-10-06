@@ -26,7 +26,6 @@ const ProgramsPage = ({match}) => {
   })
 
   const structure = document && document.structure
-
   const data = structure ? [
     {
       nodeId: generateNodeId(),
@@ -80,47 +79,21 @@ const ProgramsPage = ({match}) => {
                   </div>
                 </div>
               </SidebarComponent>
-              <div className="main-content" id="main-text">
-                <div className='sidebar-content'>
-                  <h2 className='sidebar-heading'> Responsive Sidebar With Treeview</h2>
-                  <p className='paragraph-content'> This is a graphical aid for visualising and categorising the site,
-                    in the style of an expandable and collapsable treeview component. It auto-expands to display the
-                    node(s),
-                    if any, corresponding to the currently viewed title, highlighting that node(s) and its ancestors.
-                    Load-on-demand when expanding nodes is available where supported (most graphical browsers), falling
-                    back to a full-page reload. MediaWiki-supported caching, aside from squid, has been considered so
-                    that unnecessary re-downloads of content are avoided where possible. The complete expanded/collapsed
-                    state of the treeview persists across page views in most situations.</p>
-                  <p className='paragraph-content'>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim
-                    id est laborum.</p>
-                  <div className='line'></div>
-                  <h2 className='sidebar-heading'>Lorem Ipsum Dolor</h2>
-                  <p className='paragraph-content'>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                    dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                  <div className='line'></div>
-                  <h2 className='sidebar-heading'> Lorem Ipsum Dolor</h2>
-                  <p className='paragraph-content'>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                    eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                  <div className='line'></div>
-                  <h2 className='sidebar-heading'> Lorem Ipsum Dolor</h2>
-                  <p className='paragraph-content'>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                    eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                    exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                </div>
-              </div>
+              {structure ?
+                  <div className="main-content" id="main-text">
+                    <div className='sidebar-content'>
+                      <h1 className='sidebar-heading'>{structure.title}</h1>
+                      <div className='line'></div>
+                      <h2 className='sidebar-heading'>{structure.subtitle}</h2>
+                      <p className='paragraph-content'>
+                        {structure.fromDate} - {structure.toDate}
+                      </p>
+                      <div className='line'></div>
+                      <h3 className='sidebar-heading'>{structure.organization}</h3>
+                      <div className='line'></div>
+                    </div>
+                  </div> : <div/>
+              }
             </div>
           </div>
         </div>

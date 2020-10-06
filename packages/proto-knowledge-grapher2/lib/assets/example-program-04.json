@@ -1,0 +1,38 @@
+{
+  "title": "...プログラム・タイトル...",
+  "subtitle": "...サブタイトル...",
+  "organization": "...組織名...",
+  "fromDate": "2020/04/01",
+  "toDate": "2020/07/31",
+  "members": ["foo@metabolics.co.jp", "bar@metabolics.co.jp"],
+  "children": [
+    {
+      "name": "...season1...",
+      "children": [
+        {
+          "name": "...episode1...",
+          "collectionName": "collection-name",
+          "id": "document-id",
+          "componentName": "view-component-name",
+          "params": {
+            "foo": 123
+          }
+        },
+        {
+          "name": "...episode2..."
+        }
+      ]
+    },
+    {
+      "name": "...season2...",
+      "children": [
+        {
+          "name": "...episode1..."
+        },
+        {
+          "name": "...episode2..."
+        }
+      ]
+    }
+  ]
+}
