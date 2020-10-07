@@ -1,8 +1,9 @@
 import React, {useRef} from 'react'
 import {registerComponent, useSingle2} from 'meteor/vulcan:core'
-import {SidebarComponent, TreeViewComponent} from '@syncfusion/ej2-react-navigations'
+import {ContextMenuComponent, SidebarComponent, TreeViewComponent} from '@syncfusion/ej2-react-navigations'
 import {Programs} from '../../modules/programs'
 import {v1 as uuidv1} from 'uuid'
+import {Link} from 'react-router-dom'
 
 const generateNodeId = () => uuidv1()
 
@@ -18,7 +19,7 @@ const children2array = children => {
   })
 }
 
-const ProgramsPage = ({match}) => {
+const ProgramsPage = ({match, history}) => {
   const {document} = useSingle2({
     collection: Programs,
     fragmentName: 'ProgramFragment',
@@ -41,6 +42,14 @@ const ProgramsPage = ({match}) => {
   const dockSize = '44px'
   const fields = {dataSource: data, id: 'nodeId', text: 'nodeText', child: 'nodeChild'}
 
+  const menuItems = [
+    {text: "open"},
+    {separator: true},
+    {text: "activate"},
+    {text: "deactivate"},
+    {text: "delete"},
+  ]
+
   const onCreate = () => sidebar.current.element.style.visibility = ''
   const onClose = () => treeView.current.collapseAll()
   const toggleClick = () => {
@@ -53,8 +62,26 @@ const ProgramsPage = ({match}) => {
     }
   }
 
+  const nodeClicked = args => {
+    console.log({nodeClicked: args})
+/*
+    if (args.event.which === 3) {
+      treeView.selectedNodes = [args.node.getAttribute('data-uid')];
+    }
+*/
+  }
+
+  const menuClick = args => {
+    console.log({menuClick: args})
+  }
+
+  const beforeOpen = args => {
+    console.log({beforeOpen: args})
+  }
+
   const sidebar = useRef(null)
   const treeView = useRef(null)
+  const contextMenu = useRef(null)
 
   return (
       <React.Fragment>
@@ -74,8 +101,9 @@ const ProgramsPage = ({match}) => {
                                 mediaQuery={mediaQuery} style={{visibility: 'hidden'}} created={onCreate}
                                 close={onClose} dockSize={dockSize} enableDock={true}>
                 <div className='main-menu'>
-                  <div>
-                    <TreeViewComponent id='main-treeview' ref={treeView} fields={fields} expandOn='Click'/>
+                  <div id='tree'>
+                    <TreeViewComponent id='main-treeview' ref={treeView} fields={fields} nodeClicked={nodeClicked}/>
+                    <ContextMenuComponent id="contentmenutree" target='#tree' items={menuItems} beforeOpen={beforeOpen} select={menuClick} ref={contextMenu}/>
                   </div>
                 </div>
               </SidebarComponent>
