@@ -13,7 +13,14 @@ const EJ2Layout = ({currentUser, children }) =>
       <link name="font-awesome" rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
       <link href="//cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet" />
-      <link href="//cdn.syncfusion.com/ej2/ej2-react-navigations/styles/material.css" rel="stylesheet" />
+      <link href="//cdn.syncfusion.com/ej2/ej2-icons/styles/material.css" rel="stylesheet" />
+      <link href="//cdn.syncfusion.com/ej2/ej2-buttons/styles/material.css" rel="stylesheet" />
+      <link href="//cdn.syncfusion.com/ej2/ej2-splitbuttons/styles/material.css" rel="stylesheet" />
+      <link href="//cdn.syncfusion.com/ej2/ej2-inputs/styles/material.css" rel="stylesheet" />
+      <link href="//cdn.syncfusion.com/ej2/ej2-lists/styles/material.css" rel="stylesheet" />
+      <link href="//cdn.syncfusion.com/ej2/ej2-popups/styles/material.css" rel="stylesheet" />
+      <link href="//cdn.syncfusion.com/ej2/ej2-richtexteditor/styles/material.css" rel="stylesheet" />
+      <link href="//cdn.syncfusion.com/ej2/ej2-navigations/styles/material.css" rel="stylesheet" />
     </Helmet>
 
     <Components.HeadTags />

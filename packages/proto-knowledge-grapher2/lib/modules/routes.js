@@ -5,6 +5,7 @@ addRoute([
   {name: 'sessions.top', path: '/sessions', componentName: 'SessionsHome'},
   // sections
   {name: 'sections.top', path: '/sections', componentName: 'SectionsHome'},
+  {name: 'sections.simpleTextSection', path: '/sections/simpleText', componentName: 'SimpleTextSection', layoutName: 'EJ2Layout'},
   // programs
   {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome'},
   {name: 'programs.item', path: '/programs/:id', componentName: 'ProgramsPage', layoutName: 'EJ2Layout'},
