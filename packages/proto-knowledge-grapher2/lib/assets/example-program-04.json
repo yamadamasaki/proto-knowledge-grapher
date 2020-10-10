@@ -8,29 +8,35 @@
   "children": [
     {
       "name": "...season1...",
+      "id": "1",
       "children": [
         {
           "name": "...episode1...",
+          "id": "1-1",
           "collectionName": "collection-name",
-          "id": "document-id",
-          "componentName": "view-component-name",
+          "_id": "document-id",
+          "componentName": "SimpleTextSection",
           "params": {
             "foo": 123
           }
         },
         {
-          "name": "...episode2..."
+          "name": "...episode2...",
+          "id": "1-2"
         }
       ]
     },
     {
       "name": "...season2...",
+      "id": "2",
       "children": [
         {
-          "name": "...episode1..."
+          "name": "...episode1...",
+          "id": "2-1"
         },
         {
-          "name": "...episode2..."
+          "name": "...episode2...",
+          "id": "2-2"
         }
       ]
     }

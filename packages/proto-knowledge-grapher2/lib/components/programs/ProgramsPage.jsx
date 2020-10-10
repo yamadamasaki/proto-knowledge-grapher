@@ -3,20 +3,24 @@ import {registerComponent, useSingle2} from 'meteor/vulcan:core'
 import {ContextMenuComponent, SidebarComponent, TreeViewComponent} from '@syncfusion/ej2-react-navigations'
 import {Programs} from '../../modules/programs'
 import {v1 as uuidv1} from 'uuid'
-import {Link} from 'react-router-dom'
 
 const generateNodeId = () => uuidv1()
 
 const children2array = children => {
   return children.map(node => {
     const template = {
-      nodeId: generateNodeId(),
+      nodeId: node.id,
       nodeText: node.name,
       iconCss: 'icon-circle-thin icon',
     }
     if (node.children) template.nodeChild = children2array(node.children)
     return template
   })
+}
+
+const findNode = (nodes, id) => {
+  return nodes.find(it => it.id === id) ||
+      nodes.map(it => it.children && findNode(it.children, id)).find(it => it != null)
 }
 
 const ProgramsPage = ({match, history}) => {
@@ -43,11 +47,11 @@ const ProgramsPage = ({match, history}) => {
   const fields = {dataSource: data, id: 'nodeId', text: 'nodeText', child: 'nodeChild'}
 
   const menuItems = [
-    {text: "open"},
+    {text: 'open'},
     {separator: true},
-    {text: "activate"},
-    {text: "deactivate"},
-    {text: "delete"},
+    {text: 'activate'},
+    {text: 'deactivate'},
+    {text: 'delete'},
   ]
 
   const onCreate = () => sidebar.current.element.style.visibility = ''
@@ -63,20 +67,39 @@ const ProgramsPage = ({match, history}) => {
   }
 
   const nodeClicked = args => {
-    console.log({nodeClicked: args})
-/*
-    if (args.event.which === 3) {
-      treeView.selectedNodes = [args.node.getAttribute('data-uid')];
-    }
-*/
+    //console.log({nodeClicked: args})
   }
 
   const menuClick = args => {
-    console.log({menuClick: args})
+    const selectedNodeId = treeView.current.selectedNodes[0] // ツリーで選択してからコンテキスト・メニューを出さないとだめ
+    switch (args.item.text) {
+      case 'open':
+        if (selectedNodeId) {
+          const node = findNode(structure.children, selectedNodeId)
+          //history.push("/sections/${node._id}")
+        }
+        break
+      case 'activate':
+        if (selectedNodeId) {
+          const node = findNode(structure.children, selectedNodeId)
+          if (node) {
+            const {collectionName, componentName, params} = node
+            // mongo で collectionName にドキュメントを作る
+            // params を入れる
+            // node._id = 作ったドキュメントの id
+            // node.url = /sections/{componentName}/{_id}
+            // document を保存する
+            history.push('/sections/simpleText')
+          }
+        }
+        break
+      default:
+        console.log('default')
+    }
   }
 
   const beforeOpen = args => {
-    console.log({beforeOpen: args})
+    //console.log({beforeOpen: args})
   }
 
   const sidebar = useRef(null)
@@ -103,7 +126,8 @@ const ProgramsPage = ({match, history}) => {
                 <div className='main-menu'>
                   <div id='tree'>
                     <TreeViewComponent id='main-treeview' ref={treeView} fields={fields} nodeClicked={nodeClicked}/>
-                    <ContextMenuComponent id="contentmenutree" target='#tree' items={menuItems} beforeOpen={beforeOpen} select={menuClick} ref={contextMenu}/>
+                    <ContextMenuComponent id="contentmenutree" target='#tree' items={menuItems} beforeOpen={beforeOpen}
+                                          select={menuClick} ref={contextMenu}/>
                   </div>
                 </div>
               </SidebarComponent>
