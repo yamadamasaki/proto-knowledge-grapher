@@ -1,5 +1,5 @@
 import React, {useRef} from 'react'
-import {registerComponent, useSingle2} from 'meteor/vulcan:core'
+import {registerComponent, useSingle2, useCreate2} from 'meteor/vulcan:core'
 import {ContextMenuComponent, SidebarComponent, TreeViewComponent} from '@syncfusion/ej2-react-navigations'
 import {Programs} from '../../modules/programs'
 import {v1 as uuidv1} from 'uuid'
@@ -85,11 +85,13 @@ const ProgramsPage = ({match, history}) => {
           if (node) {
             const {collectionName, componentName, params} = node
             // mongo で collectionName にドキュメントを作る
+            const [createDocument, {called, loading}] = useCreate2({collectionName, fragmentName: "SimpleTextFragment"})
+            const result = createDocument({data: {text: "knowledge.grapher"},})
+            console.log({result})
             // params を入れる
             // node._id = 作ったドキュメントの id
-            // node.url = /sections/{componentName}/{_id}
             // document を保存する
-            history.push('/sections/simpleText')
+            //history.push('/sections/simpleText')
           }
         }
         break

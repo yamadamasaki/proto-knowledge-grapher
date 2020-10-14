@@ -1506,6 +1506,159 @@ input CategorySelectorUniqueInput {
 }
 
 
+# Type for SimpleTexts
+type SimpleText {
+  _id: String 
+  createdAt: Date 
+  path: String 
+  programId: String 
+  program: Program 
+  type: String 
+  title: String 
+  htmlText: String 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteSimpleTextInput{
+  filter: SimpleTextFilterInput
+  id: String
+}
+
+input SingleSimpleTextInput {
+  # filtering
+  filter: SimpleTextFilterInput
+  sort: SimpleTextSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: SimpleTextSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiSimpleTextInput {
+
+  # filtering
+  filter: SimpleTextFilterInput
+  sort: SimpleTextSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleSimpleTextOutput{
+  result: SimpleText
+}
+
+type  MultiSimpleTextOutput{
+  results: [SimpleText]
+  totalCount: Int
+}
+
+type SimpleTextMutationOutput{
+  data: SimpleText
+}
+
+input CreateSimpleTextInput {
+  data: CreateSimpleTextDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateSimpleTextDataInput {
+  path: String 
+  programId: String 
+  type: String 
+  title: String 
+  htmlText: String 
+}
+
+input UpdateSimpleTextInput{
+  filter: SimpleTextFilterInput
+  id: String
+  data: UpdateSimpleTextDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertSimpleTextInput{
+  filter: SimpleTextFilterInput
+  id: String
+  data: UpdateSimpleTextDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateSimpleTextDataInput {
+  path: String 
+  programId: String 
+  type: String 
+  title: String 
+  htmlText: String 
+}
+
+input SimpleTextFilterInput {
+  _and: [SimpleTextFilterInput]
+  _not: SimpleTextFilterInput
+  _or: [SimpleTextFilterInput]
+
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  path: String_Selector
+  programId: String_Selector
+  type: String_Selector
+  title: String_Selector
+  htmlText: String_Selector
+}
+
+input SimpleTextSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  path: SortOptions
+  programId: SortOptions
+  type: SortOptions
+  title: SortOptions
+  htmlText: SortOptions
+}
+
+input SimpleTextSelectorInput {
+  _and: [SimpleTextSelectorInput]
+  _or: [SimpleTextSelectorInput]
+
+}
+
+input SimpleTextSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
 
 
 type Query {
@@ -1554,6 +1707,12 @@ type Query {
   
   # A list of Category documents matching a set of query terms
   categories(input: MultiCategoryInput):  MultiCategoryOutput
+  
+  # A single SimpleText document fetched by ID or slug
+  simpleText(input: SingleSimpleTextInput!): SingleSimpleTextOutput
+  
+  # A list of SimpleText documents matching a set of query terms
+  simpleTexts(input: MultiSimpleTextInput):  MultiSimpleTextOutput
   
 }
   
@@ -1806,6 +1965,38 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: CategorySelectorUniqueInput
 ) : CategoryMutationOutput
+
+  # Mutation for creating new SimpleText documents
+  createSimpleText(
+  input: CreateSimpleTextInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateSimpleTextDataInput
+) : SimpleTextMutationOutput
+
+  # Mutation for updating a SimpleText document
+  updateSimpleText(
+  input: UpdateSimpleTextInput,
+  "Deprecated (use 'input' field instead)."
+  selector: SimpleTextSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateSimpleTextDataInput 
+) : SimpleTextMutationOutput
+
+  # Mutation for upserting a SimpleText document
+  upsertSimpleText(
+  input: UpsertSimpleTextInput,
+  "Deprecated (use 'input' field instead)."
+  selector: SimpleTextSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateSimpleTextDataInput
+) : SimpleTextMutationOutput
+
+  # Mutation for deleting a SimpleText document
+  deleteSimpleText(
+  input: DeleteSimpleTextInput,
+  "Deprecated (use 'input' field instead)."
+  selector: SimpleTextSelectorUniqueInput
+) : SimpleTextMutationOutput
 
 }
 
