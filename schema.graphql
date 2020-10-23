@@ -1513,6 +1513,7 @@ type SimpleText {
   path: String 
   programId: String 
   program: Program 
+  sectionId: String 
   type: String 
   title: String 
   htmlText: String 
@@ -1591,6 +1592,7 @@ input CreateSimpleTextInput {
 input CreateSimpleTextDataInput {
   path: String 
   programId: String 
+  sectionId: String 
   type: String 
   title: String 
   htmlText: String 
@@ -1615,6 +1617,7 @@ input UpsertSimpleTextInput{
 input UpdateSimpleTextDataInput {
   path: String 
   programId: String 
+  sectionId: String 
   type: String 
   title: String 
   htmlText: String 
@@ -1630,6 +1633,7 @@ input SimpleTextFilterInput {
   createdAt: Date_Selector
   path: String_Selector
   programId: String_Selector
+  sectionId: String_Selector
   type: String_Selector
   title: String_Selector
   htmlText: String_Selector
@@ -1640,6 +1644,7 @@ input SimpleTextSortInput {
   createdAt: SortOptions
   path: SortOptions
   programId: SortOptions
+  sectionId: SortOptions
   type: SortOptions
   title: SortOptions
   htmlText: SortOptions

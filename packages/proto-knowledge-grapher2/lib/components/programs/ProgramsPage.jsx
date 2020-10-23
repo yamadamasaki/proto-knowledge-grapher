@@ -1,26 +1,22 @@
 import React, {useRef} from 'react'
-import {registerComponent, useSingle2, useCreate2} from 'meteor/vulcan:core'
-import {ContextMenuComponent, SidebarComponent, TreeViewComponent} from '@syncfusion/ej2-react-navigations'
+import {registerComponent, useSingle2} from 'meteor/vulcan:core'
+import {SidebarComponent, TreeViewComponent} from '@syncfusion/ej2-react-navigations'
 import {Programs} from '../../modules/programs'
 import {v1 as uuidv1} from 'uuid'
 
 const generateNodeId = () => uuidv1()
 
-const children2array = children => {
+const children2array = (children, programId) => {
   return children.map(node => {
     const template = {
       nodeId: node.id,
       nodeText: node.name,
       iconCss: 'icon-circle-thin icon',
+      navigateUrl: `/sections/${programId}/${node.collectionName}/${node.id}/${node.componentName}`,
     }
-    if (node.children) template.nodeChild = children2array(node.children)
+    if (node.children) template.nodeChild = children2array(node.children, programId)
     return template
   })
-}
-
-const findNode = (nodes, id) => {
-  return nodes.find(it => it.id === id) ||
-      nodes.map(it => it.children && findNode(it.children, id)).find(it => it != null)
 }
 
 const ProgramsPage = ({match, history}) => {
@@ -36,7 +32,8 @@ const ProgramsPage = ({match, history}) => {
       nodeId: generateNodeId(),
       nodeText: structure.title,
       iconCss: 'icon-microchip icon',
-      nodeChild: children2array(structure.children),
+      nodeChild: children2array(structure.children, match.params.id),
+      navigateUrl: '/',
     },
   ] : []
 
@@ -45,14 +42,6 @@ const ProgramsPage = ({match, history}) => {
   const mediaQuery = '(min-width: 600px)'
   const dockSize = '44px'
   const fields = {dataSource: data, id: 'nodeId', text: 'nodeText', child: 'nodeChild'}
-
-  const menuItems = [
-    {text: 'open'},
-    {separator: true},
-    {text: 'activate'},
-    {text: 'deactivate'},
-    {text: 'delete'},
-  ]
 
   const onCreate = () => sidebar.current.element.style.visibility = ''
   const onClose = () => treeView.current.collapseAll()
@@ -70,43 +59,8 @@ const ProgramsPage = ({match, history}) => {
     //console.log({nodeClicked: args})
   }
 
-  const menuClick = args => {
-    const selectedNodeId = treeView.current.selectedNodes[0] // ツリーで選択してからコンテキスト・メニューを出さないとだめ
-    switch (args.item.text) {
-      case 'open':
-        if (selectedNodeId) {
-          const node = findNode(structure.children, selectedNodeId)
-          //history.push("/sections/${node._id}")
-        }
-        break
-      case 'activate':
-        if (selectedNodeId) {
-          const node = findNode(structure.children, selectedNodeId)
-          if (node) {
-            const {collectionName, componentName, params} = node
-            // mongo で collectionName にドキュメントを作る
-            const [createDocument, {called, loading}] = useCreate2({collectionName, fragmentName: "SimpleTextFragment"})
-            const result = createDocument({data: {text: "knowledge.grapher"},})
-            console.log({result})
-            // params を入れる
-            // node._id = 作ったドキュメントの id
-            // document を保存する
-            //history.push('/sections/simpleText')
-          }
-        }
-        break
-      default:
-        console.log('default')
-    }
-  }
-
-  const beforeOpen = args => {
-    //console.log({beforeOpen: args})
-  }
-
   const sidebar = useRef(null)
   const treeView = useRef(null)
-  const contextMenu = useRef(null)
 
   return (
       <React.Fragment>
@@ -126,11 +80,7 @@ const ProgramsPage = ({match, history}) => {
                                 mediaQuery={mediaQuery} style={{visibility: 'hidden'}} created={onCreate}
                                 close={onClose} dockSize={dockSize} enableDock={true}>
                 <div className='main-menu'>
-                  <div id='tree'>
-                    <TreeViewComponent id='main-treeview' ref={treeView} fields={fields} nodeClicked={nodeClicked}/>
-                    <ContextMenuComponent id="contentmenutree" target='#tree' items={menuItems} beforeOpen={beforeOpen}
-                                          select={menuClick} ref={contextMenu}/>
-                  </div>
+                    <TreeViewComponent id='main-treeview' ref={treeView} fields={fields} nodeClicked={nodeClicked} fullRowNavigable/>
                 </div>
               </SidebarComponent>
               {structure ?

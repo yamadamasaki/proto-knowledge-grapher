@@ -46,6 +46,16 @@ const schema = {
     canUpdate: ['members'],
   },
   /**
+   * Section
+   */
+  sectionId: {
+    type: String,
+    canRead: ['guests'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
+  },
+
+  /**
    * Type
    */
   type: {
