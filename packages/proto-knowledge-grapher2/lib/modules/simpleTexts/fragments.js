@@ -4,5 +4,6 @@ registerFragment(/*gql*/`
     fragment SimpleTextFragment on SimpleText {
         _id
         title
+        htmlText
     }
 `)

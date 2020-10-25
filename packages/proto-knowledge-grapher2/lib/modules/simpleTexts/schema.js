@@ -27,6 +27,7 @@ const schema = {
    */
   path: {
     type: String,
+    optional: true,
     canRead: ['guests'],
     canCreate: ['members'],
     canUpdate: ['members'],
@@ -60,6 +61,7 @@ const schema = {
    */
   type: {
     type: String,
+    optional: true,
     canRead: ['guests'],
     canCreate: ['members'],
     canUpdate: ['members'],
@@ -70,6 +72,7 @@ const schema = {
    */
   title: {
     type: String,
+    optional: true,
     canRead: ['guests'],
     canCreate: ['members'],
     canUpdate: ['members'],
@@ -79,6 +82,7 @@ const schema = {
    */
   htmlText: {
     type: String,
+    optional: true,
     canRead: ['guests'],
     canCreate: ['members'],
     canUpdate: ['members'],

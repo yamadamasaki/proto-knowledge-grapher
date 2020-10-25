@@ -21,7 +21,12 @@
         },
         {
           "name": "...episode2...",
-          "id": "1-2"
+          "id": "1-2",
+          "collectionName": "SimpleTexts",
+          "componentName": "SimpleTextSection",
+          "params": {
+            "foo": 123
+          }
         }
       ]
     },

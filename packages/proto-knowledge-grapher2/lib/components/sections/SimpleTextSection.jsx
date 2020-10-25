@@ -1,5 +1,5 @@
-import React from 'react'
-import {registerComponent, useMulti2} from 'meteor/vulcan:core'
+import React, {useRef, useState} from 'react'
+import {Components, registerComponent, useCreate2, useMulti2, useUpdate2} from 'meteor/vulcan:core'
 import {
   HtmlEditor,
   Image,
@@ -9,62 +9,62 @@ import {
   RichTextEditorComponent,
   Toolbar,
 } from '@syncfusion/ej2-react-richtexteditor'
+import {ButtonComponent} from '@syncfusion/ej2-react-buttons'
 
 const SimpleTextSection = ({match}) => {
   const {params} = match
   const {programId, collectionName, sectionId} = params
-  const {results} = useMulti2({
+  const {results, refetch} = useMulti2({
     collectionName,
     fragmentName: 'SimpleTextFragment',
     input: {filter: {_and: [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]}},
+    //pollInterval: 500,
   })
-  //const document = results[0]
+
+  if (results && results.length === 0) results[0] = {programId, sectionId}
+
+  const [updateDocument, {loading: loading_u}] = useUpdate2({collectionName, fragmentName: 'SimpleTextFragment'})
+  const [createDocument, {loading: loading_c}] = useCreate2({collectionName, fragmentName: 'SimpleTextFragment'})
+  const [error, setError] = useState()
+
+  const document = results && results[0]
+
+  const editor = useRef()
+
+  const onClick = async () => {
+    document.htmlText = editor.current.getHtml()
+    if (document._id) {
+      try {
+        await updateDocument({input: {id: document._id, data: {htmlText: document.htmlText}}})
+        refetch()
+      } catch (e) {
+        setError(e)
+      }
+    } else {
+      try {
+        await createDocument({input: {data: document}})
+        refetch()
+      } catch (e) {
+        setError(e)
+      }
+    }
+  }
 
   return (
       <React.Fragment>
-        <h1>SimpleTextSection</h1>
-        <RichTextEditorComponent>
-          <p>The Rich Text Editor component is WYSIWYG ("what you see is what you get") editor that provides
-            the
-            best user experience to create and update the content. Users can format their content using
-            standard
-            toolbar commands.</p>
-
-          <p><b>Key features:</b></p>
-          <ul>
-            <li>
-              <p>Provides &lt;IFRAME&gt; and &lt;DIV&gt; modes</p>
-            </li>
-            <li>
-              <p>Capable of handling markdown editing.</p>
-            </li>
-            <li>
-              <p>Contains a modular library to load the necessary functionality on demand.</p>
-            </li>
-            <li>
-              <p>Provides a fully customizable toolbar.</p>
-            </li>
-            <li>
-              <p>Provides HTML view to edit the source directly for developers.</p>
-            </li>
-            <li>
-              <p>Supports third-party library integration.</p>
-            </li>
-            <li>
-              <p>Allows preview of modified content before saving it.</p>
-            </li>
-            <li>
-              <p>Handles images, hyperlinks, video, hyperlinks, uploads, etc.</p>
-            </li>
-            <li>
-              <p>Contains undo/redo manager.</p>
-            </li>
-            <li>
-              <p>Creates bulleted and numbered lists.</p>
-            </li>
-          </ul>
-          <Inject services={[Toolbar, Image, Link, HtmlEditor, QuickToolbar]}/>
-        </RichTextEditorComponent>
+        {
+          error ? <Components.Flash message={error}/> :
+              loading_c || loading_u ? <Components.Loading/> :
+                  document ?
+                      <React.Fragment>
+                        <h1>SimpleTextSection</h1>
+                        <RichTextEditorComponent value={document.htmlText} ref={editor}>
+                          <Inject services={[Toolbar, Image, Link, HtmlEditor, QuickToolbar]}/>
+                        </RichTextEditorComponent>
+                        <ButtonComponent onClick={onClick}>Save</ButtonComponent>
+                      </React.Fragment> :
+                      <Components.Flash message='Empty Document'/>
+        }
       </React.Fragment>
   )
 }
