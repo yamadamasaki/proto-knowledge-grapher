@@ -1,16 +1,11 @@
 import {addRoute} from 'meteor/vulcan:core'
 
 addRoute([
-  // sessions
-  {name: 'sessions.top', path: '/sessions', componentName: 'SessionsHome'},
-  // sections
-  {name: 'sections.top', path: '/sections', componentName: 'SectionsHome'},
-  {name: 'sections.simpleTextSection', path: '/sections/:programId/:sectionId/SimpleText', componentName: 'SimpleTextSection', layoutName: 'EJ2Layout'},
   // programs
   {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome'},
   {name: 'programs.item', path: '/programs/:id', componentName: 'ProgramsPage', layoutName: 'EJ2Layout'},
     // sections
-  {name: 'sections.item', path: '/sections/:programId/:collectionName/:sectionId/SimpleTextSection/', componentName: 'SimpleTextSection', layoutName: 'EJ2Layout'},
+  {name: 'sections.simpleTextSection', path: '/sections/:programId/:collectionName/:sectionId/SimpleTextSection/', componentName: 'SimpleTextSection', layoutName: 'EJ2Layout'},
 
   // posts
 

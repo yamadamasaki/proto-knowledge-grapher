@@ -8,15 +8,11 @@ import '../components/common/Logo.jsx'
 import '../components/common/SearchForm.jsx'
 import '../components/common/Vote.jsx'
 
-// sessions
-import '../components/sessions/SessionsHome'
-
 // programs
 import '../components/programs/ProgramsHome'
 import '../components/programs/ProgramsPage'
 
 // sections
-import '../components/sections/SectionsHome'
 import '../components/sections/SimpleTextSection'
 
 // posts
