@@ -4,8 +4,19 @@ addRoute([
   // programs
   {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome'},
   {name: 'programs.item', path: '/programs/:id', componentName: 'ProgramsPage', layoutName: 'EJ2Layout'},
-    // sections
-  {name: 'sections.simpleTextSection', path: '/sections/:programId/:collectionName/:sectionId/SimpleTextSection/', componentName: 'SimpleTextSection', layoutName: 'EJ2Layout'},
+  // sections
+  {
+    name: 'sections.simpleTextSection',
+    path: '/sections/:programId/:collectionName/:sectionId/SimpleTextSection/',
+    componentName: 'SimpleTextSection',
+    layoutName: 'EJ2Layout',
+  },
+  {
+    name: 'sections.simpleDiagramSection',
+    path: '/sections/:programId/:collectionName/:sectionId/SimpleDiagramSection/',
+    componentName: 'SimpleDiagramSection',
+    layoutName: 'EJ2Layout',
+  },
 
   // posts
 

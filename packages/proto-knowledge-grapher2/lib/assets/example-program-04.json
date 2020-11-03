@@ -36,11 +36,21 @@
       "children": [
         {
           "name": "...episode1...",
-          "id": "2-1"
+          "id": "2-1",
+          "collectionName": "SimpleDiagrams",
+          "componentName": "SimpleDiagramSection",
+          "params": {
+            "foo": 123
+          }
         },
         {
           "name": "...episode2...",
-          "id": "2-2"
+          "id": "2-2",
+          "collectionName": "SimpleDiagrams",
+          "componentName": "SimpleDiagramSection",
+          "params": {
+            "foo": 123
+          }
         }
       ]
     }

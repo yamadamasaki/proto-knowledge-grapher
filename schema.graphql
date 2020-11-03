@@ -1386,6 +1386,159 @@ input SimpleTextSelectorUniqueInput {
 }
 
 
+# Type for SimpleDiagrams
+type SimpleDiagram {
+  _id: String 
+  createdAt: Date 
+  path: String 
+  programId: String 
+  program: Program 
+  sectionId: String 
+  type: String 
+  title: String 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteSimpleDiagramInput{
+  filter: SimpleDiagramFilterInput
+  id: String
+}
+
+input SingleSimpleDiagramInput {
+  # filtering
+  filter: SimpleDiagramFilterInput
+  sort: SimpleDiagramSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: SimpleDiagramSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiSimpleDiagramInput {
+
+  # filtering
+  filter: SimpleDiagramFilterInput
+  sort: SimpleDiagramSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleSimpleDiagramOutput{
+  result: SimpleDiagram
+}
+
+type  MultiSimpleDiagramOutput{
+  results: [SimpleDiagram]
+  totalCount: Int
+}
+
+type SimpleDiagramMutationOutput{
+  data: SimpleDiagram
+}
+
+input CreateSimpleDiagramInput {
+  data: CreateSimpleDiagramDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateSimpleDiagramDataInput {
+  path: String 
+  programId: String 
+  sectionId: String 
+  type: String 
+  title: String 
+}
+
+input UpdateSimpleDiagramInput{
+  filter: SimpleDiagramFilterInput
+  id: String
+  data: UpdateSimpleDiagramDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertSimpleDiagramInput{
+  filter: SimpleDiagramFilterInput
+  id: String
+  data: UpdateSimpleDiagramDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateSimpleDiagramDataInput {
+  path: String 
+  programId: String 
+  sectionId: String 
+  type: String 
+  title: String 
+}
+
+input SimpleDiagramFilterInput {
+  _and: [SimpleDiagramFilterInput]
+  _not: SimpleDiagramFilterInput
+  _or: [SimpleDiagramFilterInput]
+
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  path: String_Selector
+  programId: String_Selector
+  sectionId: String_Selector
+  type: String_Selector
+  title: String_Selector
+}
+
+input SimpleDiagramSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  path: SortOptions
+  programId: SortOptions
+  sectionId: SortOptions
+  type: SortOptions
+  title: SortOptions
+}
+
+input SimpleDiagramSelectorInput {
+  _and: [SimpleDiagramSelectorInput]
+  _or: [SimpleDiagramSelectorInput]
+
+}
+
+input SimpleDiagramSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
 
 
 type Query {
@@ -1428,6 +1581,12 @@ type Query {
   
   # A list of SimpleText documents matching a set of query terms
   simpleTexts(input: MultiSimpleTextInput):  MultiSimpleTextOutput
+  
+  # A single SimpleDiagram document fetched by ID or slug
+  simpleDiagram(input: SingleSimpleDiagramInput!): SingleSimpleDiagramOutput
+  
+  # A list of SimpleDiagram documents matching a set of query terms
+  simpleDiagrams(input: MultiSimpleDiagramInput):  MultiSimpleDiagramOutput
   
 }
   
@@ -1648,6 +1807,38 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: SimpleTextSelectorUniqueInput
 ) : SimpleTextMutationOutput
+
+  # Mutation for creating new SimpleDiagram documents
+  createSimpleDiagram(
+  input: CreateSimpleDiagramInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateSimpleDiagramDataInput
+) : SimpleDiagramMutationOutput
+
+  # Mutation for updating a SimpleDiagram document
+  updateSimpleDiagram(
+  input: UpdateSimpleDiagramInput,
+  "Deprecated (use 'input' field instead)."
+  selector: SimpleDiagramSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateSimpleDiagramDataInput 
+) : SimpleDiagramMutationOutput
+
+  # Mutation for upserting a SimpleDiagram document
+  upsertSimpleDiagram(
+  input: UpsertSimpleDiagramInput,
+  "Deprecated (use 'input' field instead)."
+  selector: SimpleDiagramSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateSimpleDiagramDataInput
+) : SimpleDiagramMutationOutput
+
+  # Mutation for deleting a SimpleDiagram document
+  deleteSimpleDiagram(
+  input: DeleteSimpleDiagramInput,
+  "Deprecated (use 'input' field instead)."
+  selector: SimpleDiagramSelectorUniqueInput
+) : SimpleDiagramMutationOutput
 
 }
 
