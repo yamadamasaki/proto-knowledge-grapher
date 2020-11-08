@@ -13,11 +13,14 @@ import {ButtonComponent} from '@syncfusion/ej2-react-buttons'
 
 const SimpleTextSection = ({match}) => {
   const {params} = match
-  const {programId, collectionName, sectionId} = params
+  const collectionName = params.collectionName || 'SimpleTexts'
+  const {programId, sectionId} = params
+  const {id} = params
+  const filter = (id && {_id: {_eq: id}}) || {_and: [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]}
   const {results, refetch} = useMulti2({
     collectionName,
     fragmentName: 'SimpleTextFragment',
-    input: {filter: {_and: [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]}},
+    input: {filter},
     //pollInterval: 500,
   })
 

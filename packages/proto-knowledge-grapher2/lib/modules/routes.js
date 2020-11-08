@@ -4,7 +4,9 @@ addRoute([
   // programs
   {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome'},
   {name: 'programs.item', path: '/programs/:id', componentName: 'ProgramsPage', layoutName: 'EJ2Layout'},
+
   // sections
+  /// SimpleText
   {
     name: 'sections.simpleTextSection',
     path: '/sections/:programId/:collectionName/:sectionId/SimpleTextSection/',
@@ -12,6 +14,9 @@ addRoute([
     layoutName: 'EJ2Layout',
   },
   {name: 'sections.simpleTextsHome', path: '/simpleTexts/', componentName: 'SimpleTextsHome', layoutName: 'EJ2Layout'},
+  {name: 'sections.simpleText', path: '/simpleTexts/:id', componentName: 'SimpleTextSection', layoutName: 'EJ2Layout'},
+
+  /// SimpleDiagram
   {
     name: 'sections.simpleDiagramSection',
     path: '/sections/:programId/:collectionName/:sectionId/SimpleDiagramSection/',
