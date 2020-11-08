@@ -1089,152 +1089,12 @@ input ProgramSelectorUniqueInput {
 }
 
 
-# Type for Categories
-type Category {
-  _id: String 
-  name: String 
-  slug: String 
-  pagePath: String 
-  pageUrl: String 
-}
-
-
-input DeleteCategoryInput{
-  filter: CategoryFilterInput
-  id: String
-}
-
-input SingleCategoryInput {
-  # filtering
-  filter: CategoryFilterInput
-  sort: CategorySortInput
-  search: String
-  id: String
-
-  # backwards-compatibility
-  "Deprecated (use 'filter/id' fields instead)."
-  selector: CategorySelectorUniqueInput
-
-  # options (backwards-compatibility)
-  # Whether to enable caching for this query
-  enableCache: Boolean
-  # Return null instead of throwing MissingDocumentError
-  allowNull: Boolean
-  # An identifier to name the query's execution context
-  contextName: String
-}
-
-input MultiCategoryInput {
-
-  # filtering
-  filter: CategoryFilterInput
-  sort: CategorySortInput
-  search: String
-  offset: Int
-  limit: Int
-
-  # backwards-compatibility
-  # A JSON object that contains the query terms used to fetch data
-  "Deprecated (use 'filter/id' fields instead)."
-  terms: JSON
-
-  # options (backwards-compatibility)
-  # Whether to enable caching for this query
-  enableCache: Boolean
-  # Whether to calculate totalCount for this query
-  enableTotal: Boolean
-  # An identifier to name the query's execution context
-  contextName: String
-  
-}
-
-type SingleCategoryOutput{
-  result: Category
-}
-
-type  MultiCategoryOutput{
-  results: [Category]
-  totalCount: Int
-}
-
-type CategoryMutationOutput{
-  data: Category
-}
-
-input CreateCategoryInput {
-  data: CreateCategoryDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
-}
-
-input CreateCategoryDataInput {
-  name: String 
-  slug: String 
-}
-
-input UpdateCategoryInput{
-  filter: CategoryFilterInput
-  id: String
-  data: UpdateCategoryDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
-}
-
-input UpsertCategoryInput{
-  filter: CategoryFilterInput
-  id: String
-  data: UpdateCategoryDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
-}
-
-input UpdateCategoryDataInput {
-  name: String 
-  slug: String 
-}
-
-input CategoryFilterInput {
-  _and: [CategoryFilterInput]
-  _not: CategoryFilterInput
-  _or: [CategoryFilterInput]
-
-
-  _id: String_Selector
-  name: String_Selector
-  slug: String_Selector
-  pagePath: String_Selector
-  pageUrl: String_Selector
-}
-
-input CategorySortInput {
-  _id: SortOptions
-  name: SortOptions
-  slug: SortOptions
-  pagePath: SortOptions
-  pageUrl: SortOptions
-}
-
-input CategorySelectorInput {
-  _and: [CategorySelectorInput]
-  _or: [CategorySelectorInput]
-
-}
-
-input CategorySelectorUniqueInput {
-  _id: String
-  documentId: String # OpenCRUD backwards compatibility
-  slug: String
-
-}
-
-
 # Type for SimpleTexts
 type SimpleText {
   _id: String 
   createdAt: Date 
   path: String 
   programId: String 
-  program: Program 
   sectionId: String 
   type: String 
   title: String 
@@ -1379,6 +1239,145 @@ input SimpleTextSelectorInput {
 }
 
 input SimpleTextSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
+# Type for Categories
+type Category {
+  _id: String 
+  name: String 
+  slug: String 
+  pagePath: String 
+  pageUrl: String 
+}
+
+
+input DeleteCategoryInput{
+  filter: CategoryFilterInput
+  id: String
+}
+
+input SingleCategoryInput {
+  # filtering
+  filter: CategoryFilterInput
+  sort: CategorySortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: CategorySelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiCategoryInput {
+
+  # filtering
+  filter: CategoryFilterInput
+  sort: CategorySortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleCategoryOutput{
+  result: Category
+}
+
+type  MultiCategoryOutput{
+  results: [Category]
+  totalCount: Int
+}
+
+type CategoryMutationOutput{
+  data: Category
+}
+
+input CreateCategoryInput {
+  data: CreateCategoryDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateCategoryDataInput {
+  name: String 
+  slug: String 
+}
+
+input UpdateCategoryInput{
+  filter: CategoryFilterInput
+  id: String
+  data: UpdateCategoryDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertCategoryInput{
+  filter: CategoryFilterInput
+  id: String
+  data: UpdateCategoryDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateCategoryDataInput {
+  name: String 
+  slug: String 
+}
+
+input CategoryFilterInput {
+  _and: [CategoryFilterInput]
+  _not: CategoryFilterInput
+  _or: [CategoryFilterInput]
+
+
+  _id: String_Selector
+  name: String_Selector
+  slug: String_Selector
+  pagePath: String_Selector
+  pageUrl: String_Selector
+}
+
+input CategorySortInput {
+  _id: SortOptions
+  name: SortOptions
+  slug: SortOptions
+  pagePath: SortOptions
+  pageUrl: SortOptions
+}
+
+input CategorySelectorInput {
+  _and: [CategorySelectorInput]
+  _or: [CategorySelectorInput]
+
+}
+
+input CategorySelectorUniqueInput {
   _id: String
   documentId: String # OpenCRUD backwards compatibility
   slug: String
@@ -1570,17 +1569,17 @@ type Query {
   # A list of Program documents matching a set of query terms
   programs(input: MultiProgramInput):  MultiProgramOutput
   
-  # A single Category document fetched by ID or slug
-  category(input: SingleCategoryInput!): SingleCategoryOutput
-  
-  # A list of Category documents matching a set of query terms
-  categories(input: MultiCategoryInput):  MultiCategoryOutput
-  
   # A single SimpleText document fetched by ID or slug
   simpleText(input: SingleSimpleTextInput!): SingleSimpleTextOutput
   
   # A list of SimpleText documents matching a set of query terms
   simpleTexts(input: MultiSimpleTextInput):  MultiSimpleTextOutput
+  
+  # A single Category document fetched by ID or slug
+  category(input: SingleCategoryInput!): SingleCategoryOutput
+  
+  # A list of Category documents matching a set of query terms
+  categories(input: MultiCategoryInput):  MultiCategoryOutput
   
   # A single SimpleDiagram document fetched by ID or slug
   simpleDiagram(input: SingleSimpleDiagramInput!): SingleSimpleDiagramOutput
@@ -1744,38 +1743,6 @@ type Mutation {
   selector: ProgramSelectorUniqueInput
 ) : ProgramMutationOutput
 
-  # Mutation for creating new Category documents
-  createCategory(
-  input: CreateCategoryInput,
-  "Deprecated (use 'input' field instead)."
-  data: CreateCategoryDataInput
-) : CategoryMutationOutput
-
-  # Mutation for updating a Category document
-  updateCategory(
-  input: UpdateCategoryInput,
-  "Deprecated (use 'input' field instead)."
-  selector: CategorySelectorUniqueInput,
-  "Deprecated (use 'input' field instead)."
-  data: UpdateCategoryDataInput 
-) : CategoryMutationOutput
-
-  # Mutation for upserting a Category document
-  upsertCategory(
-  input: UpsertCategoryInput,
-  "Deprecated (use 'input' field instead)."
-  selector: CategorySelectorUniqueInput,
-  "Deprecated (use 'input' field instead)."
-  data: UpdateCategoryDataInput
-) : CategoryMutationOutput
-
-  # Mutation for deleting a Category document
-  deleteCategory(
-  input: DeleteCategoryInput,
-  "Deprecated (use 'input' field instead)."
-  selector: CategorySelectorUniqueInput
-) : CategoryMutationOutput
-
   # Mutation for creating new SimpleText documents
   createSimpleText(
   input: CreateSimpleTextInput,
@@ -1807,6 +1774,38 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: SimpleTextSelectorUniqueInput
 ) : SimpleTextMutationOutput
+
+  # Mutation for creating new Category documents
+  createCategory(
+  input: CreateCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateCategoryDataInput
+) : CategoryMutationOutput
+
+  # Mutation for updating a Category document
+  updateCategory(
+  input: UpdateCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CategorySelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCategoryDataInput 
+) : CategoryMutationOutput
+
+  # Mutation for upserting a Category document
+  upsertCategory(
+  input: UpsertCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CategorySelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCategoryDataInput
+) : CategoryMutationOutput
+
+  # Mutation for deleting a Category document
+  deleteCategory(
+  input: DeleteCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CategorySelectorUniqueInput
+) : CategoryMutationOutput
 
   # Mutation for creating new SimpleDiagram documents
   createSimpleDiagram(

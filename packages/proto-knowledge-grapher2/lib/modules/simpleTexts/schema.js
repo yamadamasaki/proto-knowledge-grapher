@@ -1,5 +1,5 @@
 /**
- * @summary Programs schema
+ * @summary SimpleTexts schema
  * @type {Object}
  */
 const schema = {
@@ -37,11 +37,14 @@ const schema = {
    */
   programId: {
     type: String,
+    optional: false,
+    /*
     relation: {
       fieldName: 'program',
       typeName: 'Program',
       kind: 'hasOne',
     },
+     */
     canRead: ['guests'],
     canCreate: ['members'],
     canUpdate: ['members'],
@@ -51,6 +54,7 @@ const schema = {
    */
   sectionId: {
     type: String,
+    optional: false,
     canRead: ['guests'],
     canCreate: ['members'],
     canUpdate: ['members'],

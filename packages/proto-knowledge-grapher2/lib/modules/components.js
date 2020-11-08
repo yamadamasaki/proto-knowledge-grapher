@@ -14,6 +14,7 @@ import '../components/programs/ProgramsPage'
 
 // sections
 import '../components/sections/SimpleTextSection'
+import '../components/sections/SimpleTextsHome'
 import '../components/sections/SimpleDiagramSection'
 // posts
 import '../components/posts/PostsHome.jsx'

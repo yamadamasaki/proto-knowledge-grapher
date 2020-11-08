@@ -11,6 +11,7 @@ addRoute([
     componentName: 'SimpleTextSection',
     layoutName: 'EJ2Layout',
   },
+  {name: 'sections.simpleTextsHome', path: '/simpleTexts/', componentName: 'SimpleTextsHome', layoutName: 'EJ2Layout'},
   {
     name: 'sections.simpleDiagramSection',
     path: '/sections/:programId/:collectionName/:sectionId/SimpleDiagramSection/',

@@ -7,3 +7,14 @@ registerFragment(/*gql*/`
         htmlText
     }
 `)
+
+registerFragment(/*gql*/`
+    fragment SimpleTextAllFragment on SimpleText {
+        _id
+        createdAt
+        title
+        programId
+        sectionId
+        htmlText
+    }
+`)
