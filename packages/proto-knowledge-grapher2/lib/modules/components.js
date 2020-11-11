@@ -16,6 +16,8 @@ import '../components/programs/ProgramsPage'
 import '../components/sections/SimpleTextSection'
 import '../components/sections/SimpleTextsHome'
 import '../components/sections/SimpleDiagramSection'
+import '../components/sections/SimpleDiagramsHome'
+
 // posts
 import '../components/posts/PostsHome.jsx'
 import '../components/posts/PostsCategory.jsx'
