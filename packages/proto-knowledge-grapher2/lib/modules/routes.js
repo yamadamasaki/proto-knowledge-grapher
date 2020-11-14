@@ -1,4 +1,5 @@
 import {addRoute} from 'meteor/vulcan:core'
+import SimpleDiagramSection from '../components/sections/SimpleDiagramSection'
 
 addRoute([
   // programs
@@ -20,11 +21,11 @@ addRoute([
   {
     name: 'sections.simpleDiagramSection',
     path: '/sections/:programId/:collectionName/:sectionId/SimpleDiagramSection/',
-    componentName: 'SimpleDiagramSection',
+    component: SimpleDiagramSection,
     layoutName: 'EJ2Layout',
   },
   {name: 'sections.simpleDiagramsHome', path: '/simpleDiagrams/', componentName: 'SimpleDiagramsHome', layoutName: 'EJ2Layout'},
-  {name: 'sections.simpleDiagram', path: '/simpleDiagrams/:id', componentName: 'SimpleDiagramSection', layoutName: 'EJ2Layout'},
+  {name: 'sections.simpleDiagram', path: '/simpleDiagrams/:id', component: SimpleDiagramSection, layoutName: 'EJ2Layout'},
 
   // posts
 

@@ -28,7 +28,23 @@ Package.onUse(function (api) {
   ]);
 
   api.addAssets(
-    ["lib/assets/images/stackoverflow.png", "lib/assets/images/telescope.png"],
+    [
+      "lib/assets/images/stackoverflow.png",
+      "lib/assets/images/telescope.png",
+      "lib/assets/images/drawingTool/basicshape/DrawingTool_1.png",
+      "lib/assets/images/drawingTool/basicshape/DrawingTool_2.png",
+      "lib/assets/images/drawingTool/basicshape/DrawingTool_3.png",
+      "lib/assets/images/drawingTool/basicshape/DrawingTool_4.png",
+      "lib/assets/images/drawingTool/basicshape/DrawingTool_5.png",
+      "lib/assets/images/drawingTool/DrawingTool_6.png",
+      "lib/assets/images/drawingTool/DrawingTool_7.png",
+      "lib/assets/images/drawingTool/DrawingTool_8.png",
+      "lib/assets/images/drawingTool/DrawingTool_9.png",
+      "lib/assets/images/drawingTool/connector/Connectors_1.png",
+      "lib/assets/images/drawingTool/connector/Connectors_2.png",
+      "lib/assets/images/drawingTool/connector/Connectors_3.png",
+      "lib/assets/images/drawingTool/employee.png",
+    ],
     ["client"]
   );
 
