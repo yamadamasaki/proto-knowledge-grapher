@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, {useEffect} from 'react'
 import {
   DiagramComponent,
   DiagramTools,
@@ -10,8 +10,9 @@ import {
   UndoRedo,
 } from '@syncfusion/ej2-react-diagrams'
 import {CheckBoxComponent} from '@syncfusion/ej2-react-buttons'
+import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
+import {registerComponent} from 'meteor/vulcan:lib'
 
-let diagramInstance
 const interval = [
   1,
   9,
@@ -100,14 +101,35 @@ const SAMPLE_CSS = `.image-pattern-style {
         padding-right: 0px;
     }`
 
-export default class SimpleDiagramSection extends React.Component {
-  componentDidMount() {
-    setTimeout(() => {
-      this.renderComplete()
-    })
+const SimpleDiagramSection = () => {
+  let diagramInstance
+
+  const onChange = args => {
+    diagramInstance.tool = args.checked ? DiagramTools.ContinuousDraw : DiagramTools.DrawOnce
   }
 
-  renderComplete() {
+  //Enable drawing object.
+  const setDrawObject = (node, connector) => {
+    const continuousDraw = document.getElementById('checked')
+    if (!continuousDraw.checked) diagramInstance.tool = DiagramTools.DrawOnce
+    if (connector == null) diagramInstance.drawingObject = node
+    else diagramInstance.drawingObject = connector
+    diagramInstance.dataBind()
+  }
+
+  //Set the Shape of the drawing Object.
+  const setShape = obj => {
+    const continuousDraw = document.getElementById('checked')
+    if (!continuousDraw.checked) diagramInstance.tool = DiagramTools.DrawOnce
+    diagramInstance.drawingObject = {shape: {type: 'Basic', shape: obj}}
+    diagramInstance.dataBind()
+  }
+
+  useEffect(() => {
+    setTimeout(() => renderComplete(), 0)
+  })
+
+  const renderComplete = () => {
     setShape('Rectangle')
     diagramInstance.tool = DiagramTools.ContinuousDraw
     diagramInstance.dataBind()
@@ -178,122 +200,98 @@ export default class SimpleDiagramSection extends React.Component {
     }
   }
 
-  render() {
-    return (
-        <div className="control-pane diagram-control-pane">
+  return (
+      <div className="control-pane diagram-control-pane">
+        <style>{SAMPLE_CSS}</style>
+        <div className="col-lg-8 control-section">
+          <div className="content-wrapper" style={{width: '100%'}}>
+            <DiagramComponent
+                id="diagram" ref={diagram => (diagramInstance = diagram)} width={'100%'} height={'540px'}
+                snapSettings={snapSettings} rulerSettings={{showRulers: true}}
+                getNodeDefaults={node => {
+                  const obj = node
+                  const basicShape = node.shape
+                  if (basicShape.shape === 'Rectangle' || basicShape.shape === 'Ellipse') obj.ports = ports
+                  else if (basicShape.shape === 'Hexagon') obj.ports = hexagonPorts
+                  else if (basicShape.shape === 'Pentagon') obj.ports = pentagonPorts
+                  else if (basicShape.type === 'Path') obj.ports = pathPorts
+                }}/>
+            <Inject services={[UndoRedo, Snapping]}/>
+          </div>
+        </div>
 
-          <style>{SAMPLE_CSS}</style>
-          <div className="col-lg-8 control-section">
-            <div className="content-wrapper" style={{width: '100%'}}>
-              <DiagramComponent
-                  id="diagram" ref={diagram => (diagramInstance = diagram)} width={'100%'} height={'540px'}
-                  snapSettings={snapSettings} rulerSettings={{showRulers: true}}
-                  getNodeDefaults={node => {
-                    const obj = node
-                    const basicShape = node.shape
-                    if (basicShape.shape === 'Rectangle' || basicShape.shape === 'Ellipse') obj.ports = ports
-                    else if (basicShape.shape === 'Hexagon') obj.ports = hexagonPorts
-                    else if (basicShape.shape === 'Pentagon') obj.ports = pentagonPorts
-                    else if (basicShape.type === 'Path') obj.ports = pathPorts
-                  }}/>
-              <Inject services={[UndoRedo, Snapping]}/>
+        <div className="col-lg-4  property-section">
+          <div className="property-panel-header">Properties</div>
+          <div className="row property-panel-content" id="appearance">
+            <div className="row row-header" style={{paddingTop: '10px'}}>
+              Shapes
+            </div>
+            <div className="row" style={{paddingTop: '8px'}}>
+              <img title="Rectangle" className="image-pattern-style e-selected-style" id="shape1"
+                   style={{marginRight: '3px'}}
+                   src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/basicshape/DrawingTool_1.png"
+                   alt="Rectangle"/>
+              <img title="Ellipse" className="image-pattern-style" id="shape2" style={{margin: '0px 3px'}}
+                   src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/basicshape/DrawingTool_2.png"
+                   alt="Ellipse"/>
+              <img title="Hexagon" className="image-pattern-style" id="shape3"
+                   src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/basicshape/DrawingTool_3.png"
+                   alt="Hexagon"/>
+            </div>
+            <div className="row" style={{paddingTop: '8px'}}>
+              <img title="Pentagon" className="image-pattern-style" id="shape4" style={{marginRight: '3px'}}
+                   src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/basicshape/DrawingTool_4.png"
+                   alt="Pentagon"/>
+              <img title="Polygon" className="image-pattern-style" id="shape5" style={{margin: '0px 3px'}}
+                   src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/basicshape/DrawingTool_5.png"
+                   alt="Polygon"/>
+              <img title="Path" className="image-pattern-style" id="path"
+                   src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/DrawingTool_6.png"
+                   alt="Path"/>
+            </div>
+            <div className="row" style={{paddingTop: '8px'}}>
+              <img title="Image" className="image-pattern-style" id="image" style={{marginRight: '3px'}}
+                   src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/DrawingTool_7.png"
+                   alt="Image"/>
+              <img title="SVG" className="image-pattern-style" id="svg" style={{marginRight: '3px'}}
+                   src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/DrawingTool_8.png"
+                   alt="SVG"/>
+              <img title="Text" className="image-pattern-style" id="text" style={{marginRight: '3px'}}
+                   src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/DrawingTool_9.png"
+                   alt="Text"/>
+            </div>
+            <div className="row row-header" style={{paddingTop: '10px'}}>
+              Connector
+            </div>
+            <div className="row" style={{paddingTop: '8px'}}>
+              <img className="image-pattern-style" id="straight" style={{marginRight: '3px'}}
+                   src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/connector/Connectors_1.png"
+                   alt="straight"/>
+              <img className="image-pattern-style" id="ortho" style={{margin: '0px 3px'}}
+                   src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/connector/Connectors_2.png"
+                   alt="ortho"/>
+              <img className="image-pattern-style" id="cubic"
+                   src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/connector/Connectors_3.png"
+                   alt="cubic"/>
+            </div>
+            <div className="row property-panel-content" style={{paddingTop: '10px'}}>
+              <CheckBoxComponent id="checked" label="Continuous Draw" checked={true} change={onChange}/>
             </div>
           </div>
-
-          <div className="col-lg-4  property-section">
-            <div className="property-panel-header">Properties</div>
-            <div className="row property-panel-content" id="appearance">
-              <div className="row row-header" style={{paddingTop: '10px'}}>
-                Shapes
-              </div>
-              <div className="row" style={{paddingTop: '8px'}}>
-                <img title="Rectangle" className="image-pattern-style e-selected-style" id="shape1"
-                     style={{marginRight: '3px'}}
-                     src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/basicshape/DrawingTool_1.png"
-                     alt="Rectangle"/>
-                <img title="Ellipse" className="image-pattern-style" id="shape2" style={{margin: '0px 3px'}}
-                     src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/basicshape/DrawingTool_2.png"
-                     alt="Ellipse"/>
-                <img title="Hexagon" className="image-pattern-style" id="shape3"
-                     src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/basicshape/DrawingTool_3.png"
-                     alt="Hexagon"/>
-              </div>
-              <div className="row" style={{paddingTop: '8px'}}>
-                <img title="Pentagon" className="image-pattern-style" id="shape4" style={{marginRight: '3px'}}
-                     src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/basicshape/DrawingTool_4.png"
-                     alt="Pentagon"/>
-                <img title="Polygon" className="image-pattern-style" id="shape5" style={{margin: '0px 3px'}}
-                     src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/basicshape/DrawingTool_5.png"
-                     alt="Polygon"/>
-                <img title="Path" className="image-pattern-style" id="path"
-                     src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/DrawingTool_6.png"
-                     alt="Path"/>
-              </div>
-              <div className="row" style={{paddingTop: '8px'}}>
-                <img title="Image" className="image-pattern-style" id="image" style={{marginRight: '3px'}}
-                     src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/DrawingTool_7.png"
-                     alt="Image"/>
-                <img title="SVG" className="image-pattern-style" id="svg" style={{marginRight: '3px'}}
-                     src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/DrawingTool_8.png"
-                     alt="SVG"/>
-                <img title="Text" className="image-pattern-style" id="text" style={{marginRight: '3px'}}
-                     src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/DrawingTool_9.png"
-                     alt="Text"/>
-              </div>
-              <div className="row row-header" style={{paddingTop: '10px'}}>
-                Connector
-              </div>
-              <div className="row" style={{paddingTop: '8px'}}>
-                <img className="image-pattern-style" id="straight" style={{marginRight: '3px'}}
-                     src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/connector/Connectors_1.png"
-                     alt="straight"/>
-                <img className="image-pattern-style" id="ortho" style={{margin: '0px 3px'}}
-                     src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/connector/Connectors_2.png"
-                     alt="ortho"/>
-                <img className="image-pattern-style" id="cubic"
-                     src="/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/connector/Connectors_3.png"
-                     alt="cubic"/>
-              </div>
-              <div className="row property-panel-content" style={{paddingTop: '10px'}}>
-                <CheckBoxComponent id="checked" label="Continuous Draw" checked={true} change={onChange}/>
-              </div>
-            </div>
-          </div>
+        </div>
+        <div className="row">
           <ToolbarComponent id='toolbar'>
             <ItemsDirective>
-              <ItemDirective text="Cut"/>
-              <ItemDirective text="Copy"/>
-              <ItemDirective text="Paste"/>
+              <ItemDirective text="Undo"/>
+              <ItemDirective text="Redo"/>
               <ItemDirective type="Separator"/>
-              <ItemDirective text="Bold"/>
-              <ItemDirective text="Italic"/>
-              <ItemDirective text="Underline"/>
+              <ItemDirective text="Save"/>
+              <ItemDirective type="Separator"/>
+              <ItemDirective text="Remove the Node"/>
             </ItemsDirective>
           </ToolbarComponent>
-
-        </div>)
-  }
-}
-
-const onChange = args => {
-  diagramInstance.tool = args.checked ? DiagramTools.ContinuousDraw : DiagramTools.DrawOnce
-}
-
-//Enable drawing object.
-const setDrawObject = (node, connector) => {
-  const continuousDraw = document.getElementById('checked')
-  if (!continuousDraw.checked) diagramInstance.tool = DiagramTools.DrawOnce
-  if (connector == null) diagramInstance.drawingObject = node
-  else diagramInstance.drawingObject = connector
-  diagramInstance.dataBind()
-}
-
-//Set the Shape of the drawing Object.
-const setShape = obj => {
-  const continuousDraw = document.getElementById('checked')
-  if (!continuousDraw.checked) diagramInstance.tool = DiagramTools.DrawOnce
-  diagramInstance.drawingObject = {shape: {type: 'Basic', shape: obj}}
-  diagramInstance.dataBind()
+        </div>
+      </div>)
 }
 
 const path =
@@ -359,3 +357,5 @@ const pentagonPorts = [
   createPort('port4', {x: 0.2, y: 1}),
   createPort('port5', {x: 0.85, y: 1}),
 ]
+
+registerComponent({name: 'SimpleDiagramSection', component: SimpleDiagramSection})
