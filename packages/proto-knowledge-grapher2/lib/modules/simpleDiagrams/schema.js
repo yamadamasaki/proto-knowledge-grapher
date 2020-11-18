@@ -77,6 +77,16 @@ const schema = {
     canCreate: ['members'],
     canUpdate: ['members'],
   },
+  /**
+   * Diagram
+   */
+  diagram: {
+    type: String,
+    optional: true,
+    canRead: ['guests'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
+  },
 }
 
 export default schema

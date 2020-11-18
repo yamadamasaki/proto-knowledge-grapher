@@ -1256,6 +1256,7 @@ type SimpleDiagram {
   sectionId: String 
   type: String 
   title: String 
+  diagram: String 
   createdAtFormatted(format: String = "YYYY/MM/DD"): String 
 }
 
@@ -1334,6 +1335,7 @@ input CreateSimpleDiagramDataInput {
   sectionId: String 
   type: String 
   title: String 
+  diagram: String 
 }
 
 input UpdateSimpleDiagramInput{
@@ -1358,6 +1360,7 @@ input UpdateSimpleDiagramDataInput {
   sectionId: String 
   type: String 
   title: String 
+  diagram: String 
 }
 
 input SimpleDiagramFilterInput {
@@ -1373,6 +1376,7 @@ input SimpleDiagramFilterInput {
   sectionId: String_Selector
   type: String_Selector
   title: String_Selector
+  diagram: String_Selector
 }
 
 input SimpleDiagramSortInput {
@@ -1383,6 +1387,7 @@ input SimpleDiagramSortInput {
   sectionId: SortOptions
   type: SortOptions
   title: SortOptions
+  diagram: SortOptions
 }
 
 input SimpleDiagramSelectorInput {

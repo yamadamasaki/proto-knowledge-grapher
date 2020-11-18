@@ -1,3 +1,3 @@
 export * from './collection.js'
 
-//import './fragments'
+import './fragments'

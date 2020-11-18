@@ -4,6 +4,7 @@ registerFragment(/*gql*/`
     fragment SimpleDiagramFragment on SimpleDiagram {
         _id
         title
+        diagram
     }
 `)
 
@@ -14,5 +15,6 @@ registerFragment(/*gql*/`
         title
         programId
         sectionId
+        diagram
     }
 `)
