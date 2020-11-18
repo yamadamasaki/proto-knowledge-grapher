@@ -11,7 +11,7 @@ import {
 } from '@syncfusion/ej2-react-diagrams'
 import {ButtonComponent, CheckBoxComponent} from '@syncfusion/ej2-react-buttons'
 import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
-import {registerComponent} from 'meteor/vulcan:lib'
+import {Components, registerComponent} from 'meteor/vulcan:lib'
 import {useCreate2, useMulti2, useUpdate2} from 'meteor/vulcan:core'
 
 const interval = [
@@ -148,7 +148,8 @@ const SimpleDiagramSection = ({match}) => {
   })
 
   const renderComplete = () => {
-    if (doc) diagram.current.loadDiagram(doc.diagram)
+    if (doc && diagram && diagram.current) diagram.current.loadDiagram(doc.diagram)
+
     setShape('Rectangle')
     diagram.current.tool = DiagramTools.ContinuousDraw
     //Click Event used to decide the drawing object.
@@ -243,19 +244,27 @@ const SimpleDiagramSection = ({match}) => {
         <div className="row">
           <div className="col-lg-8 control-section">
             <div className="content-wrapper" style={{width: '100%'}}>
-              <DiagramComponent
-                  id="diagram" ref={diagram} width={'100%'} height={'540px'}
-                  snapSettings={snapSettings} rulerSettings={{showRulers: true}}
-                  getNodeDefaults={node => {
-                    const obj = node
-                    const basicShape = node.shape
-                    if (basicShape.shape === 'Rectangle' || basicShape.shape === 'Ellipse') obj.ports = ports
-                    else if (basicShape.shape === 'Hexagon') obj.ports = hexagonPorts
-                    else if (basicShape.shape === 'Pentagon') obj.ports = pentagonPorts
-                    else if (basicShape.type === 'Path') obj.ports = pathPorts
-                  }}>
-                <Inject services={[UndoRedo, Snapping]}/>
-              </DiagramComponent>
+              {
+                error ? <Components.Flash message={error}/> :
+                    loading_c || loading_u ? <Components.Loading/> :
+                        <React.Fragment>
+                          <h1>SimpleDiagramSection</h1>
+                          <DiagramComponent
+                              id="diagram" ref={diagram} width={'100%'} height={'540px'}
+                              snapSettings={snapSettings} rulerSettings={{showRulers: true}}
+                              getNodeDefaults={node => {
+                                const obj = node
+                                const basicShape = node.shape
+                                if (basicShape.shape === 'Rectangle' || basicShape.shape ===
+                                    'Ellipse') obj.ports = ports
+                                else if (basicShape.shape === 'Hexagon') obj.ports = hexagonPorts
+                                else if (basicShape.shape === 'Pentagon') obj.ports = pentagonPorts
+                                else if (basicShape.type === 'Path') obj.ports = pathPorts
+                              }}>
+                            <Inject services={[UndoRedo, Snapping]}/>
+                          </DiagramComponent>
+                        </React.Fragment>
+              }
             </div>
           </div>
 
@@ -329,10 +338,6 @@ const SimpleDiagramSection = ({match}) => {
               <ItemDirective type="Separator"/>
               <ItemDirective
                   template={() => (<ButtonComponent onClick={saveDiagram} cssClass='e-link'>save</ButtonComponent>)}/>
-              <ItemDirective type="Separator"/>
-              <ItemDirective template={() => (
-                  <ButtonComponent onClick={() => console.log('Remove')} cssClass='e-link'>Remove the
-                    Node</ButtonComponent>)}/>
             </ItemsDirective>
           </ToolbarComponent>
         </div>
@@ -341,7 +346,7 @@ const SimpleDiagramSection = ({match}) => {
 }
 
 const path =
-    `<svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="350.000000pt" height="229.000000pt" viewBox="0 0 350.000000 229.000000" preserveAspectRatio="xMidYMid meet">
+    `<svg xmlns="http://www.w3.org/2000/svg" width="350.000000pt" height="229.000000pt" viewBox="0 0 350.000000 229.000000" preserveAspectRatio="xMidYMid meet">
         <metadata>Created by potrace 1.11, written by Peter Selinger 2001-2013</metadata>
         <g transform="translate(0.000000,229.000000) scale(0.100000,-0.100000)" fill="#de6ca9" stroke="none">
         <path fill="none" stroke="red" d="M 10,30
