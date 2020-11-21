@@ -139,16 +139,19 @@ const SimpleDiagramSection = ({match}) => {
   //Set the Shape of the drawing Object.
   const setShape = obj => {
     const continuousDraw = document.getElementById('checked')
-    if (!continuousDraw.checked) diagram.current.tool = DiagramTools.DrawOnce
-    diagram.current.drawingObject = {shape: {type: 'Basic', shape: obj}}
+    if (diagram.current) {
+      if (!continuousDraw.checked) diagram.current.tool = DiagramTools.DrawOnce
+      diagram.current.drawingObject = {shape: {type: 'Basic', shape: obj}}
+    }
   }
 
   useEffect(() => {
     setTimeout(() => renderComplete(), 0)
-  })
+  }/*, [doc]*/)
 
   const renderComplete = () => {
-    if (doc && diagram && diagram.current) diagram.current.loadDiagram(doc.diagram)
+    if (!diagram || !diagram.current) return
+    if (doc && doc.diagram) diagram.current.loadDiagram(doc.diagram)
 
     setShape('Rectangle')
     diagram.current.tool = DiagramTools.ContinuousDraw
@@ -235,6 +238,15 @@ const SimpleDiagramSection = ({match}) => {
       } catch (e) {
         setError(e)
       }
+    }
+  }
+
+  const onToolbarClicked = textContent => {
+    switch (textContent) {
+      case 'undo': diagram.current.undo(); break
+      case 'redo': diagram.current.redo(); break
+      case 'save': saveDiagram().then(r => {}); break
+      default: break
     }
   }
 
@@ -329,15 +341,12 @@ const SimpleDiagramSection = ({match}) => {
           </div>
         </div>
         <div className="row">
-          <ToolbarComponent id='toolbar'>
+          <ToolbarComponent id='toolbar' onClick={e => {onToolbarClicked(e.target.textContent)}}>
             <ItemsDirective>
-              <ItemDirective template={() => (
-                  <ButtonComponent onClick={() => diagram.current.undo()} cssClass='e-link'>undo</ButtonComponent>)}/>
-              <ItemDirective template={() => (
-                  <ButtonComponent onClick={() => diagram.current.redo()} cssClass='e-link'>redo</ButtonComponent>)}/>
+              <ItemDirective text='undo'/>
+              <ItemDirective text='redo'/>
               <ItemDirective type="Separator"/>
-              <ItemDirective
-                  template={() => (<ButtonComponent onClick={saveDiagram} cssClass='e-link'>save</ButtonComponent>)}/>
+              <ItemDirective text='save'/>
             </ItemsDirective>
           </ToolbarComponent>
         </div>
