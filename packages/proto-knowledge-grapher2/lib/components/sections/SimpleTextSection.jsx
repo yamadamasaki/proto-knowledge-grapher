@@ -30,7 +30,7 @@ const SimpleTextSection = ({match}) => {
   const [createDocument, {loading: loading_c}] = useCreate2({collectionName, fragmentName: 'SimpleTextFragment'})
   const [error, setError] = useState()
 
-  const document = results && results[0]
+  const document = results && results[0] || {}
 
   const editor = useRef()
 
@@ -58,15 +58,13 @@ const SimpleTextSection = ({match}) => {
         {
           error ? <Components.Flash message={error}/> :
               loading_c || loading_u ? <Components.Loading/> :
-                  document ?
-                      <React.Fragment>
-                        <h1>SimpleTextSection</h1>
-                        <RichTextEditorComponent value={document.htmlText} ref={editor}>
-                          <Inject services={[Toolbar, Image, Link, HtmlEditor, QuickToolbar]}/>
-                        </RichTextEditorComponent>
-                        <ButtonComponent onClick={onClick}>Save</ButtonComponent>
-                      </React.Fragment> :
-                      <Components.Flash message='Empty Document'/>
+                  <React.Fragment>
+                    <h1>SimpleTextSection</h1>
+                    <RichTextEditorComponent value={document.htmlText} ref={editor}>
+                      <Inject services={[Toolbar, Image, Link, HtmlEditor, QuickToolbar]}/>
+                    </RichTextEditorComponent>
+                    <ButtonComponent onClick={onClick}>Save</ButtonComponent>
+                  </React.Fragment>
         }
       </React.Fragment>
   )

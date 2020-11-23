@@ -9,7 +9,7 @@ import {
   Snapping,
   UndoRedo,
 } from '@syncfusion/ej2-react-diagrams'
-import {ButtonComponent, CheckBoxComponent} from '@syncfusion/ej2-react-buttons'
+import {CheckBoxComponent} from '@syncfusion/ej2-react-buttons'
 import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
 import {Components, registerComponent} from 'meteor/vulcan:lib'
 import {useCreate2, useMulti2, useUpdate2} from 'meteor/vulcan:core'
@@ -104,7 +104,7 @@ const SAMPLE_CSS = `.image-pattern-style {
 
 const SimpleDiagramSection = ({match}) => {
   const {params} = match
-  const collectionName = params.collectionName || 'SimpleDiagram'
+  const collectionName = params.collectionName || 'SimpleDiagrams'
   const {programId, sectionId} = params
   const {id} = params
   const filter = (id && {_id: {_eq: id}}) || {_and: [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]}
@@ -147,7 +147,7 @@ const SimpleDiagramSection = ({match}) => {
 
   useEffect(() => {
     setTimeout(() => renderComplete(), 0)
-  }/*, [doc]*/)
+  })
 
   const renderComplete = () => {
     if (!diagram || !diagram.current) return
@@ -243,10 +243,18 @@ const SimpleDiagramSection = ({match}) => {
 
   const onToolbarClicked = textContent => {
     switch (textContent) {
-      case 'undo': diagram.current.undo(); break
-      case 'redo': diagram.current.redo(); break
-      case 'save': saveDiagram().then(r => {}); break
-      default: break
+      case 'undo':
+        diagram.current.undo()
+        break
+      case 'redo':
+        diagram.current.redo()
+        break
+      case 'save':
+        saveDiagram().then(r => {
+        })
+        break
+      default:
+        break
     }
   }
 
@@ -341,7 +349,9 @@ const SimpleDiagramSection = ({match}) => {
           </div>
         </div>
         <div className="row">
-          <ToolbarComponent id='toolbar' onClick={e => {onToolbarClicked(e.target.textContent)}}>
+          <ToolbarComponent id='toolbar' onClick={e => {
+            onToolbarClicked(e.target.textContent)
+          }}>
             <ItemsDirective>
               <ItemDirective text='undo'/>
               <ItemDirective text='redo'/>

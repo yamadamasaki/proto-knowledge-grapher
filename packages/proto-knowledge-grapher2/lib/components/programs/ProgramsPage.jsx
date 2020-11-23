@@ -23,7 +23,7 @@ const ProgramsPage = ({match, history}) => {
   const {document} = useSingle2({
     collection: Programs,
     fragmentName: 'ProgramFragment',
-    input: {id: match.params._id},
+    input: {id: match.params.id},
   })
 
   const structure = document && document.structure
@@ -80,7 +80,7 @@ const ProgramsPage = ({match, history}) => {
                                 mediaQuery={mediaQuery} style={{visibility: 'hidden'}} created={onCreate}
                                 close={onClose} dockSize={dockSize} enableDock={true}>
                 <div className='main-menu'>
-                    <TreeViewComponent id='main-treeview' ref={treeView} fields={fields} nodeClicked={nodeClicked} fullRowNavigable/>
+                  <TreeViewComponent id='main-treeview' ref={treeView} fields={fields} nodeClicked={nodeClicked} fullRowNavigable/>
                 </div>
               </SidebarComponent>
               {structure ?
