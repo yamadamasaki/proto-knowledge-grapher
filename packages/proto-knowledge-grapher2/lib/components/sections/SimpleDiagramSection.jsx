@@ -105,22 +105,24 @@ const SAMPLE_CSS = `.image-pattern-style {
 const SimpleDiagramSection = ({match}) => {
   const {params} = match
   const collectionName = params.collectionName || 'SimpleDiagrams'
-  const {programId, sectionId} = params
+  const {programId, sectionId, subsection} = params
   const {id} = params
-  const filter = (id && {_id: {_eq: id}}) || {_and: [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]}
+  const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
+  if (subsection) selector.push({subsection: {_eq: subsection}})
+  const filter = (id && {_id: {_eq: id}}) || {_and: selector}
   const {results, refetch} = useMulti2({
     collectionName,
     fragmentName: 'SimpleDiagramFragment',
     input: {filter},
     //pollInterval: 500,
   })
-  if (results && results.length === 0) results[0] = {programId, sectionId}
+  if (results && results.length === 0) results[0] = {programId, sectionId, subsection}
 
   const [updateDocument, {loading: loading_u}] = useUpdate2({collectionName, fragmentName: 'SimpleDiagramFragment'})
   const [createDocument, {loading: loading_c}] = useCreate2({collectionName, fragmentName: 'SimpleDiagramFragment'})
   const [error, setError] = useState()
 
-  const doc = results && results[0]
+  const doc = results && results[0] || {}
 
   const diagram = useRef()
 
@@ -224,20 +226,13 @@ const SimpleDiagramSection = ({match}) => {
 
   const saveDiagram = async () => {
     doc.diagram = diagram.current.saveDiagram()
-    if (doc._id) {
-      try {
-        await updateDocument({input: {id: doc._id, data: {diagram: doc.diagram}}})
-        refetch()
-      } catch (e) {
-        setError(e)
-      }
-    } else {
-      try {
-        await createDocument({input: {data: doc}})
-        refetch()
-      } catch (e) {
-        setError(e)
-      }
+    try {
+      doc._id ?
+          await updateDocument({input: {id: doc._id, data: {diagram: doc.diagram}}}) :
+          await createDocument({input: {data: doc}})
+      refetch()
+    } catch (e) {
+      setError(e)
     }
   }
 
@@ -250,7 +245,7 @@ const SimpleDiagramSection = ({match}) => {
         diagram.current.redo()
         break
       case 'save':
-        saveDiagram().then(r => {
+        saveDiagram().then(() => {
         })
         break
       default:
@@ -266,9 +261,8 @@ const SimpleDiagramSection = ({match}) => {
             <div className="content-wrapper" style={{width: '100%'}}>
               {
                 error ? <Components.Flash message={error}/> :
-                    loading_c || loading_u ? <Components.Loading/> :
+                    [loading_c, loading_u].some(it => it === true) ? <Components.Loading/> :
                         <React.Fragment>
-                          <h1>SimpleDiagramSection</h1>
                           <DiagramComponent
                               id="diagram" ref={diagram} width={'100%'} height={'540px'}
                               snapSettings={snapSettings} rulerSettings={{showRulers: true}}
