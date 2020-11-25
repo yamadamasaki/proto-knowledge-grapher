@@ -14,9 +14,11 @@ import {ButtonComponent} from '@syncfusion/ej2-react-buttons'
 const SimpleTextSection = ({match}) => {
   const {params} = match
   const collectionName = params.collectionName || 'SimpleTexts'
-  const {programId, sectionId} = params
+  const {programId, sectionId, subsection} = params
   const {id} = params
-  const filter = (id && {_id: {_eq: id}}) || {_and: [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]}
+  const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
+  if (subsection) selector.push({subsection: {_eq: subsection}})
+  const filter = (id && {_id: {_eq: id}}) || {_and: selector}
   const {results, refetch} = useMulti2({
     collectionName,
     fragmentName: 'SimpleTextFragment',
@@ -24,7 +26,7 @@ const SimpleTextSection = ({match}) => {
     //pollInterval: 500,
   })
 
-  if (results && results.length === 0) results[0] = {programId, sectionId}
+  if (results && results.length === 0) results[0] = {programId, sectionId, subsection}
 
   const [updateDocument, {loading: loading_u}] = useUpdate2({collectionName, fragmentName: 'SimpleTextFragment'})
   const [createDocument, {loading: loading_c}] = useCreate2({collectionName, fragmentName: 'SimpleTextFragment'})
@@ -36,20 +38,13 @@ const SimpleTextSection = ({match}) => {
 
   const onClick = async () => {
     document.htmlText = editor.current.getHtml()
-    if (document._id) {
-      try {
-        await updateDocument({input: {id: document._id, data: {htmlText: document.htmlText}}})
-        refetch()
-      } catch (e) {
-        setError(e)
-      }
-    } else {
-      try {
-        await createDocument({input: {data: document}})
-        refetch()
-      } catch (e) {
-        setError(e)
-      }
+    try {
+      document._id ?
+          await updateDocument({input: {id: document._id, data: {htmlText: document.htmlText}}}) :
+          await createDocument({input: {data: document}})
+      refetch()
+    } catch (e) {
+      setError(e)
     }
   }
 
@@ -57,9 +52,8 @@ const SimpleTextSection = ({match}) => {
       <React.Fragment>
         {
           error ? <Components.Flash message={error}/> :
-              loading_c || loading_u ? <Components.Loading/> :
+              [loading_c, loading_u].some(it => it === true) ? <Components.Loading/> :
                   <React.Fragment>
-                    <h1>SimpleTextSection</h1>
                     <RichTextEditorComponent value={document.htmlText} ref={editor}>
                       <Inject services={[Toolbar, Image, Link, HtmlEditor, QuickToolbar]}/>
                     </RichTextEditorComponent>

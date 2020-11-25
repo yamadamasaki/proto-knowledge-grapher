@@ -23,28 +23,36 @@ const schema = {
     },
   },
   /**
-   * Path
+   Time Stamp of session update
    */
-  path: {
+  updatedAt: {
+    type: Date,
+    optional: true,
+    canRead: ['members'],
+    onUpdate: () => {return new Date()},
+  },
+  /**
+   The session owner's `_id`.
+   */
+  userId: {
     type: String,
     optional: true,
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['members', 'reflector'],
+    hidden: true,
+    resolveAs: {
+      fieldName: 'user',
+      type: 'User',
+      relation: 'hasOne',
+    },
   },
+
   /**
    * Program
    */
   programId: {
     type: String,
     optional: false,
-    /*
-    relation: {
-      fieldName: 'program',
-      typeName: 'Program',
-      kind: 'hasOne',
-    },
-     */
     canRead: ['guests'],
     canCreate: ['members'],
     canUpdate: ['members'],
@@ -59,18 +67,17 @@ const schema = {
     canCreate: ['members'],
     canUpdate: ['members'],
   },
-
   /**
-   * Type
+   * Subsection
    */
-  type: {
+  subsection: {
     type: String,
     optional: true,
     canRead: ['guests'],
     canCreate: ['members'],
     canUpdate: ['members'],
   },
-  // belows are SimpleText-dependent fields
+
   /**
    * Title
    */
