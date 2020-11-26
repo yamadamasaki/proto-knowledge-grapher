@@ -1254,14 +1254,17 @@ input SimpleTextSelectorUniqueInput {
 type SimpleDiagram {
   _id: String 
   createdAt: Date 
-  path: String 
+  updatedAt: Date 
+  userId: String 
+  user: User 
   programId: String 
   program: Program 
   sectionId: String 
-  type: String 
+  subsection: String 
   title: String 
   diagram: String 
   createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+  updatedAtFormatted(format: String = "YYYY/MM/DD"): String 
 }
 
 
@@ -1334,10 +1337,10 @@ input CreateSimpleDiagramInput {
 }
 
 input CreateSimpleDiagramDataInput {
-  path: String 
+  userId: String 
   programId: String 
   sectionId: String 
-  type: String 
+  subsection: String 
   title: String 
   diagram: String 
 }
@@ -1359,10 +1362,9 @@ input UpsertSimpleDiagramInput{
 }
 
 input UpdateSimpleDiagramDataInput {
-  path: String 
   programId: String 
   sectionId: String 
-  type: String 
+  subsection: String 
   title: String 
   diagram: String 
 }
@@ -1375,10 +1377,11 @@ input SimpleDiagramFilterInput {
 
   _id: String_Selector
   createdAt: Date_Selector
-  path: String_Selector
+  updatedAt: Date_Selector
+  userId: String_Selector
   programId: String_Selector
   sectionId: String_Selector
-  type: String_Selector
+  subsection: String_Selector
   title: String_Selector
   diagram: String_Selector
 }
@@ -1386,10 +1389,11 @@ input SimpleDiagramFilterInput {
 input SimpleDiagramSortInput {
   _id: SortOptions
   createdAt: SortOptions
-  path: SortOptions
+  updatedAt: SortOptions
+  userId: SortOptions
   programId: SortOptions
   sectionId: SortOptions
-  type: SortOptions
+  subsection: SortOptions
   title: SortOptions
   diagram: SortOptions
 }
@@ -1547,163 +1551,6 @@ input CategorySelectorUniqueInput {
 }
 
 
-# Type for CFPrepSessions
-type CFPrepSession {
-  _id: String 
-  createdAt: Date 
-  updatedAt: Date 
-  userId: String 
-  user: User 
-  programId: String 
-  program: Program 
-  sectionId: String 
-  purposeId: String 
-  purpose: SimpleText 
-  workId: String 
-  work: SimpleDiagram 
-  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
-  updatedAtFormatted(format: String = "YYYY/MM/DD"): String 
-}
-
-
-input DeleteCFPrepSessionInput{
-  filter: CFPrepSessionFilterInput
-  id: String
-}
-
-input SingleCFPrepSessionInput {
-  # filtering
-  filter: CFPrepSessionFilterInput
-  sort: CFPrepSessionSortInput
-  search: String
-  id: String
-
-  # backwards-compatibility
-  "Deprecated (use 'filter/id' fields instead)."
-  selector: CFPrepSessionSelectorUniqueInput
-
-  # options (backwards-compatibility)
-  # Whether to enable caching for this query
-  enableCache: Boolean
-  # Return null instead of throwing MissingDocumentError
-  allowNull: Boolean
-  # An identifier to name the query's execution context
-  contextName: String
-}
-
-input MultiCFPrepSessionInput {
-
-  # filtering
-  filter: CFPrepSessionFilterInput
-  sort: CFPrepSessionSortInput
-  search: String
-  offset: Int
-  limit: Int
-
-  # backwards-compatibility
-  # A JSON object that contains the query terms used to fetch data
-  "Deprecated (use 'filter/id' fields instead)."
-  terms: JSON
-
-  # options (backwards-compatibility)
-  # Whether to enable caching for this query
-  enableCache: Boolean
-  # Whether to calculate totalCount for this query
-  enableTotal: Boolean
-  # An identifier to name the query's execution context
-  contextName: String
-  
-}
-
-type SingleCFPrepSessionOutput{
-  result: CFPrepSession
-}
-
-type  MultiCFPrepSessionOutput{
-  results: [CFPrepSession]
-  totalCount: Int
-}
-
-type CFPrepSessionMutationOutput{
-  data: CFPrepSession
-}
-
-input CreateCFPrepSessionInput {
-  data: CreateCFPrepSessionDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
-}
-
-input CreateCFPrepSessionDataInput {
-  userId: String 
-  programId: String 
-  sectionId: String 
-  purposeId: String 
-  workId: String 
-}
-
-input UpdateCFPrepSessionInput{
-  filter: CFPrepSessionFilterInput
-  id: String
-  data: UpdateCFPrepSessionDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
-}
-
-input UpsertCFPrepSessionInput{
-  filter: CFPrepSessionFilterInput
-  id: String
-  data: UpdateCFPrepSessionDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
-}
-
-input UpdateCFPrepSessionDataInput {
-  purposeId: String 
-  workId: String 
-}
-
-input CFPrepSessionFilterInput {
-  _and: [CFPrepSessionFilterInput]
-  _not: CFPrepSessionFilterInput
-  _or: [CFPrepSessionFilterInput]
-
-
-  _id: String_Selector
-  createdAt: Date_Selector
-  updatedAt: Date_Selector
-  userId: String_Selector
-  programId: String_Selector
-  sectionId: String_Selector
-  purposeId: String_Selector
-  workId: String_Selector
-}
-
-input CFPrepSessionSortInput {
-  _id: SortOptions
-  createdAt: SortOptions
-  updatedAt: SortOptions
-  userId: SortOptions
-  programId: SortOptions
-  sectionId: SortOptions
-  purposeId: SortOptions
-  workId: SortOptions
-}
-
-input CFPrepSessionSelectorInput {
-  _and: [CFPrepSessionSelectorInput]
-  _or: [CFPrepSessionSelectorInput]
-
-}
-
-input CFPrepSessionSelectorUniqueInput {
-  _id: String
-  documentId: String # OpenCRUD backwards compatibility
-  slug: String
-
-}
-
-
 
 
 type Query {
@@ -1752,12 +1599,6 @@ type Query {
   
   # A list of Category documents matching a set of query terms
   categories(input: MultiCategoryInput):  MultiCategoryOutput
-  
-  # A single CFPrepSession document fetched by ID or slug
-  cFPrepSession(input: SingleCFPrepSessionInput!): SingleCFPrepSessionOutput
-  
-  # A list of CFPrepSession documents matching a set of query terms
-  cFPrepSessions(input: MultiCFPrepSessionInput):  MultiCFPrepSessionOutput
   
 }
   
@@ -2010,38 +1851,6 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: CategorySelectorUniqueInput
 ) : CategoryMutationOutput
-
-  # Mutation for creating new CFPrepSession documents
-  createCFPrepSession(
-  input: CreateCFPrepSessionInput,
-  "Deprecated (use 'input' field instead)."
-  data: CreateCFPrepSessionDataInput
-) : CFPrepSessionMutationOutput
-
-  # Mutation for updating a CFPrepSession document
-  updateCFPrepSession(
-  input: UpdateCFPrepSessionInput,
-  "Deprecated (use 'input' field instead)."
-  selector: CFPrepSessionSelectorUniqueInput,
-  "Deprecated (use 'input' field instead)."
-  data: UpdateCFPrepSessionDataInput 
-) : CFPrepSessionMutationOutput
-
-  # Mutation for upserting a CFPrepSession document
-  upsertCFPrepSession(
-  input: UpsertCFPrepSessionInput,
-  "Deprecated (use 'input' field instead)."
-  selector: CFPrepSessionSelectorUniqueInput,
-  "Deprecated (use 'input' field instead)."
-  data: UpdateCFPrepSessionDataInput
-) : CFPrepSessionMutationOutput
-
-  # Mutation for deleting a CFPrepSession document
-  deleteCFPrepSession(
-  input: DeleteCFPrepSessionInput,
-  "Deprecated (use 'input' field instead)."
-  selector: CFPrepSessionSelectorUniqueInput
-) : CFPrepSessionMutationOutput
 
 }
 

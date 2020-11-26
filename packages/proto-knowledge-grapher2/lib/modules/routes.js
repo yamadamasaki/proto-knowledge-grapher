@@ -35,6 +35,12 @@ addRoute([
     componentName: 'SimpleDiagramSection',
     layoutName: 'EJ2Layout',
   },
+  // sessions
+  /// CFPrepSession
+  {name: 'sessions.cfPrepSession', path: '/sections/:programId/:collectionName/:sectionId/CFPrepSession/', componentName: 'CFPrepSession', layoutName: 'EJ2Layout'},
+  /// CFSyncSession
+  /// CFAsyncSession
+  /// CFFollowupSession
 
   // posts
 

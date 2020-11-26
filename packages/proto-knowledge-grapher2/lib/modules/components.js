@@ -18,6 +18,9 @@ import '../components/sections/SimpleTextsHome'
 import '../components/sections/SimpleDiagramSection'
 import '../components/sections/SimpleDiagramsHome'
 
+// sesisons
+import '../components/copernicusForum/CFPrepSession'
+
 // posts
 import '../components/posts/PostsHome.jsx'
 import '../components/posts/PostsCategory.jsx'
