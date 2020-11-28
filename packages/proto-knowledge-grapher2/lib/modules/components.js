@@ -17,9 +17,11 @@ import '../components/sections/SimpleTextSection'
 import '../components/sections/SimpleTextsHome'
 import '../components/sections/SimpleDiagramSection'
 import '../components/sections/SimpleDiagramsHome'
+import '../components/sections/CFFrameworkDiagramSection'
 
 // sesisons
 import '../components/copernicusForum/CFPrepSession'
+import '../components/copernicusForum/CFSyncSession'
 
 // posts
 import '../components/posts/PostsHome.jsx'

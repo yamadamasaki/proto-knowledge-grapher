@@ -13,7 +13,9 @@
         },
         {
           "name": "同期セッション",
-          "id": "1-2"
+          "id": "1-2",
+          "collectionName": "CFSyncSessions",
+          "componentName": "CFSyncSession"
         },
         {
           "name": "非同期セッション",
@@ -35,7 +37,9 @@
           "children": [
             {
               "name": "事前準備",
-              "id": "2-1-1"
+              "id": "2-1-1",
+              "collectionName": "CFPrepSessions",
+              "componentName": "CFPrepSession"
             },
             {
               "name": "同期セッション",
@@ -57,7 +61,9 @@
           "children": [
             {
               "name": "事前準備",
-              "id": "2-2-1"
+              "id": "2-2-1",
+              "collectionName": "CFPrepSessions",
+              "componentName": "CFPrepSession"
             },
             {
               "name": "同期セッション",
@@ -81,7 +87,9 @@
       "children": [
         {
           "name": "事前準備",
-          "id": "3-1"
+          "id": "3-1",
+          "collectionName": "CFPrepSessions",
+          "componentName": "CFPrepSession"
         },
         {
           "name": "同期セッション",
@@ -107,7 +115,9 @@
           "children": [
             {
               "name": "事前準備",
-              "id": "4-1-1"
+              "id": "4-1-1",
+              "collectionName": "CFPrepSessions",
+              "componentName": "CFPrepSession"
             },
             {
               "name": "同期セッション",
@@ -129,7 +139,9 @@
           "children": [
             {
               "name": "事前準備",
-              "id": "4-2-1"
+              "id": "4-2-1",
+              "collectionName": "CFPrepSessions",
+              "componentName": "CFPrepSession"
             },
             {
               "name": "同期セッション",
@@ -151,7 +163,9 @@
           "children": [
             {
               "name": "事前準備",
-              "id": "4-3-1"
+              "id": "4-3-1",
+              "collectionName": "CFPrepSessions",
+              "componentName": "CFPrepSession"
             },
             {
               "name": "同期セッション",
@@ -179,7 +193,9 @@
           "children": [
             {
               "name": "事前準備",
-              "id": "5-1-1"
+              "id": "5-1-1",
+              "collectionName": "CFPrepSessions",
+              "componentName": "CFPrepSession"
             },
             {
               "name": "同期セッション",
@@ -201,7 +217,9 @@
           "children": [
             {
               "name": "事前準備",
-              "id": "5-2-1"
+              "id": "5-2-1",
+              "collectionName": "CFPrepSessions",
+              "componentName": "CFPrepSession"
             },
             {
               "name": "同期セッション",
@@ -225,7 +243,9 @@
       "children": [
         {
           "name": "事前準備",
-          "id": "6-1"
+          "id": "6-1",
+          "collectionName": "CFPrepSessions",
+          "componentName": "CFPrepSession"
         },
         {
           "name": "同期セッション",
@@ -251,7 +271,9 @@
           "children": [
             {
               "name": "事前準備",
-              "id": "7-1-1"
+              "id": "7-1-1",
+              "collectionName": "CFPrepSessions",
+              "componentName": "CFPrepSession"
             },
             {
               "name": "同期セッション",
@@ -273,7 +295,9 @@
           "children": [
             {
               "name": "事前準備",
-              "id": "7-2-1"
+              "id": "7-2-1",
+              "collectionName": "CFPrepSessions",
+              "componentName": "CFPrepSession"
             },
             {
               "name": "同期セッション",
@@ -297,7 +321,9 @@
       "children": [
         {
           "name": "事前準備",
-          "id": "8-1"
+          "id": "8-1",
+          "collectionName": "CFPrepSessions",
+          "componentName": "CFPrepSession"
         },
         {
           "name": "同期セッション",

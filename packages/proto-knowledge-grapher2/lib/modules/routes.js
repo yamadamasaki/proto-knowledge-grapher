@@ -39,6 +39,7 @@ addRoute([
   /// CFPrepSession
   {name: 'sessions.cfPrepSession', path: '/sections/:programId/:collectionName/:sectionId/CFPrepSession/', componentName: 'CFPrepSession', layoutName: 'EJ2Layout'},
   /// CFSyncSession
+  {name: 'sessions.cfSyncSession', path: '/sections/:programId/:collectionName/:sectionId/CFSyncSession/', componentName: 'CFSyncSession', layoutName: 'EJ2Layout'},
   /// CFAsyncSession
   /// CFFollowupSession
 
