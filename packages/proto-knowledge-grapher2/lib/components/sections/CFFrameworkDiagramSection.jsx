@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import {registerComponent} from 'meteor/vulcan:lib'
-import {DiagramComponent, SymbolPaletteComponent} from '@syncfusion/ej2-react-diagrams'
+import {DiagramComponent, SymbolPaletteComponent, Inject, UndoRedo} from '@syncfusion/ej2-react-diagrams'
+import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
 
 const basicShapes = [
   {id: 'Rectangle', shape: {type: 'Basic', shape: 'Rectangle'}},
@@ -87,12 +88,45 @@ const nodes = [
 ]
 
 const CFFrameworkDiagramSection = ({match}) => {
+  const diagram = useRef()
+
+  const saveDiagram = async () => {/*ToDo*/}
+
+  const onToolbarClicked = textContent => {
+    switch (textContent) {
+      case 'undo':
+        diagram.current.undo()
+        break
+      case 'redo':
+        diagram.current.redo()
+        break
+      case 'save':
+        saveDiagram().then(() => {
+        })
+        break
+      default:
+        break
+    }
+  }
+
   return (
       <React.Fragment>
         <h2>CFFrameworkDiagramSection</h2>
         <SymbolPaletteComponent id='palette' expandMode='Multiple' symbolHeight={80} symbolWidth={80}
                                 palettes={palettes}/>
-        <DiagramComponent id='diagram' width='100%' height='600px' nodes={nodes}/>
+        <DiagramComponent id='diagram' width='100%' height='600px' nodes={nodes} ref={diagram}>
+          <Inject services={[UndoRedo,]}/>
+        </DiagramComponent>
+        <ToolbarComponent id='toolbar' onClick={e => {
+          onToolbarClicked(e.target.textContent)
+        }}>
+          <ItemsDirective>
+            <ItemDirective text='undo'/>
+            <ItemDirective text='redo'/>
+            <ItemDirective type="Separator"/>
+            <ItemDirective text='save'/>
+          </ItemsDirective>
+        </ToolbarComponent>
       </React.Fragment>
   )
 }
