@@ -44,6 +44,8 @@ Package.onUse(function (api) {
       "lib/assets/images/drawingTool/connector/Connectors_2.png",
       "lib/assets/images/drawingTool/connector/Connectors_3.png",
       "lib/assets/images/drawingTool/employee.png",
+      "lib/assets/images/drawingTool/conflict.png",
+      "lib/assets/images/drawingTool/causalnet2.png",
     ],
     ["client"]
   );
