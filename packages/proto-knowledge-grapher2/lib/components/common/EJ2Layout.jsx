@@ -21,6 +21,8 @@ const EJ2Layout = ({currentUser, children }) =>
       <link href="//cdn.syncfusion.com/ej2/ej2-popups/styles/material.css" rel="stylesheet" />
       <link href="//cdn.syncfusion.com/ej2/ej2-richtexteditor/styles/material.css" rel="stylesheet" />
       <link href="//cdn.syncfusion.com/ej2/ej2-navigations/styles/material.css" rel="stylesheet" />
+      <link href="//cdn.syncfusion.com/ej2/ej2-layouts/styles/material.css" rel="stylesheet" />
+      <link href="//cdn.syncfusion.com/ej2/ej2-dropdowns/styles/material.css" rel="stylesheet" />
     </Helmet>
 
     <Components.HeadTags />

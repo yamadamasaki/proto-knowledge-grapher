@@ -41,6 +41,7 @@ addRoute([
   /// CFSyncSession
   {name: 'sessions.cfSyncSession', path: '/sections/:programId/:collectionName/:sectionId/CFSyncSession/', componentName: 'CFSyncSession', layoutName: 'EJ2Layout'},
   /// CFAsyncSession
+  {name: 'sessions.cfAsyncSession', path: '/sections/:programId/:collectionName/:sectionId/CFAsyncSession/', componentName: 'CFAsyncSession', layoutName: 'EJ2Layout'},
   /// CFFollowupSession
 
   // posts

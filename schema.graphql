@@ -1551,6 +1551,168 @@ input CategorySelectorUniqueInput {
 }
 
 
+# Type for CFAsyncSessions
+type CFAsyncSession {
+  _id: String 
+  createdAt: Date 
+  updatedAt: Date 
+  userId: String 
+  user: User 
+  programId: String 
+  program: Program 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  teams: [JSON] 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+  updatedAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteCFAsyncSessionInput{
+  filter: CFAsyncSessionFilterInput
+  id: String
+}
+
+input SingleCFAsyncSessionInput {
+  # filtering
+  filter: CFAsyncSessionFilterInput
+  sort: CFAsyncSessionSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: CFAsyncSessionSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiCFAsyncSessionInput {
+
+  # filtering
+  filter: CFAsyncSessionFilterInput
+  sort: CFAsyncSessionSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleCFAsyncSessionOutput{
+  result: CFAsyncSession
+}
+
+type  MultiCFAsyncSessionOutput{
+  results: [CFAsyncSession]
+  totalCount: Int
+}
+
+type CFAsyncSessionMutationOutput{
+  data: CFAsyncSession
+}
+
+input CreateCFAsyncSessionInput {
+  data: CreateCFAsyncSessionDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateCFAsyncSessionDataInput {
+  userId: String 
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  teams: [JSON] 
+}
+
+input UpdateCFAsyncSessionInput{
+  filter: CFAsyncSessionFilterInput
+  id: String
+  data: UpdateCFAsyncSessionDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertCFAsyncSessionInput{
+  filter: CFAsyncSessionFilterInput
+  id: String
+  data: UpdateCFAsyncSessionDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateCFAsyncSessionDataInput {
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  teams: [JSON] 
+}
+
+input CFAsyncSessionFilterInput {
+  _and: [CFAsyncSessionFilterInput]
+  _not: CFAsyncSessionFilterInput
+  _or: [CFAsyncSessionFilterInput]
+
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  updatedAt: Date_Selector
+  userId: String_Selector
+  programId: String_Selector
+  sectionId: String_Selector
+  subsection: String_Selector
+  title: String_Selector
+
+}
+
+input CFAsyncSessionSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  updatedAt: SortOptions
+  userId: SortOptions
+  programId: SortOptions
+  sectionId: SortOptions
+  subsection: SortOptions
+  title: SortOptions
+  teams: SortOptions
+}
+
+input CFAsyncSessionSelectorInput {
+  _and: [CFAsyncSessionSelectorInput]
+  _or: [CFAsyncSessionSelectorInput]
+
+}
+
+input CFAsyncSessionSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
 
 
 type Query {
@@ -1599,6 +1761,12 @@ type Query {
   
   # A list of Category documents matching a set of query terms
   categories(input: MultiCategoryInput):  MultiCategoryOutput
+  
+  # A single CFAsyncSession document fetched by ID or slug
+  cFAsyncSession(input: SingleCFAsyncSessionInput!): SingleCFAsyncSessionOutput
+  
+  # A list of CFAsyncSession documents matching a set of query terms
+  cFAsyncSessions(input: MultiCFAsyncSessionInput):  MultiCFAsyncSessionOutput
   
 }
   
@@ -1851,6 +2019,38 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: CategorySelectorUniqueInput
 ) : CategoryMutationOutput
+
+  # Mutation for creating new CFAsyncSession documents
+  createCFAsyncSession(
+  input: CreateCFAsyncSessionInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateCFAsyncSessionDataInput
+) : CFAsyncSessionMutationOutput
+
+  # Mutation for updating a CFAsyncSession document
+  updateCFAsyncSession(
+  input: UpdateCFAsyncSessionInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CFAsyncSessionSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCFAsyncSessionDataInput 
+) : CFAsyncSessionMutationOutput
+
+  # Mutation for upserting a CFAsyncSession document
+  upsertCFAsyncSession(
+  input: UpsertCFAsyncSessionInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CFAsyncSessionSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCFAsyncSessionDataInput
+) : CFAsyncSessionMutationOutput
+
+  # Mutation for deleting a CFAsyncSession document
+  deleteCFAsyncSession(
+  input: DeleteCFAsyncSessionInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CFAsyncSessionSelectorUniqueInput
+) : CFAsyncSessionMutationOutput
 
 }
 

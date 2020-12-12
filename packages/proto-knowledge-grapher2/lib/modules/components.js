@@ -19,9 +19,10 @@ import '../components/sections/SimpleDiagramSection'
 import '../components/sections/SimpleDiagramsHome'
 import '../components/sections/CFFrameworkDiagramSection'
 
-// sesisons
+// sessions
 import '../components/copernicusForum/CFPrepSession'
 import '../components/copernicusForum/CFSyncSession'
+import '../components/copernicusForum/CFAsyncSession'
 
 // posts
 import '../components/posts/PostsHome.jsx'
