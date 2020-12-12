@@ -7,10 +7,11 @@ const CFPrepSession = ({match}) => {
 
   return (
       <React.Fragment>
-        <h1>ねらい</h1>
+        <h1>準備セッション</h1>
+        <h2>ねらい</h2>
         <Components.SimpleTextSection match={{params: {programId, sectionId, subsection: 'purpose'}}}/>
-        <h1>成果物</h1>
-        <Components.SimpleDiagramSection match={{params: {programId, sectionId, subsection: 'work'}}}/>
+        <h2>成果物</h2>
+        <Components.CFFrameworkDiagramSection match={{params: {programId, sectionId, subsection: 'work'}}}/>
       </React.Fragment>
   )
 }
