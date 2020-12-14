@@ -1563,7 +1563,7 @@ type CFAsyncSession {
   sectionId: String 
   subsection: String 
   title: String 
-  teams: [JSON] 
+  teams: [CFAsyncSessionTeams] 
   createdAtFormatted(format: String = "YYYY/MM/DD"): String 
   updatedAtFormatted(format: String = "YYYY/MM/DD"): String 
 }
@@ -1643,7 +1643,7 @@ input CreateCFAsyncSessionDataInput {
   sectionId: String 
   subsection: String 
   title: String 
-  teams: [JSON] 
+  teams: [CreateCFAsyncSessionTeamsDataInput] 
 }
 
 input UpdateCFAsyncSessionInput{
@@ -1667,7 +1667,7 @@ input UpdateCFAsyncSessionDataInput {
   sectionId: String 
   subsection: String 
   title: String 
-  teams: [JSON] 
+  teams: [UpdateCFAsyncSessionTeamsDataInput] 
 }
 
 input CFAsyncSessionFilterInput {
@@ -1710,6 +1710,60 @@ input CFAsyncSessionSelectorUniqueInput {
   documentId: String # OpenCRUD backwards compatibility
   slug: String
 
+}
+
+
+type CFAsyncSessionTeams {
+  name: String 
+  players: [String] 
+}
+
+
+input CreateCFAsyncSessionTeamsInput {
+  data: CreateCFAsyncSessionTeamsDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateCFAsyncSessionTeamsDataInput {
+  name: String 
+  players: [String] 
+}
+
+input UpdateCFAsyncSessionTeamsInput{
+  filter: CFAsyncSessionTeamsFilterInput
+  id: String
+  data: UpdateCFAsyncSessionTeamsDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertCFAsyncSessionTeamsInput{
+  filter: CFAsyncSessionTeamsFilterInput
+  id: String
+  data: UpdateCFAsyncSessionTeamsDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateCFAsyncSessionTeamsDataInput {
+  name: String 
+  players: [String] 
+}
+
+input CFAsyncSessionTeamsFilterInput {
+  _and: [CFAsyncSessionTeamsFilterInput]
+  _not: CFAsyncSessionTeamsFilterInput
+  _or: [CFAsyncSessionTeamsFilterInput]
+
+
+  name: String_Selector
+  players: String_Array_Selector
+}
+
+input CFAsyncSessionTeamsSortInput {
+  name: SortOptions
+  players: SortOptions
 }
 
 

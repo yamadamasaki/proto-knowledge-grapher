@@ -4,7 +4,10 @@ registerFragment(/*gql*/`
     fragment CFAsyncSessionFragment on CFAsyncSession {
         _id
         title
-        teams
+        teams {
+          name
+          players
+        }
     }
 `)
 

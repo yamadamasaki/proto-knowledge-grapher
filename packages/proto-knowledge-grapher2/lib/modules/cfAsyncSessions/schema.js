@@ -1,7 +1,29 @@
 /**
- * @summary Programs schema
+ * @summary CFAsyncSessions Schema
  * @type {Object}
  */
+import {createSchema} from 'meteor/vulcan:lib'
+
+const teamSchema = createSchema({
+  name: {
+    type: String,
+    optional: false,
+    canRead: ['guests'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
+  },
+  players: {
+    type: Array,
+    canRead: ['guests'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
+  },
+  'players.$': {
+    type: String,
+    optional: true,
+  },
+})
+
 const schema = {
   /**
    ID
@@ -93,21 +115,17 @@ const schema = {
     canUpdate: ['members'],
   },
   /**
-   * Diagram
+   * Team
    */
   teams: {
     type: Array,
     optional: true,
-    arrayItem: {
-      type: Object,
-      // 'teams.$.name': String,
-      // 'teams.$.players': Array,
-      // 'teams.$.players.$': String,
-      optional: true,
-    },
     canRead: ['guests'],
     canCreate: ['members'],
     canUpdate: ['members'],
+  },
+  'teams.$': {
+    type: teamSchema,
   },
 }
 
