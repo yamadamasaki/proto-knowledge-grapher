@@ -4,6 +4,7 @@ import {
   DiagramComponent,
   DiagramContextMenu,
   Inject,
+  OverviewComponent,
   SymbolPaletteComponent,
   UndoRedo,
 } from '@syncfusion/ej2-react-diagrams'
@@ -84,9 +85,9 @@ const palettes = [
   {id: 'connectors', expanded: true, symbols: connectors, title: 'Connectors', iconCss: 'e-ddb-icons e-connector'},
 ]
 
-const CFFrameworkDiagramSection = ({match}) => {
+const CFNetworkDiagramSection = ({match}) => {
   const {params} = match
-  const collectionName = params.collectionName || 'SimpleDiagrams'
+  const collectionName = params.collectionName || 'CFNetworkDiagrams'
   const {programId, sectionId, subsection} = params
   const {id} = params
   const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
@@ -94,14 +95,14 @@ const CFFrameworkDiagramSection = ({match}) => {
   const filter = (id && {_id: {_eq: id}}) || {_and: selector}
   const {results, refetch} = useMulti2({
     collectionName,
-    fragmentName: 'SimpleDiagramFragment',
+    fragmentName: 'CFNetworkDiagramFragment',
     input: {filter},
     //pollInterval: 500,
   })
   if (results && results.length === 0) results[0] = {programId, sectionId, subsection}
 
-  const [updateDocument, {loading: loading_u}] = useUpdate2({collectionName, fragmentName: 'SimpleDiagramFragment'})
-  const [createDocument, {loading: loading_c}] = useCreate2({collectionName, fragmentName: 'SimpleDiagramFragment'})
+  const [updateDocument, {loading: loading_u}] = useUpdate2({collectionName, fragmentName: 'CFNetworkDiagramFragment'})
+  const [createDocument, {loading: loading_c}] = useCreate2({collectionName, fragmentName: 'CFNetworkDiagramFragment'})
   const [error, setError] = useState()
 
   const doc = results && results[0] || {}
@@ -156,10 +157,14 @@ const CFFrameworkDiagramSection = ({match}) => {
         {
           error ? <Components.Flash message={error}/> :
               [loading_c, loading_u].some(it => it === true) ? <Components.Loading/> :
-                  <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
-                                    contextMenuSettings={{show: true}}>
-                    <Inject services={[UndoRedo, DiagramContextMenu]}/>
-                  </DiagramComponent>
+                  <React.Fragment>
+                    <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
+                                      contextMenuSettings={{show: true}}>
+                      <Inject services={[UndoRedo, DiagramContextMenu]}/>
+                    </DiagramComponent>
+                    <OverviewComponent id="overview" style={{top: '30px'}} sourceID="diagram" width={'100%'}
+                                       height={'150px'}/>
+                  </React.Fragment>
         }
         <ToolbarComponent id='toolbar' onClick={e => {
           onToolbarClicked(e.target.textContent)
@@ -175,4 +180,4 @@ const CFFrameworkDiagramSection = ({match}) => {
   )
 }
 
-registerComponent({name: 'CFFrameworkDiagramSection', component: CFFrameworkDiagramSection})
+registerComponent({name: 'CFNetworkDiagramSection', component: CFNetworkDiagramSection})
