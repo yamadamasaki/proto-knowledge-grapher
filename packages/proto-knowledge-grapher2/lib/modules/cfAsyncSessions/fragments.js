@@ -7,6 +7,7 @@ registerFragment(/*gql*/`
         teams {
           name
           players
+          teamId
         }
     }
 `)

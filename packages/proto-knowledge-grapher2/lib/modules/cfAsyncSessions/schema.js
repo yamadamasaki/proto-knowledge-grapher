@@ -21,6 +21,16 @@ const teamSchema = createSchema({
   'players.$': {
     type: String,
     optional: true,
+    canRead: ['guests'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
+  },
+  teamId: {
+    type: String,
+    optional: true,
+    canRead: ['guests'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
   },
 })
 

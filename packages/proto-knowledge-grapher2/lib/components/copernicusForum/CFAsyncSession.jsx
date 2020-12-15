@@ -7,6 +7,10 @@ import {ButtonComponent} from '@syncfusion/ej2-react-buttons'
 import Users from 'meteor/vulcan:users'
 import omit from 'lodash/omit'
 import mapValues from 'lodash/mapValues'
+import {v1 as uuidv1} from 'uuid'
+import {Link} from 'react-router-dom'
+
+const generateTeamId = () => uuidv1()
 
 const removeTypename = obj => {
   if (!obj) return obj
@@ -68,6 +72,41 @@ const CFAsyncSession = ({match}) => {
 
   const nTeams = document.teams.length
 
+  const TeamComponent = props => {
+    const name = useRef()
+    const players = useRef()
+    const {team, users, onSave, onDelete, placeholder} = props
+    const save = () => {
+      const team = {name: (name.current || {}).value, players: (players.current || {}).value}
+      if (placeholder) team.teamId = generateTeamId()
+      onSave(team)
+      if (placeholder) {
+        name.current.value = ''
+        players.current.value = []
+      }
+    }
+    return (
+        <div className="e-card" id="basic">
+          <div className="e-card-content">
+            <TextBoxComponent placeholder="Team Name" value={team && team.name} floatLabelType="Auto" ref={name}/>
+            <MultiSelectComponent
+                placeholder="Players" value={team && team.players} dataSource={users}
+                fields={{text: 'username', value: '_id'}} floatLabelType="Auto" ref={players}/>
+            {
+              team.teamId ?
+                  <div><Link
+                      to={`/sections/${programId}/CFNetworkDiagrams/${sectionId}/${team.teamId}/CFNetworkDiagramSection`}>
+                    Team's Page
+                  </Link><br/></div> :
+                  <div></div>
+            }
+            {!placeholder ? <ButtonComponent onClick={onDelete}>Delete Team</ButtonComponent> : <div></div>}
+            <ButtonComponent onClick={save}>Save Team</ButtonComponent>
+          </div>
+        </div>
+    )
+  }
+
   return (
       <React.Fragment>
         <h1>非同期セッション</h1>
@@ -84,30 +123,6 @@ const CFAsyncSession = ({match}) => {
         <h4>チームを追加する</h4>
         <TeamComponent team={{}} users={users} onSave={onSave(nTeams)} placeholder={true}/>
       </React.Fragment>
-  )
-}
-
-const TeamComponent = props => {
-  const name = useRef()
-  const players = useRef()
-  const {team, users, onSave, onDelete, placeholder} = props
-  const save = () => {
-    onSave({name: (name.current || {}).value, players: (players.current || {}).value})
-    if (placeholder) {
-      name.current.value = ''
-      players.current.value = []
-    }
-  }
-  return (
-      <div className="e-card" id="basic">
-        <div className="e-card-content">
-          <TextBoxComponent placeholder="Team Name" value={team && team.name} floatLabelType="Auto" ref={name}/>
-          <MultiSelectComponent placeholder="Players" value={team && team.players} dataSource={users}
-                                fields={{text: 'username', value: '_id'}} ref={players}/>
-          {!placeholder ? <ButtonComponent onClick={onDelete}>Delete Team</ButtonComponent> : <div></div>}
-          <ButtonComponent onClick={save}>Save Team</ButtonComponent>
-        </div>
-      </div>
   )
 }
 
