@@ -1,5 +1,5 @@
 /**
- * @summary Simple Diagrams
+ * @summary CFNetwork Diagrams
  * @type {Object}
  */
 const schema = {
@@ -18,9 +18,7 @@ const schema = {
     type: Date,
     optional: true,
     canRead: ['admins'],
-    onCreate: () => {
-      return new Date()
-    },
+    onCreate: () => new Date(),
   },
   /**
    Time Stamp of session update
@@ -29,7 +27,7 @@ const schema = {
     type: Date,
     optional: true,
     canRead: ['members'],
-    onUpdate: () => {return new Date()},
+    onUpdate: () => new Date(),
   },
   /**
    The session owner's `_id`.
@@ -81,7 +79,7 @@ const schema = {
     canUpdate: ['members'],
   },
 
-  // belows are SimpleText-dependent fields
+  // belows are CFNetworkDiagram-dependent fields
   /**
    * Title
    */

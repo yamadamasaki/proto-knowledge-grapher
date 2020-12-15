@@ -1716,6 +1716,7 @@ input CFAsyncSessionSelectorUniqueInput {
 type CFAsyncSessionTeams {
   name: String 
   players: [String] 
+  teamId: String 
 }
 
 
@@ -1728,6 +1729,7 @@ input CreateCFAsyncSessionTeamsInput {
 input CreateCFAsyncSessionTeamsDataInput {
   name: String 
   players: [String] 
+  teamId: String 
 }
 
 input UpdateCFAsyncSessionTeamsInput{
@@ -1749,6 +1751,7 @@ input UpsertCFAsyncSessionTeamsInput{
 input UpdateCFAsyncSessionTeamsDataInput {
   name: String 
   players: [String] 
+  teamId: String 
 }
 
 input CFAsyncSessionTeamsFilterInput {
@@ -1759,11 +1762,175 @@ input CFAsyncSessionTeamsFilterInput {
 
   name: String_Selector
   players: String_Array_Selector
+  teamId: String_Selector
 }
 
 input CFAsyncSessionTeamsSortInput {
   name: SortOptions
   players: SortOptions
+  teamId: SortOptions
+}
+
+
+# Type for CFNetworkDiagrams
+type CFNetworkDiagram {
+  _id: String 
+  createdAt: Date 
+  updatedAt: Date 
+  userId: String 
+  user: User 
+  programId: String 
+  program: Program 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  diagram: String 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+  updatedAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteCFNetworkDiagramInput{
+  filter: CFNetworkDiagramFilterInput
+  id: String
+}
+
+input SingleCFNetworkDiagramInput {
+  # filtering
+  filter: CFNetworkDiagramFilterInput
+  sort: CFNetworkDiagramSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: CFNetworkDiagramSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiCFNetworkDiagramInput {
+
+  # filtering
+  filter: CFNetworkDiagramFilterInput
+  sort: CFNetworkDiagramSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleCFNetworkDiagramOutput{
+  result: CFNetworkDiagram
+}
+
+type  MultiCFNetworkDiagramOutput{
+  results: [CFNetworkDiagram]
+  totalCount: Int
+}
+
+type CFNetworkDiagramMutationOutput{
+  data: CFNetworkDiagram
+}
+
+input CreateCFNetworkDiagramInput {
+  data: CreateCFNetworkDiagramDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateCFNetworkDiagramDataInput {
+  userId: String 
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  diagram: String 
+}
+
+input UpdateCFNetworkDiagramInput{
+  filter: CFNetworkDiagramFilterInput
+  id: String
+  data: UpdateCFNetworkDiagramDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertCFNetworkDiagramInput{
+  filter: CFNetworkDiagramFilterInput
+  id: String
+  data: UpdateCFNetworkDiagramDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateCFNetworkDiagramDataInput {
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  diagram: String 
+}
+
+input CFNetworkDiagramFilterInput {
+  _and: [CFNetworkDiagramFilterInput]
+  _not: CFNetworkDiagramFilterInput
+  _or: [CFNetworkDiagramFilterInput]
+
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  updatedAt: Date_Selector
+  userId: String_Selector
+  programId: String_Selector
+  sectionId: String_Selector
+  subsection: String_Selector
+  title: String_Selector
+  diagram: String_Selector
+}
+
+input CFNetworkDiagramSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  updatedAt: SortOptions
+  userId: SortOptions
+  programId: SortOptions
+  sectionId: SortOptions
+  subsection: SortOptions
+  title: SortOptions
+  diagram: SortOptions
+}
+
+input CFNetworkDiagramSelectorInput {
+  _and: [CFNetworkDiagramSelectorInput]
+  _or: [CFNetworkDiagramSelectorInput]
+
+}
+
+input CFNetworkDiagramSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
 }
 
 
@@ -1821,6 +1988,12 @@ type Query {
   
   # A list of CFAsyncSession documents matching a set of query terms
   cFAsyncSessions(input: MultiCFAsyncSessionInput):  MultiCFAsyncSessionOutput
+  
+  # A single CFNetworkDiagram document fetched by ID or slug
+  cFNetworkDiagram(input: SingleCFNetworkDiagramInput!): SingleCFNetworkDiagramOutput
+  
+  # A list of CFNetworkDiagram documents matching a set of query terms
+  cFNetworkDiagrams(input: MultiCFNetworkDiagramInput):  MultiCFNetworkDiagramOutput
   
 }
   
@@ -2105,6 +2278,38 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: CFAsyncSessionSelectorUniqueInput
 ) : CFAsyncSessionMutationOutput
+
+  # Mutation for creating new CFNetworkDiagram documents
+  createCFNetworkDiagram(
+  input: CreateCFNetworkDiagramInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateCFNetworkDiagramDataInput
+) : CFNetworkDiagramMutationOutput
+
+  # Mutation for updating a CFNetworkDiagram document
+  updateCFNetworkDiagram(
+  input: UpdateCFNetworkDiagramInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CFNetworkDiagramSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCFNetworkDiagramDataInput 
+) : CFNetworkDiagramMutationOutput
+
+  # Mutation for upserting a CFNetworkDiagram document
+  upsertCFNetworkDiagram(
+  input: UpsertCFNetworkDiagramInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CFNetworkDiagramSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCFNetworkDiagramDataInput
+) : CFNetworkDiagramMutationOutput
+
+  # Mutation for deleting a CFNetworkDiagram document
+  deleteCFNetworkDiagram(
+  input: DeleteCFNetworkDiagramInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CFNetworkDiagramSelectorUniqueInput
+) : CFNetworkDiagramMutationOutput
 
 }
 
