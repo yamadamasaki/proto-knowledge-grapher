@@ -5,6 +5,7 @@ import {
   DiagramContextMenu,
   Inject,
   OverviewComponent,
+  PrintAndExport,
   SymbolPaletteComponent,
   UndoRedo,
 } from '@syncfusion/ej2-react-diagrams'
@@ -142,6 +143,12 @@ const CFNetworkDiagramSection = ({match}) => {
         saveDiagram().then(() => {
         })
         break
+      case 'export':
+        diagram.current.exportDiagram({mode: "Download",region:"PageSettings",multiplePage:false,fileName:"Export",margin:{ left: 10, top: 10, bottom: 10, right: 10 },})
+        break
+      case 'print':
+        diagram.current.print({mode: "Data", region: "PageSettings", multiplePage: true, margin: { left: 10, top: 10, bottom: 10, right: 10 }})
+        break
       default:
         break
     }
@@ -160,7 +167,7 @@ const CFNetworkDiagramSection = ({match}) => {
                   <React.Fragment>
                     <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
                                       contextMenuSettings={{show: true}}>
-                      <Inject services={[UndoRedo, DiagramContextMenu]}/>
+                      <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
                     </DiagramComponent>
                     <OverviewComponent id="overview" style={{top: '30px'}} sourceID="diagram" width={'100%'}
                                        height={'150px'}/>
@@ -174,6 +181,8 @@ const CFNetworkDiagramSection = ({match}) => {
             <ItemDirective text='redo'/>
             <ItemDirective type="Separator"/>
             <ItemDirective text='save'/>
+            <ItemDirective text='export'/>
+            <ItemDirective text='print'/>
           </ItemsDirective>
         </ToolbarComponent>
       </React.Fragment>
