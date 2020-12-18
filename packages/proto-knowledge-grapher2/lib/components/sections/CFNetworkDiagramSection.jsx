@@ -16,7 +16,7 @@ const basicShapes = [
   {
     id: 'Rectangle-top',
     shape: {type: 'Basic', shape: 'Rectangle'},
-    annotations: [{offset: {x: 0.5, y: 0.1}, verticalAlignment: 'Top'}],
+    annotations: [{offset: {x: 0.5, y: 0.1}, verticalAlignment: 'Top', content: 'ラベル'}],
     symbolInfo: {description: {text: 'Top'}},
   }, {
     id: 'Rectangle-center',
@@ -41,25 +41,6 @@ const basicShapes = [
   },
 ]
 
-const imageShapes = [
-  {
-    id: 'causalnet', style: {fill: 'none'},
-    shape: {
-      type: 'Image',
-      source: '/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/causalnet2.png',
-      scale: 'None',
-    },
-    width: 80, height: 80,
-  }, {
-    id: 'conflict', style: {fill: 'none'},
-    shape: {
-      type: 'Image',
-      source: '/packages/proto-knowledge-grapher2/lib/assets/images/drawingTool/conflict.png',
-      scale: 'None',
-    },
-    width: 80, height: 80,
-  }]
-
 const points = {sourcePoint: {x: 0, y: 0}, targetPoint: {x: 40, y: 40}}
 const connectors = [
   {id: 'SingleOrthogonal', type: 'Orthogonal', ...points, targetDecorator: {shape: 'Arrow'}},
@@ -82,7 +63,6 @@ const connectors = [
 
 const palettes = [
   {id: 'basic', expanded: true, symbols: basicShapes, title: 'Basic Shapes', iconCss: 'e-ddb-icons e-basic'},
-  {id: 'images', expanded: true, symbols: imageShapes, title: 'Image Shapes', iconCss: 'e-ddb-icons e-basic'},
   {id: 'connectors', expanded: true, symbols: connectors, title: 'Connectors', iconCss: 'e-ddb-icons e-connector'},
 ]
 
@@ -157,10 +137,8 @@ const CFNetworkDiagramSection = ({match}) => {
   return (
       <React.Fragment>
         {doc.title && <h2>{doc.title}</h2>}
-        <SymbolPaletteComponent id='palette' expandMode='Multiple' symbolHeight={80} symbolWidth={80}
-                                scrollSettings={{horizontalOffset: 100, verticalOffset: 50}}
-                                palettes={palettes}
-                                getSymbolInfo={symbol => symbol.symbolInfo}/>
+        <SymbolPaletteComponent id='palette' expandMode='Multiple' symbolHeight={64} symbolWidth={64}
+                                scrollSettings={{horizontalOffset: 80, verticalOffset: 40}} palettes={palettes}/>
         {
           error ? <Components.Flash message={error}/> :
               [loading_c, loading_u].some(it => it === true) ? <Components.Loading/> :

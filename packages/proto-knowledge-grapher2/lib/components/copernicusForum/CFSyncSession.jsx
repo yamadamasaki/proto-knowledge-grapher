@@ -1,5 +1,5 @@
 import React from 'react'
-import {registerComponent, Components} from 'meteor/vulcan:lib'
+import {Components, registerComponent} from 'meteor/vulcan:lib'
 
 const CFSyncSession = ({match}) => {
   const {params} = match
@@ -7,7 +7,7 @@ const CFSyncSession = ({match}) => {
 
   return (
       <React.Fragment>
-        <h1>CFSyncSession</h1>
+        <h1>同期セッション</h1>
         <Components.CFFrameworkDiagramSection match={{params: {programId, sectionId, subsection: 'purpose'}}}/>
       </React.Fragment>
   )

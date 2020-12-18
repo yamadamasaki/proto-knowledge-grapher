@@ -101,7 +101,7 @@ const CFAsyncSession = ({match}) => {
                   <div></div>
             }
             {!placeholder ? <ButtonComponent onClick={onDelete}>Delete Team</ButtonComponent> : <div></div>}
-            <ButtonComponent onClick={save}>Save Team</ButtonComponent>
+            <ButtonComponent onClick={save}>{placeholder?"Create Team":"Save Team"}</ButtonComponent>
           </div>
         </div>
     )
