@@ -1,14 +1,13 @@
 // common
-
 import '../components/common/Footer.jsx'
 import '../components/common/Header.jsx'
 import '../components/common/Layout.jsx'
 import '../components/common/EJ2Layout.jsx'
 import '../components/common/Logo.jsx'
 import '../components/common/SearchForm.jsx'
-import '../components/common/Vote.jsx'
 
 // programs
+import '../components/programs/KnowledgeGrapherHome'
 import '../components/programs/ProgramsHome'
 import '../components/programs/ProgramsPage'
 
@@ -25,31 +24,6 @@ import '../components/copernicusForum/CFPrepSession'
 import '../components/copernicusForum/CFSyncSession'
 import '../components/copernicusForum/CFAsyncSession'
 
-// posts
-import '../components/posts/PostsHome.jsx'
-import '../components/posts/PostsCategory.jsx'
-import '../components/posts/PostsNewButton.jsx'
-import '../components/posts/PostsItem.jsx'
-import '../components/posts/PostsViews.jsx'
-import '../components/posts/PostsList.jsx'
-import '../components/posts/PostsListHeader.jsx'
-import '../components/posts/PostsCategories.jsx'
-import '../components/posts/PostsCommenters.jsx'
-import '../components/posts/PostsPage.jsx'
-import '../components/posts/PostsStats.jsx'
-import '../components/posts/PostsCommentsThread.jsx'
-
-// comments
-import '../components/comments/CommentsItem.jsx'
-import '../components/comments/CommentsList.jsx'
-import '../components/comments/CommentsNode.jsx'
-import '../components/comments/CommentsNewForm.jsx'
-import '../components/comments/CommentsEditForm.jsx'
-import '../components/comments/CommentsLoadMore.jsx'
-
-// categories
-import '../components/categories/CategoriesMenu.jsx'
-
 // users
 import '../components/users/UsersAccount.jsx'
 import '../components/users/UsersEdit.jsx'
@@ -62,6 +36,3 @@ import '../components/users/UsersName.jsx'
 
 // admin
 import '../components/admin/AdminUsers.jsx'
-import '../components/admin/AdminPosts.jsx'
-import '../components/admin/AdminCategories.jsx'
-import '../components/admin/AdminComments.jsx'

@@ -1,6 +1,8 @@
 import {addRoute} from 'meteor/vulcan:core'
 
 addRoute([
+  // knowledge grapher
+  {name: 'knowledge-grapher.top', path: '/', componentName: 'KnowledgeGrapherHome', layoutName: 'EJ2Layout'},
   // programs
   {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome', layoutName: 'EJ2Layout'},
   {name: 'programs.item', path: '/programs/:id', componentName: 'ProgramsPage', layoutName: 'EJ2Layout'},
@@ -37,33 +39,40 @@ addRoute([
   },
   // sessions
   /// CFPrepSession
-  {name: 'sessions.cfPrepSession', path: '/sections/:programId/:collectionName/:sectionId/CFPrepSession/', componentName: 'CFPrepSession', layoutName: 'EJ2Layout'},
+  {
+    name: 'sessions.cfPrepSession',
+    path: '/sections/:programId/:collectionName/:sectionId/CFPrepSession/',
+    componentName: 'CFPrepSession',
+    layoutName: 'EJ2Layout',
+  },
   /// CFSyncSession
-  {name: 'sessions.cfSyncSession', path: '/sections/:programId/:collectionName/:sectionId/CFSyncSession/', componentName: 'CFSyncSession', layoutName: 'EJ2Layout'},
+  {
+    name: 'sessions.cfSyncSession',
+    path: '/sections/:programId/:collectionName/:sectionId/CFSyncSession/',
+    componentName: 'CFSyncSession',
+    layoutName: 'EJ2Layout',
+  },
   /// CFAsyncSession
-  {name: 'sessions.cfAsyncSession', path: '/sections/:programId/:collectionName/:sectionId/CFAsyncSession/', componentName: 'CFAsyncSession', layoutName: 'EJ2Layout'},
-  {name: 'sessions.cfAsyncSession.teams', path: '/sections/:programId/:collectionName/:sectionId/:subsection/CFNetworkDiagramSection/', componentName: 'CFNetworkDiagramSection', layoutName: 'EJ2Layout'},
+  {
+    name: 'sessions.cfAsyncSession',
+    path: '/sections/:programId/:collectionName/:sectionId/CFAsyncSession/',
+    componentName: 'CFAsyncSession',
+    layoutName: 'EJ2Layout',
+  },
+  {
+    name: 'sessions.cfAsyncSession.teams',
+    path: '/sections/:programId/:collectionName/:sectionId/:subsection/CFNetworkDiagramSection/',
+    componentName: 'CFNetworkDiagramSection',
+    layoutName: 'EJ2Layout',
+  },
   /// CFFollowupSession
 
-  // posts
-
-  {name: 'posts.top', path: '/', componentName: 'PostsHome'},
-  {name: 'posts.new', path: '/new', componentName: 'PostsHome'},
-  {name: 'posts.best', path: '/best', componentName: 'PostsHome'},
-  {name: 'posts.category', path: '/category/:slug', componentName: 'PostsCategory'},
-  {name: 'posts.single', path: '/posts/:_id/:slug?', componentName: 'PostsPage'},
-
   // users
-
   {name: 'users.profile', path: '/users/:slug', componentName: 'UsersProfile'},
   {name: 'users.account', path: '/account', componentName: 'UsersAccount'},
   {name: 'users.edit', path: '/users/:slug/edit', componentName: 'UsersEdit'},
 
-  // admin
-
-  {name: 'admin.categories', path: '/admin/categories', componentName: 'AdminCategories'},
-  {name: 'admin.comments', path: '/admin/comments', componentName: 'AdminComments'},
-  {name: 'admin.posts', path: '/admin/posts', componentName: 'AdminPosts'},
+// admin
   {name: 'admin.users', path: '/admin/users', componentName: 'AdminUsers'},
 
 ])
