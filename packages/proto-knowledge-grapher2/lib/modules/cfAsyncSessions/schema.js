@@ -8,29 +8,29 @@ const teamSchema = createSchema({
   name: {
     type: String,
     optional: false,
-    canRead: ['guests'],
+    canRead: ['members'],
     canCreate: ['members'],
     canUpdate: ['members'],
   },
   players: {
     type: Array,
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
   },
   'players.$': {
     type: String,
     optional: true,
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
   },
   teamId: {
     type: String,
     optional: true,
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
   },
 })
 
@@ -41,15 +41,15 @@ const schema = {
   _id: {
     type: String,
     optional: true,
-    canRead: ['guests'],
+    canRead: ['members'],
   },
   /**
-   Time Stamp of post creation
+   Time Stamp of session creation
    */
   createdAt: {
     type: Date,
     optional: true,
-    canRead: ['admins'],
+    canRead: ['members'],
     onCreate: () => {
       return new Date()
     },
@@ -70,7 +70,7 @@ const schema = {
     type: String,
     optional: true,
     canRead: ['members'],
-    canCreate: ['members', 'reflector'],
+    canCreate: ['members'],
     hidden: true,
     resolveAs: {
       fieldName: 'user',
@@ -89,18 +89,18 @@ const schema = {
       typeName: 'Program',
       kind: 'hasOne',
     },
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
   },
   /**
    * Section
    */
   sectionId: {
     type: String,
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
   },
   /**
    * Subsection
@@ -108,9 +108,9 @@ const schema = {
   subsection: {
     type: String,
     optional: true,
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
   },
 
   // belows are SimpleText-dependent fields
@@ -120,9 +120,9 @@ const schema = {
   title: {
     type: String,
     optional: true,
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
   },
   /**
    * Team
@@ -130,9 +130,9 @@ const schema = {
   teams: {
     type: Array,
     optional: true,
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
   },
   'teams.$': {
     type: teamSchema,

@@ -9,7 +9,7 @@ const schema = {
   _id: {
     type: String,
     optional: true,
-    canRead: ['guests'],
+    canRead: ['members'],
   },
   /**
    Time Stamp of post creation
@@ -17,7 +17,7 @@ const schema = {
   createdAt: {
     type: Date,
     optional: true,
-    canRead: ['admins'],
+    canRead: ['members'],
     onCreate: () => new Date(),
   },
   /**
@@ -36,7 +36,7 @@ const schema = {
     type: String,
     optional: true,
     canRead: ['members'],
-    canCreate: ['members', 'reflector'],
+    canCreate: ['admins'],
     hidden: true,
     resolveAs: {
       fieldName: 'user',
@@ -55,18 +55,18 @@ const schema = {
       typeName: 'Program',
       kind: 'hasOne',
     },
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
   },
   /**
    * Section
    */
   sectionId: {
     type: String,
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
   },
   /**
    * Subsection
@@ -74,9 +74,9 @@ const schema = {
   subsection: {
     type: String,
     optional: true,
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
   },
 
   // belows are CFNetworkDiagram-dependent fields
@@ -86,7 +86,7 @@ const schema = {
   title: {
     type: String,
     optional: true,
-    canRead: ['guests'],
+    canRead: ['members'],
     canCreate: ['members'],
     canUpdate: ['members'],
   },
@@ -96,7 +96,7 @@ const schema = {
   diagram: {
     type: String,
     optional: true,
-    canRead: ['guests'],
+    canRead: ['members'],
     canCreate: ['members'],
     canUpdate: ['members'],
   },

@@ -11,7 +11,7 @@ const schema = {
   _id: {
     type: String,
     optional: true,
-    canRead: ['guests'],
+    canRead: ['members'],
   },
   /**
    Time Stamp of post creation
@@ -19,7 +19,7 @@ const schema = {
   createdAt: {
     type: Date,
     optional: true,
-    canRead: ['admins'],
+    canRead: ['members'],
     onCreate: () => {
       return new Date()
     },
@@ -37,9 +37,9 @@ const schema = {
     type: String,
     optional: false,
     max: 500,
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
     input: 'text',
     order: 20,
     searchable: true,
@@ -50,7 +50,7 @@ const schema = {
   slug: {
     type: String,
     optional: true,
-    canRead: ['guests'],
+    canRead: ['members'],
     onCreate: ({document: post}) => {
       return Utils.slugify(post.title)
     },
@@ -66,9 +66,9 @@ const schema = {
   structureAsJson: {
     type: String,
     optional: true,
-    canRead: ['guests'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+    canRead: ['members'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
     input: 'textarea',
   },
   /**
@@ -77,7 +77,7 @@ const schema = {
   structure: {
     type: Object,
     optional: true,
-    canRead: ['guests'],
+    canRead: ['members'],
     onCreate: ({document}) => {
       console.log(document)
       if (document.structureAsJson) return JSON.parse(document.structureAsJson)
