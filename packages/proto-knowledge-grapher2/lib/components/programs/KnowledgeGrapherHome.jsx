@@ -4,6 +4,7 @@ import {Components, useMulti2} from 'meteor/vulcan:core'
 import Programs from '../../modules/programs/collection'
 import {Link} from 'react-router-dom'
 import {ListViewComponent} from '@syncfusion/ej2-react-lists'
+import {Helmet} from 'react-helmet'
 
 const KnowledgeGrapherHome = () => {
   const {results, loading} = useMulti2({
@@ -17,6 +18,7 @@ const KnowledgeGrapherHome = () => {
 
   return (
       <React.Fragment>
+        <Helmet><title>Knowledge Grapher Home</title></Helmet>
         {
           loading ? <Components.Loading/> :
               <div>

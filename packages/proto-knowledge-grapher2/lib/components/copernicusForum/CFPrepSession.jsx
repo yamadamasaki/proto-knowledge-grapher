@@ -1,5 +1,6 @@
 import React from 'react'
 import {Components, registerComponent} from 'meteor/vulcan:lib'
+import {Helmet} from 'react-helmet'
 
 const CFPrepSession = ({match}) => {
   const {params} = match
@@ -7,6 +8,7 @@ const CFPrepSession = ({match}) => {
 
   return (
       <React.Fragment>
+        <Helmet><title>Prep Session ({sectionId})</title></Helmet>
         <h1>準備セッション</h1>
         <h2>ねらい</h2>
         <Components.SimpleTextSection match={{params: {programId, sectionId, subsection: 'purpose'}}}/>

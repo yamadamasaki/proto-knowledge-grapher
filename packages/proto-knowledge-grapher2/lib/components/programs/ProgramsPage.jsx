@@ -3,6 +3,7 @@ import {registerComponent, useSingle2} from 'meteor/vulcan:core'
 import {SidebarComponent, TreeViewComponent} from '@syncfusion/ej2-react-navigations'
 import {Programs} from '../../modules/programs'
 import {v1 as uuidv1} from 'uuid'
+import {Helmet} from 'react-helmet'
 
 const generateNodeId = () => uuidv1()
 
@@ -64,6 +65,7 @@ const ProgramsPage = ({match, history}) => {
 
   return (
       <React.Fragment>
+        <Helmet><title>{structure?structure.title:'Program'}</title></Helmet>
         <h1>ProgramsPage</h1>
         <div className="control-section">
           <div id="wrapper">

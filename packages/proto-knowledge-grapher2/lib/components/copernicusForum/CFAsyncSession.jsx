@@ -9,6 +9,7 @@ import omit from 'lodash/omit'
 import mapValues from 'lodash/mapValues'
 import {v1 as uuidv1} from 'uuid'
 import {Link} from 'react-router-dom'
+import {Helmet} from 'react-helmet'
 
 const generateTeamId = () => uuidv1()
 
@@ -109,6 +110,7 @@ const CFAsyncSession = ({match}) => {
 
   return (
       <React.Fragment>
+        <Helmet><title>Async Session ({sectionId})</title></Helmet>
         <h1>非同期セッション</h1>
         <h2>チーム</h2>
         {

@@ -11,6 +11,7 @@ import {
 } from '@syncfusion/ej2-react-diagrams'
 import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
 import {useCreate2, useMulti2, useUpdate2} from 'meteor/vulcan:core'
+import {Helmet} from 'react-helmet'
 
 const basicShapes = [
   {
@@ -136,6 +137,7 @@ const CFNetworkDiagramSection = ({match}) => {
 
   return (
       <React.Fragment>
+        <Helmet><title>Async Session {sectionId} - {subsection})</title></Helmet>
         {doc.title && <h2>{doc.title}</h2>}
         <SymbolPaletteComponent id='palette' expandMode='Multiple' symbolHeight={64} symbolWidth={64}
                                 scrollSettings={{horizontalOffset: 80, verticalOffset: 40}} palettes={palettes}/>

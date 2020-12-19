@@ -1,5 +1,6 @@
 import React from 'react'
 import {Components, registerComponent} from 'meteor/vulcan:lib'
+import {Helmet} from 'react-helmet'
 
 const CFSyncSession = ({match}) => {
   const {params} = match
@@ -7,6 +8,7 @@ const CFSyncSession = ({match}) => {
 
   return (
       <React.Fragment>
+        <Helmet><title>Sync Session ({sectionId})</title></Helmet>
         <h1>同期セッション</h1>
         <Components.CFFrameworkDiagramSection match={{params: {programId, sectionId, subsection: 'purpose'}}}/>
       </React.Fragment>
