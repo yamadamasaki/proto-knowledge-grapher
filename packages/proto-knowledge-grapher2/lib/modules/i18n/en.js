@@ -1,4 +1,5 @@
 import { addStrings } from 'meteor/vulcan:core';
+import React from 'react'
 
 addStrings('en', {
 
@@ -90,5 +91,7 @@ addStrings('en', {
   'admin.users': 'Users (admin)',
   'admin.comments': 'Comments (admin)',
   'admin.posts': 'Posts (admin)',
-  
+
+  'app.powered_by': 'Built by Metabolics, Ltd.'
+
 });
