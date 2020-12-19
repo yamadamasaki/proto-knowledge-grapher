@@ -11,3 +11,4 @@ import './posts/index.js';
 import './settings.js';
 import './rss.js';
 import './api.js';
+import './accounts.js'

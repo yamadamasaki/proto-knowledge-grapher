@@ -47,7 +47,7 @@ const Header = ({ currentUser, flash, history }) => {
                   <p className="posts-new-form-message">
                     <FormattedMessage id="posts.sign_up_or_log_in_first" />
                   </p>
-                  <Components.AccountsLoginForm />
+                  <Components.AccountsLoginForm showSignUpLink={false}/>
                 </div>
               </Components.ModalTrigger>
             )}
