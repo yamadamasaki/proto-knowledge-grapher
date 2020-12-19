@@ -4,6 +4,7 @@ import {
   DiagramComponent,
   DiagramContextMenu,
   Inject,
+  PrintAndExport,
   SymbolPaletteComponent,
   UndoRedo,
 } from '@syncfusion/ej2-react-diagrams'
@@ -141,6 +142,23 @@ const CFFrameworkDiagramSection = ({match}) => {
         saveDiagram().then(() => {
         })
         break
+      case 'export':
+        diagram.current.exportDiagram({
+          mode: 'Download',
+          region: 'PageSettings',
+          multiplePage: false,
+          fileName: 'Export',
+          margin: {left: 10, top: 10, bottom: 10, right: 10},
+        })
+        break
+      case 'print':
+        diagram.current.print({
+          mode: 'Data',
+          region: 'PageSettings',
+          multiplePage: true,
+          margin: {left: 10, top: 10, bottom: 10, right: 10},
+        })
+        break
       default:
         break
     }
@@ -158,7 +176,7 @@ const CFFrameworkDiagramSection = ({match}) => {
               [loading_c, loading_u].some(it => it === true) ? <Components.Loading/> :
                   <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
                                     contextMenuSettings={{show: true}}>
-                    <Inject services={[UndoRedo, DiagramContextMenu]}/>
+                    <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
                   </DiagramComponent>
         }
         <ToolbarComponent id='toolbar' onClick={e => {
@@ -169,6 +187,8 @@ const CFFrameworkDiagramSection = ({match}) => {
             <ItemDirective text='redo'/>
             <ItemDirective type="Separator"/>
             <ItemDirective text='save'/>
+            <ItemDirective text='export'/>
+            <ItemDirective text='print'/>
           </ItemsDirective>
         </ToolbarComponent>
       </React.Fragment>

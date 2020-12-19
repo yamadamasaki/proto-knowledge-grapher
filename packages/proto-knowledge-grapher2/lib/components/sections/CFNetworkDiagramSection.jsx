@@ -125,10 +125,21 @@ const CFNetworkDiagramSection = ({match}) => {
         })
         break
       case 'export':
-        diagram.current.exportDiagram({mode: "Download",region:"PageSettings",multiplePage:false,fileName:"Export",margin:{ left: 10, top: 10, bottom: 10, right: 10 },})
+        diagram.current.exportDiagram({
+          mode: 'Download',
+          region: 'PageSettings',
+          multiplePage: false,
+          fileName: 'Export',
+          margin: {left: 10, top: 10, bottom: 10, right: 10},
+        })
         break
       case 'print':
-        diagram.current.print({mode: "Data", region: "PageSettings", multiplePage: true, margin: { left: 10, top: 10, bottom: 10, right: 10 }})
+        diagram.current.print({
+          mode: 'Data',
+          region: 'PageSettings',
+          multiplePage: true,
+          margin: {left: 10, top: 10, bottom: 10, right: 10},
+        })
         break
       default:
         break
