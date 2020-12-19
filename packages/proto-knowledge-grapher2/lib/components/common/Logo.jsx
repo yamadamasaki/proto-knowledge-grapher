@@ -3,6 +3,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const Logo = ({ logoUrl, siteTitle }) => {
+  // logoUrl causes undefined IndexLink // DO NOT USE
   if (logoUrl) {
     return (
       <h1 className="logo-image ">

@@ -2,7 +2,7 @@ import {addRoute} from 'meteor/vulcan:core'
 
 addRoute([
   // programs
-  {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome'},
+  {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome', layoutName: 'EJ2Layout'},
   {name: 'programs.item', path: '/programs/:id', componentName: 'ProgramsPage', layoutName: 'EJ2Layout'},
 
   // sections
