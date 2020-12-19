@@ -23,6 +23,7 @@ import '../components/sections/CFNetworkDiagramSection'
 import '../components/copernicusForum/CFPrepSession'
 import '../components/copernicusForum/CFSyncSession'
 import '../components/copernicusForum/CFAsyncSession'
+import '../components/copernicusForum/CFFollowupSession'
 
 // users
 import '../components/users/UsersAccount.jsx'

@@ -7,36 +7,6 @@ addRoute([
   {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome', layoutName: 'EJ2Layout'},
   {name: 'programs.item', path: '/programs/:id', componentName: 'ProgramsPage', layoutName: 'EJ2Layout'},
 
-  // sections
-  /// SimpleText
-  {
-    name: 'sections.simpleTextSection',
-    path: '/sections/:programId/:collectionName/:sectionId/SimpleTextSection/',
-    componentName: 'SimpleTextSection',
-    layoutName: 'EJ2Layout',
-  },
-  {name: 'sections.simpleTextsHome', path: '/simpleTexts/', componentName: 'SimpleTextsHome', layoutName: 'EJ2Layout'},
-  {name: 'sections.simpleText', path: '/simpleTexts/:id', componentName: 'SimpleTextSection', layoutName: 'EJ2Layout'},
-
-  /// SimpleDiagram
-  {
-    name: 'sections.simpleDiagramSection',
-    path: '/sections/:programId/:collectionName/:sectionId/SimpleDiagramSection/',
-    componentName: 'SimpleDiagramSection',
-    layoutName: 'EJ2Layout',
-  },
-  {
-    name: 'sections.simpleDiagramsHome',
-    path: '/simpleDiagrams/',
-    componentName: 'SimpleDiagramsHome',
-    layoutName: 'EJ2Layout',
-  },
-  {
-    name: 'sections.simpleDiagram',
-    path: '/simpleDiagrams/:id',
-    componentName: 'SimpleDiagramSection',
-    layoutName: 'EJ2Layout',
-  },
   // sessions
   /// CFPrepSession
   {
@@ -66,9 +36,14 @@ addRoute([
     layoutName: 'EJ2Layout',
   },
   /// CFFollowupSession
+  {
+    name: 'sessions.cfFollowupSession',
+    path: '/sections/:programId/:collectionName/:sectionId/CFFollowupSession/',
+    componentName: 'CFFollowupSession',
+    layoutName: 'EJ2Layout',
+  },
 
   // users
-  {name: 'users.profile', path: '/users/:slug', componentName: 'UsersProfile'},
   {name: 'users.account', path: '/account', componentName: 'UsersAccount'},
   {name: 'users.edit', path: '/users/:slug/edit', componentName: 'UsersEdit'},
 

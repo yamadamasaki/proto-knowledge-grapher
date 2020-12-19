@@ -27,7 +27,7 @@
           "name": "フォローアップ同期セッション",
           "id": "1-4",
           "collectionName": "CFFollowupSessions",
-          "componentName": "CFFollowupASession"
+          "componentName": "CFFollowupSession"
         }
       ]
     },
@@ -61,7 +61,7 @@
               "name": "フォローアップ同期セッション",
               "id": "2-1-4",
               "collectionName": "CFFollowupSessions",
-              "componentName": "CFFollowupASession"
+              "componentName": "CFFollowupSession"
             }
           ]
         },
@@ -91,7 +91,7 @@
               "name": "フォローアップ同期セッション",
               "id": "2-2-4",
               "collectionName": "CFFollowupSessions",
-              "componentName": "CFFollowupASession"
+              "componentName": "CFFollowupSession"
             }
           ]
         }
@@ -123,7 +123,7 @@
           "name": "フォローアップ同期セッション",
           "id": "3-4",
           "collectionName": "CFFollowupSessions",
-          "componentName": "CFFollowupASession"
+          "componentName": "CFFollowupSession"
         }
       ]
     },
@@ -157,7 +157,7 @@
               "name": "フォローアップ同期セッション",
               "id": "4-1-4",
               "collectionName": "CFFollowupSessions",
-              "componentName": "CFFollowupASession"
+              "componentName": "CFFollowupSession"
             }
           ]
         },
@@ -187,7 +187,7 @@
               "name": "フォローアップ同期セッション",
               "id": "4-2-4",
               "collectionName": "CFFollowupSessions",
-              "componentName": "CFFollowupASession"
+              "componentName": "CFFollowupSession"
             }
           ]
         },
@@ -217,7 +217,7 @@
               "name": "フォローアップ同期セッション",
               "id": "4-3-4",
               "collectionName": "CFFollowupSessions",
-              "componentName": "CFFollowupASession"
+              "componentName": "CFFollowupSession"
             }
           ]
         }
@@ -253,7 +253,7 @@
               "name": "フォローアップ同期セッション",
               "id": "5-1-4",
               "collectionName": "CFFollowupSessions",
-              "componentName": "CFFollowupASession"
+              "componentName": "CFFollowupSession"
             }
           ]
         },
@@ -283,7 +283,7 @@
               "name": "フォローアップ同期セッション",
               "id": "5-2-4",
               "collectionName": "CFFollowupSessions",
-              "componentName": "CFFollowupASession"
+              "componentName": "CFFollowupSession"
             }
           ]
         }
@@ -315,7 +315,7 @@
           "name": "フォローアップ同期セッション",
           "id": "6-4",
           "collectionName": "CFFollowupSessions",
-          "componentName": "CFFollowupASession"
+          "componentName": "CFFollowupSession"
         }
       ]
     },
@@ -349,7 +349,7 @@
               "name": "フォローアップ同期セッション",
               "id": "7-1-4",
               "collectionName": "CFFollowupSessions",
-              "componentName": "CFFollowupASession"
+              "componentName": "CFFollowupSession"
             }
           ]
         },
@@ -379,7 +379,7 @@
               "name": "フォローアップ同期セッション",
               "id": "7-2-4",
               "collectionName": "CFFollowupSessions",
-              "componentName": "CFFollowupASession"
+              "componentName": "CFFollowupSession"
             }
           ]
         }
@@ -411,7 +411,7 @@
           "name": "フォローアップ同期セッション",
           "id": "8-4",
           "collectionName": "CFFollowupSessions",
-          "componentName": "CFFollowupASession"
+          "componentName": "CFFollowupSession"
         }
       ]
     }
