@@ -13,8 +13,9 @@ const children2array = (children, programId) => {
       nodeId: node.id,
       nodeText: node.name,
       iconCss: 'icon-circle-thin icon',
-      navigateUrl: `/sections/${programId}/${node.collectionName}/${node.id}/${node.componentName}`,
     }
+    if (node.componentName) Object.assign(template,
+        {navigateUrl: `/sections/${programId}/${node.collectionName}/${node.id}/${node.componentName}`})
     if (node.children) template.nodeChild = children2array(node.children, programId)
     return template
   })
@@ -65,7 +66,7 @@ const ProgramsPage = ({match, history}) => {
 
   return (
       <React.Fragment>
-        <Helmet><title>{structure?structure.title:'Program'}</title></Helmet>
+        <Helmet><title>{structure ? structure.title : 'Program'}</title></Helmet>
         <h1>ProgramsPage</h1>
         <div className="control-section">
           <div id="wrapper">
@@ -82,7 +83,8 @@ const ProgramsPage = ({match, history}) => {
                                 mediaQuery={mediaQuery} style={{visibility: 'hidden'}} created={onCreate}
                                 close={onClose} dockSize={dockSize} enableDock={true}>
                 <div className='main-menu'>
-                  <TreeViewComponent id='main-treeview' ref={treeView} fields={fields} nodeClicked={nodeClicked} fullRowNavigable/>
+                  <TreeViewComponent id='main-treeview' ref={treeView} fields={fields} nodeClicked={nodeClicked}
+                                     fullRowNavigable/>
                 </div>
               </SidebarComponent>
               {structure ?
