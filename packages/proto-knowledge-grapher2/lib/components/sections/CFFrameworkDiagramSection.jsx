@@ -9,7 +9,8 @@ import {
   UndoRedo,
 } from '@syncfusion/ej2-react-diagrams'
 import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
-import {useCreate2, useMulti2, useUpdate2} from 'meteor/vulcan:core'
+import {useCreate2, useMulti2, useUpdate2, withCurrentUser} from 'meteor/vulcan:core'
+import Users from 'meteor/vulcan:users'
 
 const basicShapes = [
   {
@@ -85,11 +86,16 @@ const palettes = [
   {id: 'connectors', expanded: true, symbols: connectors, title: 'Connectors', iconCss: 'e-ddb-icons e-connector'},
 ]
 
-const CFFrameworkDiagramSection = ({match}) => {
+const toArray = permission => !permission ? [] : (!Array.isArray(permission) ? [permission] : permission)
+const toBoolean = (user, permission) => Users.isMemberOf(user, toArray(permission))
+
+const CFFrameworkDiagramSection = ({match, currentUser}) => {
   const {params} = match
   const collectionName = params.collectionName || 'SimpleDiagrams'
   const {programId, sectionId, subsection} = params
   const {id} = params
+  let {isSavable} = params
+  isSavable = toBoolean(currentUser, isSavable)
   const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
   if (subsection) selector.push({subsection: {_eq: subsection}})
   const filter = (id && {_id: {_eq: id}}) || {_and: selector}
@@ -186,7 +192,7 @@ const CFFrameworkDiagramSection = ({match}) => {
             <ItemDirective text='undo'/>
             <ItemDirective text='redo'/>
             <ItemDirective type="Separator"/>
-            <ItemDirective text='save'/>
+            {isSavable ? <ItemDirective text='save'/> : <div/>}
             <ItemDirective text='export'/>
             <ItemDirective text='print'/>
           </ItemsDirective>
@@ -195,4 +201,4 @@ const CFFrameworkDiagramSection = ({match}) => {
   )
 }
 
-registerComponent({name: 'CFFrameworkDiagramSection', component: CFFrameworkDiagramSection})
+registerComponent({name: 'CFFrameworkDiagramSection', component: CFFrameworkDiagramSection, hocs: [withCurrentUser]})

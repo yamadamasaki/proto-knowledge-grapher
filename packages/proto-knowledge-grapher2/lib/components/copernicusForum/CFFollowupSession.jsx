@@ -10,7 +10,7 @@ const CFFollowupSession = ({match}) => {
       <React.Fragment>
         <Helmet><title>Followup Session ({sectionId})</title></Helmet>
         <h1>フォローアップ・セッション</h1>
-        <Components.CFFrameworkDiagramSection match={{params: {programId, sectionId}}}/>
+        <Components.CFFrameworkDiagramSection match={{params: {programId, sectionId, isSavable: 'admins'}}}/>
       </React.Fragment>
   )
 }

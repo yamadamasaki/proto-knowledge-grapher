@@ -10,7 +10,7 @@ const CFSyncSession = ({match}) => {
       <React.Fragment>
         <Helmet><title>Sync Session ({sectionId})</title></Helmet>
         <h1>同期セッション</h1>
-        <Components.CFFrameworkDiagramSection match={{params: {programId, sectionId}}}/>
+        <Components.CFFrameworkDiagramSection match={{params: {programId, sectionId, isSavable: 'admins'}}}/>
       </React.Fragment>
   )
 }

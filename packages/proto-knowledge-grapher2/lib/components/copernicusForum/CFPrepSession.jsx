@@ -13,7 +13,7 @@ const CFPrepSession = ({match}) => {
         <h2>ねらい</h2>
         <Components.SimpleTextSection match={{params: {programId, sectionId, subsection: 'purpose', isEditable: 'admins', isReadable: 'members'}}}/>
         <h2>成果物</h2>
-        <Components.CFFrameworkDiagramSection match={{params: {programId, sectionId, subsection: 'work'}}}/>
+        <Components.CFFrameworkDiagramSection match={{params: {programId, sectionId, subsection: 'work', isSavable: 'admins'}}}/>
       </React.Fragment>
   )
 }
