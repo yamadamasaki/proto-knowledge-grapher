@@ -11,8 +11,7 @@ import {
 } from '@syncfusion/ej2-react-diagrams'
 import {CheckBoxComponent} from '@syncfusion/ej2-react-buttons'
 import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
-import {Components, registerComponent} from 'meteor/vulcan:lib'
-import {useCreate2, useMulti2, useUpdate2} from 'meteor/vulcan:core'
+import {registerComponent, useCreate2, useMulti2, useUpdate2} from 'meteor/vulcan:core'
 
 const interval = [
   1,

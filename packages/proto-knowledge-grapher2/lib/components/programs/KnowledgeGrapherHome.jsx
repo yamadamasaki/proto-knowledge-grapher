@@ -1,6 +1,5 @@
 import React from 'react'
-import {registerComponent} from 'meteor/vulcan:lib'
-import {Components, useMulti2} from 'meteor/vulcan:core'
+import {Components, registerComponent, useMulti2} from 'meteor/vulcan:core'
 import Programs from '../../modules/programs/collection'
 import {Link} from 'react-router-dom'
 import {ListViewComponent} from '@syncfusion/ej2-react-lists'

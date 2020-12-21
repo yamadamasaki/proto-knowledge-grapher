@@ -1,6 +1,5 @@
 import React, {useRef, useState} from 'react'
-import {Components, registerComponent} from 'meteor/vulcan:lib'
-import {useCreate2, useMulti2, useUpdate2} from 'meteor/vulcan:core'
+import {Components, registerComponent, useCreate2, useMulti2, useUpdate2} from 'meteor/vulcan:core'
 import {TextBoxComponent} from '@syncfusion/ej2-react-inputs'
 import {MultiSelectComponent} from '@syncfusion/ej2-react-dropdowns'
 import {ButtonComponent} from '@syncfusion/ej2-react-buttons'
@@ -102,7 +101,7 @@ const CFAsyncSession = ({match}) => {
                   <div></div>
             }
             {!placeholder ? <ButtonComponent onClick={onDelete}>Delete Team</ButtonComponent> : <div></div>}
-            <ButtonComponent onClick={save}>{placeholder?"Create Team":"Save Team"}</ButtonComponent>
+            <ButtonComponent onClick={save}>{placeholder ? 'Create Team' : 'Save Team'}</ButtonComponent>
           </div>
         </div>
     )

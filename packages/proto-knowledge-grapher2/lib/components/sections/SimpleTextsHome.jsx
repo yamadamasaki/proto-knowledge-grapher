@@ -1,5 +1,5 @@
 import React from 'react'
-import {Components, registerComponent} from 'meteor/vulcan:lib'
+import {Components, registerComponent} from 'meteor/vulcan:core'
 import SimpleTexts from '../../modules/simpleTexts/collection'
 import {Link} from 'react-router-dom'
 

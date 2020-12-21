@@ -2,7 +2,7 @@
  * @summary CFAsyncSessions Schema
  * @type {Object}
  */
-import {createSchema} from 'meteor/vulcan:lib'
+import {createSchema} from 'meteor/vulcan:core'
 
 const teamSchema = createSchema({
   name: {

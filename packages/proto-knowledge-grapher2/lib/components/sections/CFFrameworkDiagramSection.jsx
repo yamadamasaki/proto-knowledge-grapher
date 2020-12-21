@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {Components, registerComponent} from 'meteor/vulcan:lib'
+import {Components, registerComponent, useCreate2, useMulti2, useUpdate2, withCurrentUser} from 'meteor/vulcan:core'
 import {
   DiagramComponent,
   DiagramContextMenu,
@@ -9,7 +9,6 @@ import {
   UndoRedo,
 } from '@syncfusion/ej2-react-diagrams'
 import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
-import {useCreate2, useMulti2, useUpdate2, withCurrentUser} from 'meteor/vulcan:core'
 import Users from 'meteor/vulcan:users'
 
 const basicShapes = [
