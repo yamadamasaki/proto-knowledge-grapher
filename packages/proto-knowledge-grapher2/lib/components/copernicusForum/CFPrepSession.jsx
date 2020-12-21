@@ -11,9 +11,28 @@ const CFPrepSession = ({match}) => {
         <Helmet><title>Prep Session ({sectionId})</title></Helmet>
         <h1>準備セッション</h1>
         <h2>ねらい</h2>
-        <Components.SimpleTextSection match={{params: {programId, sectionId, subsection: 'purpose', isEditable: 'admins', isReadable: 'members'}}}/>
+        <Components.SimpleTextSection match={{
+          params: {
+            programId,
+            sectionId,
+            subsection: 'purpose',
+            isEditable: 'admins',
+            isReadable: 'members',
+          },
+        }}/>
         <h2>成果物</h2>
-        <Components.CFFrameworkDiagramSection match={{params: {programId, sectionId, subsection: 'work', isSavable: 'admins'}}}/>
+        <Components.CFFrameworkDiagramSection
+            match={{params: {programId, sectionId, subsection: 'work', isSavable: 'admins'}}}/>
+        <h2>宿題</h2>
+        <Components.GoogleFormsSection match={{
+          params: {
+            programId,
+            sectionId,
+            subsection: 'questionnaire',
+            isDefinable: 'admins',
+            isAnswerable: 'members',
+          },
+        }}/>
       </React.Fragment>
   )
 }

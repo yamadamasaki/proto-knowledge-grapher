@@ -1934,6 +1934,172 @@ input CFNetworkDiagramSelectorUniqueInput {
 }
 
 
+# Type for GoogleForms
+type GoogleForm {
+  _id: String 
+  createdAt: Date 
+  updatedAt: Date 
+  userId: String 
+  user: User 
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  formUrl: String 
+  resultUrl: String 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+  updatedAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteGoogleFormInput{
+  filter: GoogleFormFilterInput
+  id: String
+}
+
+input SingleGoogleFormInput {
+  # filtering
+  filter: GoogleFormFilterInput
+  sort: GoogleFormSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: GoogleFormSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiGoogleFormInput {
+
+  # filtering
+  filter: GoogleFormFilterInput
+  sort: GoogleFormSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleGoogleFormOutput{
+  result: GoogleForm
+}
+
+type  MultiGoogleFormOutput{
+  results: [GoogleForm]
+  totalCount: Int
+}
+
+type GoogleFormMutationOutput{
+  data: GoogleForm
+}
+
+input CreateGoogleFormInput {
+  data: CreateGoogleFormDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateGoogleFormDataInput {
+  userId: String 
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  formUrl: String 
+  resultUrl: String 
+}
+
+input UpdateGoogleFormInput{
+  filter: GoogleFormFilterInput
+  id: String
+  data: UpdateGoogleFormDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertGoogleFormInput{
+  filter: GoogleFormFilterInput
+  id: String
+  data: UpdateGoogleFormDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateGoogleFormDataInput {
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  formUrl: String 
+  resultUrl: String 
+}
+
+input GoogleFormFilterInput {
+  _and: [GoogleFormFilterInput]
+  _not: GoogleFormFilterInput
+  _or: [GoogleFormFilterInput]
+
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  updatedAt: Date_Selector
+  userId: String_Selector
+  programId: String_Selector
+  sectionId: String_Selector
+  subsection: String_Selector
+  title: String_Selector
+  formUrl: String_Selector
+  resultUrl: String_Selector
+}
+
+input GoogleFormSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  updatedAt: SortOptions
+  userId: SortOptions
+  programId: SortOptions
+  sectionId: SortOptions
+  subsection: SortOptions
+  title: SortOptions
+  formUrl: SortOptions
+  resultUrl: SortOptions
+}
+
+input GoogleFormSelectorInput {
+  _and: [GoogleFormSelectorInput]
+  _or: [GoogleFormSelectorInput]
+
+}
+
+input GoogleFormSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
 
 
 type Query {
@@ -1994,6 +2160,12 @@ type Query {
   
   # A list of CFNetworkDiagram documents matching a set of query terms
   cFNetworkDiagrams(input: MultiCFNetworkDiagramInput):  MultiCFNetworkDiagramOutput
+  
+  # A single GoogleForm document fetched by ID or slug
+  googleForm(input: SingleGoogleFormInput!): SingleGoogleFormOutput
+  
+  # A list of GoogleForm documents matching a set of query terms
+  googleForms(input: MultiGoogleFormInput):  MultiGoogleFormOutput
   
 }
   
@@ -2310,6 +2482,38 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: CFNetworkDiagramSelectorUniqueInput
 ) : CFNetworkDiagramMutationOutput
+
+  # Mutation for creating new GoogleForm documents
+  createGoogleForm(
+  input: CreateGoogleFormInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateGoogleFormDataInput
+) : GoogleFormMutationOutput
+
+  # Mutation for updating a GoogleForm document
+  updateGoogleForm(
+  input: UpdateGoogleFormInput,
+  "Deprecated (use 'input' field instead)."
+  selector: GoogleFormSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateGoogleFormDataInput 
+) : GoogleFormMutationOutput
+
+  # Mutation for upserting a GoogleForm document
+  upsertGoogleForm(
+  input: UpsertGoogleFormInput,
+  "Deprecated (use 'input' field instead)."
+  selector: GoogleFormSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateGoogleFormDataInput
+) : GoogleFormMutationOutput
+
+  # Mutation for deleting a GoogleForm document
+  deleteGoogleForm(
+  input: DeleteGoogleFormInput,
+  "Deprecated (use 'input' field instead)."
+  selector: GoogleFormSelectorUniqueInput
+) : GoogleFormMutationOutput
 
 }
 

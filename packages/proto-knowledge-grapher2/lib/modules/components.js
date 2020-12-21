@@ -18,6 +18,7 @@ import '../components/sections/SimpleDiagramSection'
 import '../components/sections/SimpleDiagramsHome'
 import '../components/sections/CFFrameworkDiagramSection'
 import '../components/sections/CFNetworkDiagramSection'
+import '../components/sections/GoogleFormsSection'
 
 // sessions
 import '../components/copernicusForum/CFPrepSession'
