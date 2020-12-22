@@ -1,5 +1,5 @@
 import React, {useRef} from 'react'
-import {registerComponent, useSingle2} from 'meteor/vulcan:core'
+import {registerComponent, useSingle2, withAccess} from 'meteor/vulcan:core'
 import {SidebarComponent, TreeViewComponent} from '@syncfusion/ej2-react-navigations'
 import {Programs} from '../../modules/programs'
 import {v1 as uuidv1} from 'uuid'
@@ -109,5 +109,5 @@ const ProgramsPage = ({match, history}) => {
   )
 }
 
-registerComponent({name: 'ProgramsPage', component: ProgramsPage})
+registerComponent( 'ProgramsPage', ProgramsPage, [withAccess, {groups:['members']}])
 

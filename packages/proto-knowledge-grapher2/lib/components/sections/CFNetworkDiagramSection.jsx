@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {Components, registerComponent, useCreate2, useMulti2, useUpdate2} from 'meteor/vulcan:core'
+import {Components, registerComponent, useCreate2, useMulti2, useUpdate2, withAccess} from 'meteor/vulcan:core'
 import {
   DiagramComponent,
   DiagramContextMenu,
@@ -179,4 +179,4 @@ const CFNetworkDiagramSection = ({match}) => {
   )
 }
 
-registerComponent({name: 'CFNetworkDiagramSection', component: CFNetworkDiagramSection})
+registerComponent( 'CFNetworkDiagramSection', CFNetworkDiagramSection, [withAccess, {groups:['members']}])

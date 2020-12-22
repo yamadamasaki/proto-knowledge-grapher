@@ -1,5 +1,5 @@
 import React from 'react'
-import {Components, registerComponent} from 'meteor/vulcan:core'
+import {Components, registerComponent, withAccess} from 'meteor/vulcan:core'
 import {Helmet} from 'react-helmet'
 
 const CFPrepSession = ({match}) => {
@@ -37,4 +37,5 @@ const CFPrepSession = ({match}) => {
   )
 }
 
-registerComponent({name: 'CFPrepSession', component: CFPrepSession})
+//registerComponent({name: 'CFPrepSession', component: CFPrepSession, hocs:[withAccess, {groups:['members'], message:'non-login users are not allowed'}]})
+registerComponent('CFPrepSession', CFPrepSession, [withAccess, {groups:['members']}])

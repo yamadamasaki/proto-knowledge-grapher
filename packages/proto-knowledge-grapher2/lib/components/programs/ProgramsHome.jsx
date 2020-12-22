@@ -1,5 +1,5 @@
 import React from 'react'
-import {Components, registerComponent} from 'meteor/vulcan:core'
+import {Components, registerComponent, withAccess} from 'meteor/vulcan:core'
 import Programs from '../../modules/programs/collection'
 import {Link} from 'react-router-dom'
 import {Helmet} from 'react-helmet'
@@ -19,4 +19,4 @@ const ProgramsHome = () => (
     </React.Fragment>
 )
 
-registerComponent({name: 'ProgramsHome', component: ProgramsHome})
+registerComponent( 'ProgramsHome', ProgramsHome, [withAccess, {groups:['members']}])
