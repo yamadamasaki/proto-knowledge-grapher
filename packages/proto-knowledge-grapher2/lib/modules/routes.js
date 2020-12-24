@@ -4,7 +4,7 @@ addRoute([
   // knowledge grapher
   {name: 'knowledge-grapher.top', path: '/', componentName: 'KnowledgeGrapherHome', layoutName: 'EJ2Layout'},
   // programs
-  {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome', layoutName: 'EJ2Layout'},
+  {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome'},
   {name: 'programs.item', path: '/programs/:id', componentName: 'ProgramsPage', layoutName: 'EJ2Layout'},
 
   // sessions
