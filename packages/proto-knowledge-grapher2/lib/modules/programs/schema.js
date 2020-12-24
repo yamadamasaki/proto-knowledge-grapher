@@ -78,14 +78,8 @@ const schema = {
     type: Object,
     optional: true,
     canRead: ['members'],
-    onCreate: ({document}) => {
-      console.log(document)
-      if (document.structureAsJson) return JSON.parse(document.structureAsJson)
-    },
-    onUpdate: ({data}) => {
-      console.log({data})
-      if (data.structureAsJson) return JSON.parse(data.structureAsJson)
-    },
+    onCreate: ({document}) => (document.structureAsJson ? JSON.parse(document.structureAsJson) : null),
+    onUpdate: ({data}) => (data.structureAsJson ? JSON.parse(data.structureAsJson) : null),
   },
 }
 
