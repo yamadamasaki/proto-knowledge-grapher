@@ -1,5 +1,5 @@
 import React from 'react'
-import {Components, registerComponent, withAccess} from 'meteor/vulcan:core'
+import {Components, registerComponent} from 'meteor/vulcan:core'
 import {Helmet} from 'react-helmet'
 
 const CFFollowupSession = ({match}) => {
@@ -14,5 +14,4 @@ const CFFollowupSession = ({match}) => {
       </React.Fragment>
   )
 }
-
-registerComponent( 'CFFollowupSession',  CFFollowupSession,[withAccess, {groups:['members']}])
+registerComponent({name: 'CFFollowupSession', component: CFFollowupSession})

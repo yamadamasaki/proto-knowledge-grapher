@@ -1,5 +1,5 @@
 import React, {useRef} from 'react'
-import {registerComponent, useSingle2, withAccess} from 'meteor/vulcan:core'
+import {registerComponent, useSingle2} from 'meteor/vulcan:core'
 import {SidebarComponent, TreeViewComponent} from '@syncfusion/ej2-react-navigations'
 import {Programs} from '../../modules/programs'
 import {v1 as uuidv1} from 'uuid'
@@ -67,7 +67,6 @@ const ProgramsPage = ({match, history}) => {
   return (
       <React.Fragment>
         <Helmet><title>{structure ? structure.title : 'Program'}</title></Helmet>
-        <h1>ProgramsPage</h1>
         <div className="control-section">
           <div id="wrapper">
             <title>Essential JS 2 for React - Sidebar > Sidebar with ListView </title>
@@ -76,7 +75,6 @@ const ProgramsPage = ({match, history}) => {
                 <ul className='header-list'>
                   <li className='float-left header-style icon-menu' id='hamburger' onClick={toggleClick}></li>
                   <li className='float-left header-style nav-pane'><b>Navigation Pane</b></li>
-                  <li className='header-style float-right support border-left'><b>Support</b></li>
                 </ul>
               </div>
               <SidebarComponent id="sidebar-treeview" ref={sidebar} width={width} target={target}
@@ -109,5 +107,5 @@ const ProgramsPage = ({match, history}) => {
   )
 }
 
-registerComponent( 'ProgramsPage', ProgramsPage, [withAccess, {groups:['members']}])
+registerComponent({name: 'ProgramsPage', component: ProgramsPage})
 

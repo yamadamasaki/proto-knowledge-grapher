@@ -1,5 +1,5 @@
 import React from 'react'
-import {Components, registerComponent, useMulti2, withAccess} from 'meteor/vulcan:core'
+import {Components, registerComponent, useMulti2} from 'meteor/vulcan:core'
 import Programs from '../../modules/programs/collection'
 import {Link} from 'react-router-dom'
 import {ListViewComponent} from '@syncfusion/ej2-react-lists'
@@ -17,7 +17,7 @@ const KnowledgeGrapherHome = () => {
 
   return (
       <React.Fragment>
-        <Helmet><title>Knowledge Grapher Home</title></Helmet>
+        <Helmet><title>提供プログラム</title></Helmet>
         {
           loading ? <Components.Loading/> :
               <div>
@@ -29,4 +29,4 @@ const KnowledgeGrapherHome = () => {
   )
 }
 
-registerComponent('KnowledgeGrapherHome', KnowledgeGrapherHome, [withAccess, {groups:['members']}])
+registerComponent({name: 'KnowledgeGrapherHome', component: KnowledgeGrapherHome})
