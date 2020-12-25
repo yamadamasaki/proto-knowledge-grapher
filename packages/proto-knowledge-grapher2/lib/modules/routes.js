@@ -1,11 +1,14 @@
 import {addRoute} from 'meteor/vulcan:core'
 
+const adminAccessOptions = {groups: ['admins'], redirect: '/log-in'}
+const memberAccessOptions = {groups: ['members'], redirect: '/log-in'}
+
 addRoute([
   // knowledge grapher
-  {name: 'knowledge-grapher.top', path: '/', componentName: 'KnowledgeGrapherHome', layoutName: 'EJ2Layout'},
+  {name: 'knowledge-grapher.top', path: '/', componentName: 'KnowledgeGrapherHome', layoutName: 'EJ2Layout', access: memberAccessOptions},
   // programs
-  {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome'},
-  {name: 'programs.item', path: '/programs/:id', componentName: 'ProgramsPage', layoutName: 'EJ2Layout'},
+  {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome', access: memberAccessOptions},
+  {name: 'programs.item', path: '/programs/:id', componentName: 'ProgramsPage', layoutName: 'EJ2Layout', access: memberAccessOptions},
 
   // sessions
   /// CFPrepSession
@@ -14,6 +17,7 @@ addRoute([
     path: '/sections/:programId/:collectionName/:sectionId/CFPrepSession/',
     componentName: 'CFPrepSession',
     layoutName: 'EJ2Layout',
+    access: memberAccessOptions,
   },
   /// CFSyncSession
   {
@@ -21,6 +25,7 @@ addRoute([
     path: '/sections/:programId/:collectionName/:sectionId/CFSyncSession/',
     componentName: 'CFSyncSession',
     layoutName: 'EJ2Layout',
+    access: memberAccessOptions,
   },
   /// CFAsyncSession
   {
@@ -28,12 +33,14 @@ addRoute([
     path: '/sections/:programId/:collectionName/:sectionId/CFAsyncSession/',
     componentName: 'CFAsyncSession',
     layoutName: 'EJ2Layout',
+    access: memberAccessOptions,
   },
   {
     name: 'sessions.cfAsyncSession.teams',
     path: '/sections/:programId/:collectionName/:sectionId/:subsection/CFNetworkDiagramSection/',
     componentName: 'CFNetworkDiagramSection',
     layoutName: 'EJ2Layout',
+    access: memberAccessOptions,
   },
   /// CFFollowupSession
   {
@@ -41,13 +48,15 @@ addRoute([
     path: '/sections/:programId/:collectionName/:sectionId/CFFollowupSession/',
     componentName: 'CFFollowupSession',
     layoutName: 'EJ2Layout',
+    access: memberAccessOptions,
   },
 
   // users
+  {name: 'users.profile', path: '/users/:slug', componentName: 'UsersProfile'},
   {name: 'users.account', path: '/account', componentName: 'UsersAccount'},
   {name: 'users.edit', path: '/users/:slug/edit', componentName: 'UsersEdit'},
 
 // admin
-  {name: 'admin.users', path: '/admin/users', componentName: 'AdminUsers'},
+  {name: 'admin.users', path: '/admin/users', componentName: 'AdminUsers', access: adminAccessOptions,},
 
 ])
