@@ -22,7 +22,7 @@ registerFragment(/* GraphQL */`
     isAdmin
     #bio
     #htmlBio
-    twitterUsername
+    #twitterUsername
     #website
     groups
     # vulcan:posts

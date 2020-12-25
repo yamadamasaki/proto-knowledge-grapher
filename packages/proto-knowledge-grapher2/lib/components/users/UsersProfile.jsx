@@ -44,10 +44,6 @@ const UsersProfile = ({ currentUser, loading, document: user }) => {
             </li>
           )}
         </ul>
-        <h3>
-          <FormattedMessage id="users.posts" />
-        </h3>
-        <Components.PostsList input={{ filter: { userId: { _eq: user._id } } }} showHeader={false} />
       </div>
     );
   }
