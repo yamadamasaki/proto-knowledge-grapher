@@ -82,7 +82,7 @@ const ProgramsPage = ({match, history}) => {
                                 close={onClose} dockSize={dockSize} enableDock={true}>
                 <div className='main-menu'>
                   <TreeViewComponent id='main-treeview' ref={treeView} fields={fields} nodeClicked={nodeClicked}
-                                     fullRowNavigable/>
+                                     fullRowNavigable enablePersistence={true}/>
                 </div>
               </SidebarComponent>
               {structure ?

@@ -82,6 +82,8 @@ const CFNetworkDiagramSection = ({match}) => {
   })
   if (results && results.length === 0) results[0] = {programId, sectionId, subsection}
 
+  const {nodeLabels = ['undefined'], edgeLabels = ['undefined']} = params
+
   const [updateDocument, {loading: loading_u}] = useUpdate2({collectionName, fragmentName: 'CFNetworkDiagramFragment'})
   const [createDocument, {loading: loading_c}] = useCreate2({collectionName, fragmentName: 'CFNetworkDiagramFragment'})
   const [error, setError] = useState()
@@ -145,6 +147,24 @@ const CFNetworkDiagramSection = ({match}) => {
     }
   }
 
+  const nodesTemplate = nodeLabels.map((label, index) => ({
+    id: `node-${index}`,
+    shape: {type: 'Basic', shape: 'Rectangle'},
+    annotations: [
+        {offset: {x: 0.5, y: 0.1}, verticalAlignment: 'Top', content: label},
+    ],
+    symbolInfo: {description: {text: 'Top'}},
+  }))
+
+  const edgesTemplate = edgeLabels.map((label, index) => ({
+    id: 'SingleStraight', type: 'Straight', ...points, targetDecorator: {shape: 'Arrow'},
+  }))
+
+  const templates = [
+    {id: 'nodes', expanded: true, symbols: nodesTemplate, title: '発言', iconCss: 'e-ddb-icons e-basic'},
+    {id: 'edges', expanded: true, symbols: edgesTemplate, title: '位置付け', iconCss: 'e-ddb-icons e-connector'},
+  ]
+
   return (
       <React.Fragment>
         <Helmet><title>Async Session {sectionId} - {subsection})</title></Helmet>
@@ -156,7 +176,8 @@ const CFNetworkDiagramSection = ({match}) => {
               [loading_c, loading_u].some(it => it === true) ? <Components.Loading/> :
                   <React.Fragment>
                     <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
-                                      contextMenuSettings={{show: true}}>
+                                      contextMenuSettings={{show: true}}
+                                      historyChange={e=>console.log({e})}>
                       <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
                     </DiagramComponent>
                     <OverviewComponent id="overview" style={{top: '30px'}} sourceID="diagram" width={'100%'}
