@@ -1,7 +1,7 @@
 import {addRoute} from 'meteor/vulcan:core'
 
-const adminAccessOptions = {groups: ['admins'], redirect: '/log-in'}
-const memberAccessOptions = {groups: ['members'], redirect: '/log-in'}
+const adminAccessOptions = {groups: ['admins']}
+const memberAccessOptions = {groups: ['members'], redirect: '/login'}
 
 addRoute([
   // knowledge grapher
@@ -55,6 +55,7 @@ addRoute([
   {name: 'users.profile', path: '/users/:slug', componentName: 'UsersProfile'},
   {name: 'users.account', path: '/account', componentName: 'UsersAccount'},
   {name: 'users.edit', path: '/users/:slug/edit', componentName: 'UsersEdit'},
+  {name: 'users.login', path: '/login', componentName: 'LoginPage'},
 
 // admin
   {name: 'admin.users', path: '/admin/users', componentName: 'AdminUsers', access: adminAccessOptions,},
