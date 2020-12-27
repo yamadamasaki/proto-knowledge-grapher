@@ -107,11 +107,19 @@ const CFAsyncSession = ({match}) => {
     )
   }
 
+  const sessionName = '非同期セッション'
+
   return (
       <React.Fragment>
         <Helmet><title>Async Session ({sectionId})</title></Helmet>
-        <h1>非同期セッション</h1>
-        <h2>チーム</h2>
+        <Components.KGBreadCrumbs programId={programId} sectionId={sectionId}/>
+        <Components.KGSessionHeader sessionName={sessionName}/>
+
+        <Components.KGSectionMenu sectionNames={[
+          'お題', 'チームワーク',
+        ]}/>
+
+        <Components.KGSectionHeader sectionName='チームワーク'/>
         {
           error ? <Components.Flash message={error}/> :
               [loading_c, loading_u, loading_r, loading_users].some(it => it === true) ? <Components.Loading/> :

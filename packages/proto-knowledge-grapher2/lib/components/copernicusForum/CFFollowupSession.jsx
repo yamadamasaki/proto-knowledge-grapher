@@ -2,6 +2,8 @@ import React from 'react'
 import {Components, registerComponent} from 'meteor/vulcan:core'
 import {Helmet} from 'react-helmet'
 
+const sessionName = 'フォローアップ・セッション'
+
 const CFFollowupSession = ({match}) => {
   const {params} = match
   const {programId, sectionId} = params
@@ -9,8 +11,21 @@ const CFFollowupSession = ({match}) => {
   return (
       <React.Fragment>
         <Helmet><title>Followup Session ({sectionId})</title></Helmet>
-        <h1>フォローアップ・セッション</h1>
-        <Components.CFFrameworkDiagramSection match={{params: {programId, sectionId, isSavable: 'admins'}}}/>
+        <Components.KGBreadCrumbs programId={programId} sectionId={sectionId}/>
+        <Components.KGSessionHeader sessionName={sessionName}/>
+
+        <Components.KGSectionMenu sectionNames={[
+          'お題', '(ソロ｜ペア）ワーク', 'モブワーク',
+        ]}/>
+
+        <Components.KGSectionHeader sectionName='モブワーク'/>
+        <Components.CFFrameworkDiagramSection match={{
+          params: {
+            programId,
+            sectionId,
+            isSavable: 'admins',
+          }
+        }}/>
       </React.Fragment>
   )
 }
