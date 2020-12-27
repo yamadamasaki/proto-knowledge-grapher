@@ -6,6 +6,11 @@ import '../components/common/EJ2Layout.jsx'
 import '../components/common/Logo.jsx'
 import '../components/common/SearchForm.jsx'
 
+import '../components/common/KGBreadCrumbs'
+import '../components/common/KGSectionHeader'
+import '../components/common/KGSectionMenu'
+import '../components/common/KGSessionHeader'
+
 // programs
 import '../components/programs/KnowledgeGrapherHome'
 import '../components/programs/ProgramsHome'
