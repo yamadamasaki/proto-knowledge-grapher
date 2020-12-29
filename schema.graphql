@@ -2100,6 +2100,227 @@ input GoogleFormSelectorUniqueInput {
 }
 
 
+# Type for KGTeams
+type KGTeam {
+  _id: String 
+  createdAt: Date 
+  updatedAt: Date 
+  userId: String 
+  user: User 
+  programId: String 
+  program: Program 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  teams: [KGTeamTeams] 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+  updatedAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteKGTeamInput{
+  filter: KGTeamFilterInput
+  id: String
+}
+
+input SingleKGTeamInput {
+  # filtering
+  filter: KGTeamFilterInput
+  sort: KGTeamSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: KGTeamSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiKGTeamInput {
+
+  # filtering
+  filter: KGTeamFilterInput
+  sort: KGTeamSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleKGTeamOutput{
+  result: KGTeam
+}
+
+type  MultiKGTeamOutput{
+  results: [KGTeam]
+  totalCount: Int
+}
+
+type KGTeamMutationOutput{
+  data: KGTeam
+}
+
+input CreateKGTeamInput {
+  data: CreateKGTeamDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateKGTeamDataInput {
+  userId: String 
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  teams: [CreateKGTeamTeamsDataInput] 
+}
+
+input UpdateKGTeamInput{
+  filter: KGTeamFilterInput
+  id: String
+  data: UpdateKGTeamDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertKGTeamInput{
+  filter: KGTeamFilterInput
+  id: String
+  data: UpdateKGTeamDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateKGTeamDataInput {
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  teams: [UpdateKGTeamTeamsDataInput] 
+}
+
+input KGTeamFilterInput {
+  _and: [KGTeamFilterInput]
+  _not: KGTeamFilterInput
+  _or: [KGTeamFilterInput]
+
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  updatedAt: Date_Selector
+  userId: String_Selector
+  programId: String_Selector
+  sectionId: String_Selector
+  subsection: String_Selector
+  title: String_Selector
+
+}
+
+input KGTeamSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  updatedAt: SortOptions
+  userId: SortOptions
+  programId: SortOptions
+  sectionId: SortOptions
+  subsection: SortOptions
+  title: SortOptions
+  teams: SortOptions
+}
+
+input KGTeamSelectorInput {
+  _and: [KGTeamSelectorInput]
+  _or: [KGTeamSelectorInput]
+
+}
+
+input KGTeamSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
+type KGTeamTeams {
+  name: String 
+  players: [String] 
+  teamId: String 
+}
+
+
+input CreateKGTeamTeamsInput {
+  data: CreateKGTeamTeamsDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateKGTeamTeamsDataInput {
+  name: String 
+  players: [String] 
+  teamId: String 
+}
+
+input UpdateKGTeamTeamsInput{
+  filter: KGTeamTeamsFilterInput
+  id: String
+  data: UpdateKGTeamTeamsDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertKGTeamTeamsInput{
+  filter: KGTeamTeamsFilterInput
+  id: String
+  data: UpdateKGTeamTeamsDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateKGTeamTeamsDataInput {
+  name: String 
+  players: [String] 
+  teamId: String 
+}
+
+input KGTeamTeamsFilterInput {
+  _and: [KGTeamTeamsFilterInput]
+  _not: KGTeamTeamsFilterInput
+  _or: [KGTeamTeamsFilterInput]
+
+
+  name: String_Selector
+  players: String_Array_Selector
+  teamId: String_Selector
+}
+
+input KGTeamTeamsSortInput {
+  name: SortOptions
+  players: SortOptions
+  teamId: SortOptions
+}
+
+
 
 
 type Query {
@@ -2166,6 +2387,12 @@ type Query {
   
   # A list of GoogleForm documents matching a set of query terms
   googleForms(input: MultiGoogleFormInput):  MultiGoogleFormOutput
+  
+  # A single KGTeam document fetched by ID or slug
+  kGTeam(input: SingleKGTeamInput!): SingleKGTeamOutput
+  
+  # A list of KGTeam documents matching a set of query terms
+  kGTeams(input: MultiKGTeamInput):  MultiKGTeamOutput
   
 }
   
@@ -2514,6 +2741,38 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: GoogleFormSelectorUniqueInput
 ) : GoogleFormMutationOutput
+
+  # Mutation for creating new KGTeam documents
+  createKGTeam(
+  input: CreateKGTeamInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateKGTeamDataInput
+) : KGTeamMutationOutput
+
+  # Mutation for updating a KGTeam document
+  updateKGTeam(
+  input: UpdateKGTeamInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGTeamSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateKGTeamDataInput 
+) : KGTeamMutationOutput
+
+  # Mutation for upserting a KGTeam document
+  upsertKGTeam(
+  input: UpsertKGTeamInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGTeamSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateKGTeamDataInput
+) : KGTeamMutationOutput
+
+  # Mutation for deleting a KGTeam document
+  deleteKGTeam(
+  input: DeleteKGTeamInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGTeamSelectorUniqueInput
+) : KGTeamMutationOutput
 
 }
 
