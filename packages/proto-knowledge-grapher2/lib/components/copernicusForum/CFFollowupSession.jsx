@@ -15,15 +15,50 @@ const CFFollowupSession = ({match}) => {
         <Components.KGSessionHeader sessionName={sessionName}/>
 
         <Components.KGSectionMenu sectionNames={[
-          'お題', '(ソロ｜ペア）ワーク', 'モブワーク',
+          '解説', 'お題', 'モブワーク', '(ソロ｜ペア）ワーク',
         ]}/>
+
+        <Components.KGSectionHeader sectionName='解説'/>
+        <Components.SimpleTextSection match={{
+          params: {
+            programId,
+            sectionId,
+            subsection: 'introduction',
+            isEditable: 'admins',
+            isReadable: 'members',
+          },
+        }}/>
+
+        <Components.KGSectionHeader sectionName='お題'/>
+        <Components.GoogleFormsSection match={{
+          params: {
+            programId,
+            sectionId,
+            subsection: 'questionnaire',
+            isDefinable: 'admins',
+            isAnswerable: 'members',
+          },
+        }}/>
 
         <Components.KGSectionHeader sectionName='モブワーク'/>
         <Components.CFFrameworkDiagramSection match={{
           params: {
             programId,
             sectionId,
+            subsection: 'mobWork',
             isSavable: 'admins',
+          }
+        }}/>
+
+        <Components.KGSectionHeader sectionName='(ソロ｜ペア）ワーク'/>
+        <Components.KGTeamSection match={{
+          params: {
+            programId,
+            sectionId,
+            subsection: 'soloWork',
+            isEditable: 'admins',
+            delegatedCollectionName: 'CFFrameworkDiagrams',
+            delegatedComponentName: 'CFFrameworkDiagramSection',
           }
         }}/>
       </React.Fragment>

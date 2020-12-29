@@ -15,8 +15,30 @@ const CFAsyncSession = ({match}) => {
         <Components.KGSessionHeader sessionName={sessionName}/>
 
         <Components.KGSectionMenu sectionNames={[
-          'お題', 'チームワーク',
+          '解説', 'お題', 'チームワーク',
         ]}/>
+
+        <Components.KGSectionHeader sectionName='解説'/>
+        <Components.SimpleTextSection match={{
+          params: {
+            programId,
+            sectionId,
+            subsection: 'introduction',
+            isEditable: 'admins',
+            isReadable: 'members',
+          },
+        }}/>
+
+        <Components.KGSectionHeader sectionName='お題'/>
+        <Components.GoogleFormsSection match={{
+          params: {
+            programId,
+            sectionId,
+            subsection: 'questionnaire',
+            isDefinable: 'admins',
+            isAnswerable: 'members',
+          },
+        }}/>
 
         <Components.KGSectionHeader sectionName='チームワーク'/>
         <Components.KGTeamSection match={{
@@ -27,9 +49,8 @@ const CFAsyncSession = ({match}) => {
             isEditable: 'admins',
             delegatedCollectionName: 'CFNetworkDiagrams',
             delegatedComponentName: 'CFNetworkDiagramSection',
-          }
-        }}
-        />
+          },
+        }}/>
       </React.Fragment>
   )
 }

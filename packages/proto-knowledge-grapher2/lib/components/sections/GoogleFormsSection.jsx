@@ -67,11 +67,13 @@ const GoogleFormsSection = ({match, currentUser}) => {
                                           floatLabelType="Auto" ref={resultUrl}/>
                         <ButtonComponent onClick={save}>Save</ButtonComponent>
                         <br/>
-                        <a href={document.resultUrl}>結果表示（要Google Driveアカウント）</a>
+                        {
+                          document.resultUrl ? <a href={document.resultUrl}>結果表示（要Google Driveアカウント）</a> : <div/>
+                        }
                       </div>
                     }
                     {
-                      isAnswerable &&
+                      isAnswerable && document.formUrl &&
                       <div>
                         <h3>質問</h3>
                         <iframe src={document.formUrl} width="640" height="2078" frameBorder="0" marginHeight="0"

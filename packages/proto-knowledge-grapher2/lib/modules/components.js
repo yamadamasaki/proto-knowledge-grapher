@@ -10,6 +10,7 @@ import '../components/common/KGBreadCrumbs'
 import '../components/common/KGSectionHeader'
 import '../components/common/KGSectionMenu'
 import '../components/common/KGSessionHeader'
+import '../components/common/ErrorBoundary'
 
 // programs
 import '../components/programs/KnowledgeGrapherHome'
