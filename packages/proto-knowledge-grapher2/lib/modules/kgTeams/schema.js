@@ -61,7 +61,9 @@ const schema = {
     type: Date,
     optional: true,
     canRead: ['members'],
-    onUpdate: () => {return new Date()},
+    onUpdate: () => {
+      return new Date()
+    },
   },
   /**
    The session owner's `_id`.
