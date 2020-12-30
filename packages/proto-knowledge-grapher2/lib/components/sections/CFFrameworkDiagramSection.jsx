@@ -4,6 +4,7 @@ import {
   DiagramComponent,
   DiagramContextMenu,
   Inject,
+  OverviewComponent,
   PrintAndExport,
   SymbolPaletteComponent,
   UndoRedo,
@@ -179,10 +180,14 @@ const CFFrameworkDiagramSection = ({match, currentUser}) => {
         {
           error ? <Components.Flash message={error}/> :
               [loading_c, loading_u].some(it => it === true) ? <Components.Loading/> :
-                  <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
-                                    contextMenuSettings={{show: true}}>
-                    <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
-                  </DiagramComponent>
+                  <React.Fragment>
+                    <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
+                                      contextMenuSettings={{show: true}}>
+                      <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
+                    </DiagramComponent>
+                    <OverviewComponent id="overview" style={{top: '30px'}} sourceID="diagram" width={'100%'}
+                                       height={'150px'}/>
+                  </React.Fragment>
         }
         <ToolbarComponent id='toolbar' onClick={e => {
           onToolbarClicked(e.target.textContent)
