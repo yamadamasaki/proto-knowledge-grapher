@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {Components, registerComponent, useCreate2, useMulti2, useUpdate2, withCurrentUser} from 'meteor/vulcan:core'
 import {
+  AnnotationConstraints,
   DiagramComponent,
   DiagramContextMenu,
   Inject,
@@ -8,10 +9,10 @@ import {
   PrintAndExport,
   SymbolPaletteComponent,
   UndoRedo,
-  AnnotationConstraints,
 } from '@syncfusion/ej2-react-diagrams'
 import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
 import {Helmet} from 'react-helmet'
+import {v1 as uuidv1} from 'uuid'
 
 const findParams = (children, sectionId) => {
   if (!children || children.length === 0) return null
@@ -70,23 +71,8 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
       }
   ))
 
-  const points = {sourcePoint: {x: 0, y: 0}, targetPoint: {x: 40, y: 40}}
-
-  const connectors = (edgeLabels || []).map(edgeLabel => (
-      {
-        id: 'SingleStraight', type: 'Straight', ...points, targetDecorator: {shape: 'Arrow'},
-        annotations: [
-          {
-            content: edgeLabel, constraints: AnnotationConstraints.ReadOnly,
-            horizontalAlignment: 'Center', verticalAlignment: 'Center',
-          },
-        ],
-      }
-  ))
-
   const palettes = [
     {id: 'basic', expanded: true, symbols: basicShapes, title: '発言', iconCss: 'e-ddb-icons e-basic'},
-    {id: 'connectors', expanded: true, symbols: connectors, title: '発言間の関係性', iconCss: 'e-ddb-icons e-connector'},
   ]
 
   const diagram = useRef()
@@ -146,20 +132,50 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
     }
   }
 
+  const contextMenuSettings = {
+    show: true,
+    items: edgeLabels ?
+        edgeLabels.map(edgeLabel => ({text: edgeLabel, id: edgeLabel, target: '.e-diagramcontent'})) :
+        [],
+    showCustomMenuOnly: false,
+  }
+
+  const addEdge = event => {
+    const item = event.item.id
+    const {x, y} = event.event
+    const selectedNode = diagram.current.selectedItems.nodes[0]
+    const sourcePoint = {x, y}
+    const targetPoint = {x: x + 40, y: y + 40}
+    const edge = {
+      id: `edge-${item}-${uuidv1()}`, type: 'Straight', targetDecorator: {shape: 'Arrow'},
+      annotations: [
+        {
+          content: item, constraints: AnnotationConstraints.ReadOnly,
+          horizontalAlignment: 'Center', verticalAlignment: 'Center',
+        },
+      ],
+    }
+    diagram.current.add(
+        selectedNode ?
+            {sourceID: selectedNode.id, targetPoint, ...edge} :
+            {sourcePoint, targetPoint, ...edge}
+    )
+  }
+
   return (
       <React.Fragment>
         <Helmet><title>Async Session {sectionId} - {subsection})</title></Helmet>
-        {doc.title && <h2>{doc.title}</h2>}
-        <SymbolPaletteComponent id='palette' expandMode='Multiple' symbolHeight={80} symbolWidth={80}
-                                scrollSettings={{horizontalOffset: 100, verticalOffset: 50}} palettes={palettes}
-                                getSymbolInfo={symbol => symbol.symbolInfo}/>
         {
           error ? <Components.Flash message={error}/> :
               [loading_c, loading_u, loading_program].some(it => it === true) ? <Components.Loading/> :
                   <React.Fragment>
+                    {doc.title && <h2>{doc.title}</h2>}
+                    <SymbolPaletteComponent id='palette' expandMode='Multiple' symbolHeight={80} symbolWidth={80}
+                                            scrollSettings={{horizontalOffset: 100, verticalOffset: 50}}
+                                            palettes={palettes}
+                                            getSymbolInfo={symbol => symbol.symbolInfo}/>
                     <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
-                                      contextMenuSettings={{show: true}}
-                                      historyChange={e => console.log({e})}>
+                                      contextMenuSettings={contextMenuSettings} contextMenuClick={addEdge}>
                       <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
                     </DiagramComponent>
                     <OverviewComponent id="overview" style={{top: '30px'}} sourceID="diagram" width={'100%'}
