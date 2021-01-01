@@ -15,7 +15,7 @@ const CFAsyncSession = ({match}) => {
         <Components.KGSessionHeader sessionName={sessionName}/>
 
         <Components.KGSectionMenu sectionNames={[
-          '解説', 'お題', 'チームワーク',
+          '解説', 'お題', 'チーム・グラフィング',
         ]}/>
 
         <Components.KGSectionHeader sectionName='解説'/>
@@ -40,7 +40,7 @@ const CFAsyncSession = ({match}) => {
           },
         }}/>
 
-        <Components.KGSectionHeader sectionName='チームワーク'/>
+        <Components.KGSectionHeader sectionName='チーム・グラフィング'/>
         <Components.KGTeamSection match={{
           params: {
             programId,

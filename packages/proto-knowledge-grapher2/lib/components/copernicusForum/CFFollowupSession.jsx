@@ -15,7 +15,7 @@ const CFFollowupSession = ({match}) => {
         <Components.KGSessionHeader sessionName={sessionName}/>
 
         <Components.KGSectionMenu sectionNames={[
-          '解説', 'お題', 'モブワーク', '(ソロ｜ペア）ワーク',
+          '解説', 'お題', 'モブ・グラフィング', '(ソロ｜ペア）・グラフィング',
         ]}/>
 
         <Components.KGSectionHeader sectionName='解説'/>
@@ -40,7 +40,7 @@ const CFFollowupSession = ({match}) => {
           },
         }}/>
 
-        <Components.KGSectionHeader sectionName='モブワーク'/>
+        <Components.KGSectionHeader sectionName='モブ・グラフィング'/>
         <Components.CFFrameworkDiagramSection match={{
           params: {
             programId,
@@ -50,7 +50,7 @@ const CFFollowupSession = ({match}) => {
           }
         }}/>
 
-        <Components.KGSectionHeader sectionName='(ソロ｜ペア）ワーク'/>
+        <Components.KGSectionHeader sectionName='(ソロ｜ペア）・グラフィング'/>
         <Components.KGTeamSection match={{
           params: {
             programId,
