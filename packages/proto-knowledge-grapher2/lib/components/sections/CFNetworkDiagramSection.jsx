@@ -84,6 +84,7 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
   const renderComplete = () => {
     if (!diagram || !diagram.current) return
     if (doc && doc.diagram) diagram.current.loadDiagram(doc.diagram)
+
   }
 
   const saveDiagram = async () => {/*ToDo*/
@@ -145,7 +146,9 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
     const {x, y} = event.event
     const selectedNode = diagram.current.selectedItems.nodes[0]
     const sourcePoint = {x, y}
-    const targetPoint = {x: x + 40, y: y + 40}
+    const targetPoint = selectedNode ?
+        {x: selectedNode.offsetX, y: selectedNode.offsetY + selectedNode.actualSize.height / 2 + 40} :
+        {x: x + 40, y: y + 40}
     const edge = {
       id: `edge-${item}-${uuidv1()}`, type: 'Straight', targetDecorator: {shape: 'Arrow'},
       annotations: [
@@ -158,8 +161,13 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
     diagram.current.add(
         selectedNode ?
             {sourceID: selectedNode.id, targetPoint, ...edge} :
-            {sourcePoint, targetPoint, ...edge}
+            {sourcePoint, targetPoint, ...edge},
     )
+  }
+
+  const menuOpened = event => {
+    if (diagram.current.selectedItems.nodes[0]) return
+    edgeLabels.forEach(item => event.hiddenItems.push(item))
   }
 
   return (
@@ -175,7 +183,8 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
                                             palettes={palettes}
                                             getSymbolInfo={symbol => symbol.symbolInfo}/>
                     <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
-                                      contextMenuSettings={contextMenuSettings} contextMenuClick={addEdge}>
+                                      contextMenuSettings={contextMenuSettings} contextMenuClick={addEdge}
+                                      contextMenuOpen={menuOpened}>
                       <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
                     </DiagramComponent>
                     <OverviewComponent id="overview" style={{top: '30px'}} sourceID="diagram" width={'100%'}
