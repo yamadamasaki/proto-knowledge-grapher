@@ -27,6 +27,13 @@ addRoute([
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
   },
+  {
+    name: 'sessions.cfSyncSession.teams',
+    path: '/sections/:programId/:collectionName/:sectionId/:subsection/CFFrameworkDiagramSection/',
+    componentName: 'CFFrameworkDiagramSection',
+    layoutName: 'EJ2Layout',
+    access: memberAccessOptions,
+  },
   /// CFAsyncSession
   {
     name: 'sessions.cfAsyncSession',

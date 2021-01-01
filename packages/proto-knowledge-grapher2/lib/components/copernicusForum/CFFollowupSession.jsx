@@ -57,7 +57,7 @@ const CFFollowupSession = ({match}) => {
             sectionId,
             subsection: 'soloWork',
             isEditable: 'admins',
-            delegatedCollectionName: 'CFFrameworkDiagrams',
+            delegatedCollectionName: 'SimpleDiagrams',
             delegatedComponentName: 'CFFrameworkDiagramSection',
           }
         }}/>
