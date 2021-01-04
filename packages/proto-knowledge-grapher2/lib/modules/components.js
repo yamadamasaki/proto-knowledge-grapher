@@ -11,6 +11,7 @@ import '../components/common/KGSectionHeader'
 import '../components/common/KGSectionMenu'
 import '../components/common/KGSessionHeader'
 import '../components/common/ErrorBoundary'
+import '../components/common/IfIHave'
 
 // programs
 import '../components/programs/KnowledgeGrapherHome'
