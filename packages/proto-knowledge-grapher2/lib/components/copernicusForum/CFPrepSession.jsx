@@ -24,8 +24,8 @@ const CFPrepSession = ({match}) => {
             programId,
             sectionId,
             subsection: 'purpose',
-            isEditable: 'admins',
-            isReadable: 'members',
+            isEditable: {groups: ['admins']},
+            isReadable: {groups: ['members']},
           },
         }}/>
 

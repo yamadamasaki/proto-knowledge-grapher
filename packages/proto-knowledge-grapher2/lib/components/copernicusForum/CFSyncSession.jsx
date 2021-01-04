@@ -26,8 +26,8 @@ const CFSyncSession = ({match}) => {
             programId,
             sectionId,
             subsection: 'introduction',
-            isEditable: 'admins',
-            isReadable: 'members',
+            isEditable: {groups: ['admins']},
+            isReadable: {groups: ['members']},
           },
         }}/>
 
