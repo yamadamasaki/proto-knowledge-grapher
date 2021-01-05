@@ -37,8 +37,8 @@ const CFSyncSession = ({match}) => {
             programId,
             sectionId,
             subsection: 'questionnaire',
-            isDefinable: 'admins',
-            isAnswerable: 'members',
+            isDefinable: {groups: ['admins']},
+            isAnswerable: {groups: ['members']},
           },
         }}/>
 

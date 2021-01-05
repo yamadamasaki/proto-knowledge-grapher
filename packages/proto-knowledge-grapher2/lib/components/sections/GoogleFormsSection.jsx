@@ -1,20 +1,15 @@
 import React, {useRef, useState} from 'react'
-import {Components, registerComponent, useCreate2, useMulti2, useUpdate2, withCurrentUser} from 'meteor/vulcan:core'
+import {Components, registerComponent, useCreate2, useMulti2, useUpdate2} from 'meteor/vulcan:core'
 import Users from 'meteor/vulcan:users'
 import {TextBoxComponent} from '@syncfusion/ej2-react-inputs'
 import {ButtonComponent} from '@syncfusion/ej2-react-buttons'
 
-const toArray = permission => !permission ? [] : (!Array.isArray(permission) ? [permission] : permission)
-const toBoolean = (user, permission) => Users.isMemberOf(user, toArray(permission))
-
-const GoogleFormsSection = ({match, currentUser}) => {
+const GoogleFormsSection = ({match}) => {
   const {params} = match
   const collectionName = params.collectionName || 'GoogleForms'
   const {programId, sectionId, subsection} = params
   const {id} = params
-  let {isDefinable, isAnswerable} = params
-  isDefinable = toBoolean(currentUser, isDefinable)
-  isAnswerable = toBoolean(currentUser, isAnswerable)
+  const {isDefinable, isAnswerable} = params
 
   const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
   if (subsection) selector.push({subsection: {_eq: subsection}})
@@ -57,34 +52,33 @@ const GoogleFormsSection = ({match, currentUser}) => {
           error ? <Components.Flash message={error}/> :
               [loading_c, loading_u, loading_q].some(it => it === true) ? <Components.Loading/> :
                   <React.Fragment>
-                    {
-                      isDefinable &&
-                      <div>
-                        <h3>Google Forms URL</h3>
-                        <TextBoxComponent placeholder="Google Forms URL" value={document && document.formUrl}
-                                          floatLabelType="Auto" ref={formUrl}/>
-                        <TextBoxComponent placeholder="Result URL" value={document && document.resultUrl}
-                                          floatLabelType="Auto" ref={resultUrl}/>
-                        <ButtonComponent onClick={save}>Save</ButtonComponent>
-                        <br/>
-                        {
-                          document.resultUrl ? <a href={document.resultUrl}>結果表示（要Google Driveアカウント）</a> : <div/>
-                        }
-                      </div>
-                    }
-                    {
-                      isAnswerable && document.formUrl &&
-                      <div>
-                        <h3>質問</h3>
-                        <iframe src={document.formUrl} width="640" height="2078" frameBorder="0" marginHeight="0"
-                                marginWidth="0">読み込んでいます…
-                        </iframe>
-                      </div>
-                    }
+                    <Components.IfIHave permission={isDefinable}>
+                      <h3>Google Forms URL</h3>
+                      <TextBoxComponent placeholder="Google Forms URL" value={document && document.formUrl}
+                                        floatLabelType="Auto" ref={formUrl}/>
+                      <TextBoxComponent placeholder="Result URL" value={document && document.resultUrl}
+                                        floatLabelType="Auto" ref={resultUrl}/>
+                      <ButtonComponent onClick={save}>Save</ButtonComponent>
+                      <br/>
+                      {
+                        document.resultUrl ? <a href={document.resultUrl}>結果表示（要Google Driveアカウント）</a> : <div/>
+                      }
+                    </Components.IfIHave>
+                    <Components.IfIHave permission={isAnswerable}>
+                      {
+                        document.formUrl &&
+                        <div>
+                          <h3>質問</h3>
+                          <iframe src={document.formUrl} width="640" height="2078" frameBorder="0" marginHeight="0"
+                                  marginWidth="0">読み込んでいます…
+                          </iframe>
+                        </div>
+                      }
+                    </Components.IfIHave>
                   </React.Fragment>
         }
       </React.Fragment>
   )
 }
 
-registerComponent({name: 'GoogleFormsSection', component: GoogleFormsSection, hocs: [withCurrentUser]})
+registerComponent({name: 'GoogleFormsSection', component: GoogleFormsSection})
