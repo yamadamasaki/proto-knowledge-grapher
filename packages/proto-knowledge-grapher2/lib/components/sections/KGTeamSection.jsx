@@ -24,6 +24,7 @@ const KGTeamSection = ({match, currentUser}) => {
   const collectionName = params.collectionName || 'KGTeams'
   const {programId, sectionId, subsection} = params
   const {id} = params
+  const {delegatedCollectionName, delegatedComponentName, subsessionName} = params
   const {isEditable} = params
   const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
   if (subsection) selector.push({subsection: {_eq: subsection}})
@@ -35,7 +36,7 @@ const KGTeamSection = ({match, currentUser}) => {
     //pollInterval: 500,
   })
 
-  if (results && results.length === 0) results[0] = {programId, sectionId, subsection}
+  if (results && results.length === 0) results[0] = {programId, sectionId, subsection, title: subsessionName}
 
   const {results: users, loading: loading_users} = useMulti2(
       {collection: Users, fragmentName: 'UsersMinimumInfo', input: {filter: {username: {_is_null: false}}}},
@@ -72,8 +73,6 @@ const KGTeamSection = ({match, currentUser}) => {
   if (!document.teams) document.teams = []
   const nTeams = document.teams.length
 
-  const {delegatedCollectionName, delegatedComponentName, subsessionName} = params
-
   const TeamComponent = props => {
     const name = useRef()
     const players = useRef()
@@ -90,8 +89,7 @@ const KGTeamSection = ({match, currentUser}) => {
         players.current.value = []
       }
     }
-    const url = `/sections/${programId}/${delegatedCollectionName}/${sectionId}/${team.teamId}/${delegatedComponentName}/${subsessionName ||
-    ''}`
+    const url = `/sections/${programId}/${delegatedCollectionName}/${sectionId}/${team.teamId}/${delegatedComponentName}/`
     const readonly = !isPermitted(currentUser, isEditable)
 
     return (

@@ -5,7 +5,7 @@ import Users from 'meteor/vulcan:users'
 
 const CFFrameworkDiagramSubsession = ({match}) => {
   const {params} = match
-  const {programId, sectionId, teamId, subsessionName} = params
+  const {programId, sectionId, teamId} = params
   const {id} = params
 
   const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
@@ -18,6 +18,7 @@ const CFFrameworkDiagramSubsession = ({match}) => {
       {collection: Users, fragmentName: 'UsersMinimumInfo', input: {filter: {username: {_is_null: false}}}},
   )
 
+  const subsessionName = teams && teams[0] && teams[0].title
   const team = teams && teams[0] && teams[0].teams && teams[0].teams.find(it => it.teamId === teamId)
   const teamName = team && team.name
 

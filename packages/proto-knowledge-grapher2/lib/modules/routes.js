@@ -29,7 +29,7 @@ addRoute([
   },
   {
     name: 'sessions.csFrameworkDiagramSubsession',
-    path: '/sections/:programId/:collectionName/:sectionId/:teamId/CFFrameworkDiagramSubsession/:subsessionName',
+    path: '/sections/:programId/:collectionName/:sectionId/:teamId/CFFrameworkDiagramSubsession/',
     componentName: 'CFFrameworkDiagramSubsession',
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
@@ -44,7 +44,7 @@ addRoute([
   },
   {
     name: 'sessions.cfNetworkDiagramSubsession',
-    path: '/sections/:programId/:collectionName/:sectionId/:teamId/CFNetworkDiagramSubsession/:subsessionName',
+    path: '/sections/:programId/:collectionName/:sectionId/:teamId/CFNetworkDiagramSubsession/',
     componentName: 'CFNetworkDiagramSubsession',
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
