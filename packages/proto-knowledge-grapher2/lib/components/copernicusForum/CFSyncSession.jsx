@@ -15,7 +15,7 @@ const CFSyncSession = ({match}) => {
         <Components.KGSessionHeader sessionName={sessionName}/>
 
         <Components.KGSectionMenu sectionNames={[
-          '解説', 'お題', 'モブ・グラフィング', '(ソロ｜ペア）・グラフィング',
+          '解説', 'お題', 'モブ・グラフィティ', '(ソロ｜ペア）・グラフィティ',
         ]}/>
 
         <Components.KGSectionHeader sectionName='解説'/>
@@ -40,7 +40,7 @@ const CFSyncSession = ({match}) => {
           },
         }}/>
 
-        <Components.KGSectionHeader sectionName='モブ・グラフィング'/>
+        <Components.KGSectionHeader sectionName='モブ・グラフィティ'/>
         <Components.CFFrameworkDiagramSection match={{
           params: {
             programId,
@@ -50,7 +50,7 @@ const CFSyncSession = ({match}) => {
           },
         }}/>
 
-        <Components.KGSectionHeader sectionName='(ソロ｜ペア）・グラフィング'/>
+        <Components.KGSectionHeader sectionName='(ソロ｜ペア）・グラフィティ'/>
         <Components.KGTeamSection match={{
           params: {
             programId,
@@ -59,7 +59,7 @@ const CFSyncSession = ({match}) => {
             isEditable: {groups: ['admins']},
             delegatedCollectionName: 'SimpleDiagrams',
             delegatedComponentName: 'CFFrameworkDiagramSubsession',
-            subsessionName: `${sessionName} - (ソロ｜ペア）・グラフィング`,
+            subsessionName: `${sessionName} - (ソロ｜ペア）・グラフィティ`,
           },
         }}/>
       </React.Fragment>

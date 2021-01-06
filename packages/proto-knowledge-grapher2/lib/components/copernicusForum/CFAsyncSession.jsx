@@ -15,7 +15,7 @@ const CFAsyncSession = ({match}) => {
         <Components.KGSessionHeader sessionName={sessionName}/>
 
         <Components.KGSectionMenu sectionNames={[
-          '解説', 'お題', 'チーム・グラフィング',
+          '解説', 'お題', 'チーム・グラフィティ',
         ]}/>
 
         <Components.KGSectionHeader sectionName='解説'/>
@@ -40,7 +40,7 @@ const CFAsyncSession = ({match}) => {
           },
         }}/>
 
-        <Components.KGSectionHeader sectionName='チーム・グラフィング'/>
+        <Components.KGSectionHeader sectionName='チーム・グラフィティ'/>
         <Components.KGTeamSection match={{
           params: {
             programId,
@@ -49,7 +49,7 @@ const CFAsyncSession = ({match}) => {
             isEditable: {groups: ['admins']},
             delegatedCollectionName: 'CFNetworkDiagrams',
             delegatedComponentName: 'CFNetworkDiagramSubsession',
-            subsessionName: `${sessionName} - チーム・グラフィング`,
+            subsessionName: `${sessionName} - チーム・グラフィティ`,
           },
         }}/>
       </React.Fragment>
