@@ -33,6 +33,8 @@ import '../components/copernicusForum/CFPrepSession'
 import '../components/copernicusForum/CFSyncSession'
 import '../components/copernicusForum/CFAsyncSession'
 import '../components/copernicusForum/CFFollowupSession'
+import '../components/copernicusForum/CFFrameworkDiagramSubsession'
+import '../components/copernicusForum/CFNetworkDiagramSubsession'
 
 // users
 import '../components/users/UsersAccount.jsx'

@@ -46,8 +46,8 @@ const CFFollowupSession = ({match}) => {
             programId,
             sectionId,
             subsection: 'mobWork',
-            isSavable: 'admins',
-          }
+            isSavable: {groups: ['admins']},
+          },
         }}/>
 
         <Components.KGSectionHeader sectionName='(ソロ｜ペア）・グラフィング'/>
@@ -56,10 +56,11 @@ const CFFollowupSession = ({match}) => {
             programId,
             sectionId,
             subsection: 'soloWork',
-            isEditable: 'admins',
+            isEditable: {groups: ['admins']},
             delegatedCollectionName: 'SimpleDiagrams',
-            delegatedComponentName: 'CFFrameworkDiagramSection',
-          }
+            delegatedComponentName: 'CFFrameworkDiagramSubsession',
+            subsessionName: `${sessionName} - (ソロ｜ペア）・グラフィング`,
+          },
         }}/>
       </React.Fragment>
   )

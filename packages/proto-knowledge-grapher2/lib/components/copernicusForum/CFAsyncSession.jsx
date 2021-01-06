@@ -46,9 +46,10 @@ const CFAsyncSession = ({match}) => {
             programId,
             sectionId,
             subsection: 'teams',
-            isEditable: 'admins',
+            isEditable: {groups: ['admins']},
             delegatedCollectionName: 'CFNetworkDiagrams',
-            delegatedComponentName: 'CFNetworkDiagramSection',
+            delegatedComponentName: 'CFNetworkDiagramSubsession',
+            subsessionName: `${sessionName} - チーム・グラフィング`,
           },
         }}/>
       </React.Fragment>

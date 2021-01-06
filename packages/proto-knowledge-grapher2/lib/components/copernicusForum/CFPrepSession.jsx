@@ -15,7 +15,7 @@ const CFPrepSession = ({match}) => {
         <Components.KGSessionHeader sessionName={sessionName}/>
 
         <Components.KGSectionMenu sectionNames={[
-            'ねらい', 'ゴール', '課題',
+          'ねらい', 'ゴール', '課題',
         ]}/>
 
         <Components.KGSectionHeader sectionName='ねらい'/>
@@ -35,7 +35,7 @@ const CFPrepSession = ({match}) => {
             programId,
             sectionId,
             subsection: 'work',
-            isSavable: 'admins'
+            isSavable: {groups: ['admins']},
           },
         }}/>
 

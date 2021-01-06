@@ -10,7 +10,7 @@ import {
   UndoRedo,
 } from '@syncfusion/ej2-react-diagrams'
 import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
-import Users from 'meteor/vulcan:users'
+import {isPermitted} from '../common/IfIHave'
 
 const basicShapes = [
   {
@@ -86,16 +86,12 @@ const palettes = [
   {id: 'connectors', expanded: true, symbols: connectors, title: 'Connectors', iconCss: 'e-ddb-icons e-connector'},
 ]
 
-const toArray = permission => !permission ? [] : (!Array.isArray(permission) ? [permission] : permission)
-const toBoolean = (user, permission) => Users.isMemberOf(user, toArray(permission))
-
 const CFFrameworkDiagramSection = ({match, currentUser}) => {
   const {params} = match
   const collectionName = params.collectionName || 'SimpleDiagrams'
   const {programId, sectionId, subsection} = params
   const {id} = params
-  let {isSavable} = params
-  isSavable = toBoolean(currentUser, isSavable)
+  const {isSavable} = params
   const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
   if (subsection) selector.push({subsection: {_eq: subsection}})
   const filter = (id && {_id: {_eq: id}}) || {_and: selector}
@@ -196,7 +192,9 @@ const CFFrameworkDiagramSection = ({match, currentUser}) => {
             <ItemDirective text='undo'/>
             <ItemDirective text='redo'/>
             <ItemDirective type="Separator"/>
-            {isSavable ? <ItemDirective text='save'/> : <div/>}
+            {
+              isPermitted(currentUser, isSavable) ? <ItemDirective text='save'/> : <div/>
+            }
             <ItemDirective text='export'/>
             <ItemDirective text='print'/>
           </ItemsDirective>

@@ -11,8 +11,8 @@ import {
   UndoRedo,
 } from '@syncfusion/ej2-react-diagrams'
 import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
-import {Helmet} from 'react-helmet'
 import {v1 as uuidv1} from 'uuid'
+import {isPermitted} from '../common/IfIHave'
 
 const findParams = (children, sectionId) => {
   if (!children || children.length === 0) return null
@@ -26,6 +26,7 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
   const collectionName = params.collectionName || 'CFNetworkDiagrams'
   const {programId, sectionId, subsection} = params
   const {id} = params
+  const {isSavable} = params
   const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
   if (subsection) selector.push({subsection: {_eq: subsection}})
   const filter = (id && {_id: {_eq: id}}) || {_and: selector}
@@ -172,7 +173,6 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
 
   return (
       <React.Fragment>
-        <Helmet><title>Async Session {sectionId} - {subsection})</title></Helmet>
         {
           error ? <Components.Flash message={error}/> :
               [loading_c, loading_u, loading_program].some(it => it === true) ? <Components.Loading/> :
@@ -198,7 +198,9 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
             <ItemDirective text='undo'/>
             <ItemDirective text='redo'/>
             <ItemDirective type="Separator"/>
-            <ItemDirective text='save'/>
+            {
+              isPermitted(currentUser, isSavable) ? <ItemDirective text='save'/> : <div/>
+            }
             <ItemDirective text='export'/>
             <ItemDirective text='print'/>
           </ItemsDirective>

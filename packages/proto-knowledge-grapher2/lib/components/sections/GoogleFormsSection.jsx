@@ -1,6 +1,5 @@
 import React, {useRef, useState} from 'react'
 import {Components, registerComponent, useCreate2, useMulti2, useUpdate2} from 'meteor/vulcan:core'
-import Users from 'meteor/vulcan:users'
 import {TextBoxComponent} from '@syncfusion/ej2-react-inputs'
 import {ButtonComponent} from '@syncfusion/ej2-react-buttons'
 
@@ -53,7 +52,6 @@ const GoogleFormsSection = ({match}) => {
               [loading_c, loading_u, loading_q].some(it => it === true) ? <Components.Loading/> :
                   <React.Fragment>
                     <Components.IfIHave permission={isDefinable}>
-                      <h3>Google Forms URL</h3>
                       <TextBoxComponent placeholder="Google Forms URL" value={document && document.formUrl}
                                         floatLabelType="Auto" ref={formUrl}/>
                       <TextBoxComponent placeholder="Result URL" value={document && document.resultUrl}

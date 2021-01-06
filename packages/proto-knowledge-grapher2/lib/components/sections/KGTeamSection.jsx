@@ -8,9 +8,7 @@ import {MultiSelectComponent} from '@syncfusion/ej2-react-dropdowns'
 import {Link} from 'react-router-dom'
 import {ButtonComponent} from '@syncfusion/ej2-react-buttons'
 import {v1 as uuidv1} from 'uuid'
-
-const toArray = permission => !permission ? [] : (!Array.isArray(permission) ? [permission] : permission)
-const toBoolean = (user, permission) => Users.isMemberOf(user, toArray(permission))
+import {isPermitted} from '../common/IfIHave'
 
 const removeTypename = obj => {
   if (!obj) return obj
@@ -26,8 +24,7 @@ const KGTeamSection = ({match, currentUser}) => {
   const collectionName = params.collectionName || 'KGTeams'
   const {programId, sectionId, subsection} = params
   const {id} = params
-  let {isEditable} = params
-  isEditable = toBoolean(currentUser, isEditable)
+  const {isEditable} = params
   const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
   if (subsection) selector.push({subsection: {_eq: subsection}})
   const filter = (id && {_id: {_eq: id}}) || {_and: selector}
@@ -75,7 +72,7 @@ const KGTeamSection = ({match, currentUser}) => {
   if (!document.teams) document.teams = []
   const nTeams = document.teams.length
 
-  const {delegatedCollectionName, delegatedComponentName} = params
+  const {delegatedCollectionName, delegatedComponentName, subsessionName} = params
 
   const TeamComponent = props => {
     const name = useRef()
@@ -93,29 +90,25 @@ const KGTeamSection = ({match, currentUser}) => {
         players.current.value = []
       }
     }
+    const url = `/sections/${programId}/${delegatedCollectionName}/${sectionId}/${team.teamId}/${delegatedComponentName}/${subsessionName ||
+    ''}`
+    const readonly = !isPermitted(currentUser, isEditable)
+
     return (
         <div className="e-card" id="basic">
           <div className="e-card-content">
             <TextBoxComponent placeholder="Team Name" value={team && team.name} floatLabelType="Auto"
-                              readonly={!isEditable} ref={name}/>
+                              readonly={readonly} ref={name}/>
             <MultiSelectComponent
                 placeholder="Players" value={team && team.players} dataSource={users}
-                fields={{text: 'username', value: '_id'}} floatLabelType="Auto" readonly={!isEditable} ref={players}/>
+                fields={{text: 'username', value: '_id'}} floatLabelType="Auto" readonly={readonly} ref={players}/>
             {
-              team.teamId ?
-                  <div><Link
-                      to={`/sections/${programId}/${delegatedCollectionName}/${sectionId}/${team.teamId}/${delegatedComponentName}`}>
-                    Team's Page
-                  </Link><br/></div> :
-                  <div></div>
+              team.teamId ? <div><Link to={url}>Team's Page</Link><br/></div> : <div></div>
             }
-            {
-              isEditable ?
-                  <div>
-                    {!placeholder ? <ButtonComponent onClick={onDelete}>Delete Team</ButtonComponent> : <div></div>}
-                    <ButtonComponent onClick={save}>{placeholder ? 'Create Team' : 'Save Team'}</ButtonComponent>
-                  </div> : <div/>
-            }
+            <Components.IfIHave permission={isEditable}>
+              {!placeholder ? <ButtonComponent onClick={onDelete}>Delete Team</ButtonComponent> : <div></div>}
+              <ButtonComponent onClick={save}>{placeholder ? 'Create Team' : 'Save Team'}</ButtonComponent>
+            </Components.IfIHave>
           </div>
         </div>
     )
@@ -132,15 +125,11 @@ const KGTeamSection = ({match, currentUser}) => {
                       </div>
                   ))
         }
-        {
-          isEditable ? (
-              <div>
-                <hr/>
-                <h4>チームを追加する</h4>
-                <TeamComponent team={{}} users={users} onSave={onSave(nTeams)} placeholder={true}/>
-              </div>
-          ) : <div/>
-        }
+        <Components.IfIHave permission={isEditable}>
+          <hr/>
+          <h4>チームを追加する</h4>
+          <TeamComponent team={{}} users={users} onSave={onSave(nTeams)} placeholder={true}/>
+        </Components.IfIHave>
       </React.Fragment>
   )
 }

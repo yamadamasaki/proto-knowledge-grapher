@@ -1,8 +1,6 @@
 import React from 'react'
 import {Components, registerComponent} from 'meteor/vulcan:core'
 import {Helmet} from 'react-helmet'
-import ErrorBoundary from '../common/ErrorBoundary'
-
 
 const sessionName = '同期セッション'
 
@@ -48,8 +46,8 @@ const CFSyncSession = ({match}) => {
             programId,
             sectionId,
             subsection: 'mobWork',
-            isSavable: 'admins',
-          }
+            isSavable: {groups: ['admins']},
+          },
         }}/>
 
         <Components.KGSectionHeader sectionName='(ソロ｜ペア）・グラフィング'/>
@@ -58,10 +56,11 @@ const CFSyncSession = ({match}) => {
             programId,
             sectionId,
             subsection: 'soloWork',
-            isEditable: 'admins',
+            isEditable: {groups: ['admins']},
             delegatedCollectionName: 'SimpleDiagrams',
-            delegatedComponentName: 'CFFrameworkDiagramSection',
-          }
+            delegatedComponentName: 'CFFrameworkDiagramSubsession',
+            subsessionName: `${sessionName} - (ソロ｜ペア）・グラフィング`,
+          },
         }}/>
       </React.Fragment>
   )
