@@ -8,25 +8,7 @@ import {MdClose, MdMenu} from 'react-icons/md'
 import {loremIpsum} from 'react-lorem-ipsum'
 import Identicon from 'identicon.js'
 
-const SAMPLE_CSS = `body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, ubuntu;
-    background: navajowhite;
-    margin: 0;
-    padding: 0;
-}
-
-html,
-body {
-    height: 100%;
-    overflow: hidden;
-}
-
-input,
-button {
-    font-family: verdana, ubuntu;
-}
-
-.container {
+const SAMPLE_CSS = `.container {
     display: flex;
     flex-direction: row;
     min-height: 100%;

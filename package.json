@@ -27,6 +27,7 @@
     "@syncfusion/ej2-react-inputs": "^18.3.53",
     "@syncfusion/ej2-react-lists": "^18.4.30",
     "@syncfusion/ej2-react-navigations": "^18.2.58",
+    "@syncfusion/ej2-react-popups": "^18.4.30",
     "@syncfusion/ej2-react-richtexteditor": "^18.3.35",
     "@syncfusion/ej2-richtexteditor": "^18.3.35",
     "@types/react": "^16.9.5",
