@@ -5,10 +5,22 @@ const memberAccessOptions = {groups: ['members'], redirect: '/login'}
 
 addRoute([
   // knowledge grapher
-  {name: 'knowledge-grapher.top', path: '/', componentName: 'KnowledgeGrapherHome', layoutName: 'EJ2Layout', access: memberAccessOptions},
+  {
+    name: 'knowledge-grapher.top',
+    path: '/',
+    componentName: 'KnowledgeGrapherHome',
+    layoutName: 'EJ2Layout',
+    access: memberAccessOptions,
+  },
   // programs
   {name: 'programs.top', path: '/programs', componentName: 'ProgramsHome', access: memberAccessOptions},
-  {name: 'programs.item', path: '/programs/:id', componentName: 'ProgramsPage', layoutName: 'EJ2Layout', access: memberAccessOptions},
+  {
+    name: 'programs.item',
+    path: '/programs/:id',
+    componentName: 'ProgramsPage',
+    layoutName: 'EJ2Layout',
+    access: memberAccessOptions,
+  },
 
   // sessions
   /// CFPrepSession
@@ -57,6 +69,13 @@ addRoute([
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
   },
+  /// SimpleChatSection (test)
+  {
+    name: 'test.simpleChatSection',
+    path: '/SimpleChatSection',
+    componentName: 'SimpleChatSection',
+    layoutName: 'EJ2Layout',
+  },
 
   // users
   {name: 'users.profile', path: '/users/:slug', componentName: 'UsersProfile'},
@@ -65,6 +84,6 @@ addRoute([
   {name: 'users.login', path: '/login', componentName: 'LoginPage'},
 
 // admin
-  {name: 'admin.users', path: '/admin/users', componentName: 'AdminUsers', access: adminAccessOptions,},
+  {name: 'admin.users', path: '/admin/users', componentName: 'AdminUsers', access: adminAccessOptions},
 
 ])

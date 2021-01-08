@@ -27,6 +27,7 @@ import '../components/sections/CFFrameworkDiagramSection'
 import '../components/sections/CFNetworkDiagramSection'
 import '../components/sections/GoogleFormsSection'
 import '../components/sections/KGTeamSection'
+import '../components/sections/SimpleChatSection'
 
 // sessions
 import '../components/copernicusForum/CFPrepSession'
