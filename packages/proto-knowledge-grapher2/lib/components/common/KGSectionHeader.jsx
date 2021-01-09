@@ -8,6 +8,12 @@ const headerStyle = {
   borderLeft: '6px double #000',
 }
 
+const commentIcon = `
+  .e-comment-icon:before {
+    content:'\\e680';
+  }
+`
+
 const KGSectionHeader = ({sectionName}) => {
   const [visible, isVisible] = useState(false)
   const openDialog = useCallback(() => (isVisible(true)), [])
@@ -21,7 +27,8 @@ const KGSectionHeader = ({sectionName}) => {
                          enableResize={true} resizeHandles={['All']}>
           <Components.SimpleChatSection/>
         </DialogComponent>
-        <ButtonComponent onClick={openDialog}>Chat</ButtonComponent>
+        <style>{commentIcon}></style>
+        <ButtonComponent onClick={openDialog} iconCss='e-icons e-comment-icon'>Comments</ButtonComponent>
       </React.Fragment>
   )
 }
