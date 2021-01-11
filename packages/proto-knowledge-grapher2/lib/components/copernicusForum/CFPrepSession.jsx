@@ -18,6 +18,16 @@ const CFPrepSession = ({match}) => {
           'ねらい', 'ゴール', '課題',
         ]}/>
 
+        <Components.KGChatButton match={{
+          params: {
+            programId,
+            sectionId,
+            subsection: 'chat',
+            isChattable: {groups: ['members']},
+            isReadable: {groups: ['members']},
+          },
+        }}/>
+
         <Components.KGSectionHeader sectionName='ねらい'/>
         <Components.SimpleTextSection match={{
           params: {

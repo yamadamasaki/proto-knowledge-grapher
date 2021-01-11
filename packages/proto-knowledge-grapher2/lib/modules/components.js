@@ -12,6 +12,7 @@ import '../components/common/KGSectionMenu'
 import '../components/common/KGSessionHeader'
 import '../components/common/ErrorBoundary'
 import '../components/common/IfIHave'
+import '../components/common/KGChatButton'
 
 // programs
 import '../components/programs/KnowledgeGrapherHome'
@@ -20,14 +21,11 @@ import '../components/programs/ProgramsPage'
 
 // sections
 import '../components/sections/SimpleTextSection'
-import '../components/sections/SimpleTextsHome'
-import '../components/sections/SimpleDiagramSection'
-import '../components/sections/SimpleDiagramsHome'
 import '../components/sections/CFFrameworkDiagramSection'
 import '../components/sections/CFNetworkDiagramSection'
 import '../components/sections/GoogleFormsSection'
 import '../components/sections/KGTeamSection'
-import '../components/sections/SimpleChatSection'
+import '../components/sections/KGChatSection'
 
 // sessions
 import '../components/copernicusForum/CFPrepSession'

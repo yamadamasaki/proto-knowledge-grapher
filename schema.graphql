@@ -1089,6 +1089,145 @@ input ProgramSelectorUniqueInput {
 }
 
 
+# Type for Categories
+type Category {
+  _id: String 
+  name: String 
+  slug: String 
+  pagePath: String 
+  pageUrl: String 
+}
+
+
+input DeleteCategoryInput{
+  filter: CategoryFilterInput
+  id: String
+}
+
+input SingleCategoryInput {
+  # filtering
+  filter: CategoryFilterInput
+  sort: CategorySortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: CategorySelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiCategoryInput {
+
+  # filtering
+  filter: CategoryFilterInput
+  sort: CategorySortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleCategoryOutput{
+  result: Category
+}
+
+type  MultiCategoryOutput{
+  results: [Category]
+  totalCount: Int
+}
+
+type CategoryMutationOutput{
+  data: Category
+}
+
+input CreateCategoryInput {
+  data: CreateCategoryDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateCategoryDataInput {
+  name: String 
+  slug: String 
+}
+
+input UpdateCategoryInput{
+  filter: CategoryFilterInput
+  id: String
+  data: UpdateCategoryDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertCategoryInput{
+  filter: CategoryFilterInput
+  id: String
+  data: UpdateCategoryDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateCategoryDataInput {
+  name: String 
+  slug: String 
+}
+
+input CategoryFilterInput {
+  _and: [CategoryFilterInput]
+  _not: CategoryFilterInput
+  _or: [CategoryFilterInput]
+
+
+  _id: String_Selector
+  name: String_Selector
+  slug: String_Selector
+  pagePath: String_Selector
+  pageUrl: String_Selector
+}
+
+input CategorySortInput {
+  _id: SortOptions
+  name: SortOptions
+  slug: SortOptions
+  pagePath: SortOptions
+  pageUrl: SortOptions
+}
+
+input CategorySelectorInput {
+  _and: [CategorySelectorInput]
+  _or: [CategorySelectorInput]
+
+}
+
+input CategorySelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
 # Type for SimpleTexts
 type SimpleText {
   _id: String 
@@ -1405,145 +1544,6 @@ input SimpleDiagramSelectorInput {
 }
 
 input SimpleDiagramSelectorUniqueInput {
-  _id: String
-  documentId: String # OpenCRUD backwards compatibility
-  slug: String
-
-}
-
-
-# Type for Categories
-type Category {
-  _id: String 
-  name: String 
-  slug: String 
-  pagePath: String 
-  pageUrl: String 
-}
-
-
-input DeleteCategoryInput{
-  filter: CategoryFilterInput
-  id: String
-}
-
-input SingleCategoryInput {
-  # filtering
-  filter: CategoryFilterInput
-  sort: CategorySortInput
-  search: String
-  id: String
-
-  # backwards-compatibility
-  "Deprecated (use 'filter/id' fields instead)."
-  selector: CategorySelectorUniqueInput
-
-  # options (backwards-compatibility)
-  # Whether to enable caching for this query
-  enableCache: Boolean
-  # Return null instead of throwing MissingDocumentError
-  allowNull: Boolean
-  # An identifier to name the query's execution context
-  contextName: String
-}
-
-input MultiCategoryInput {
-
-  # filtering
-  filter: CategoryFilterInput
-  sort: CategorySortInput
-  search: String
-  offset: Int
-  limit: Int
-
-  # backwards-compatibility
-  # A JSON object that contains the query terms used to fetch data
-  "Deprecated (use 'filter/id' fields instead)."
-  terms: JSON
-
-  # options (backwards-compatibility)
-  # Whether to enable caching for this query
-  enableCache: Boolean
-  # Whether to calculate totalCount for this query
-  enableTotal: Boolean
-  # An identifier to name the query's execution context
-  contextName: String
-  
-}
-
-type SingleCategoryOutput{
-  result: Category
-}
-
-type  MultiCategoryOutput{
-  results: [Category]
-  totalCount: Int
-}
-
-type CategoryMutationOutput{
-  data: Category
-}
-
-input CreateCategoryInput {
-  data: CreateCategoryDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
-}
-
-input CreateCategoryDataInput {
-  name: String 
-  slug: String 
-}
-
-input UpdateCategoryInput{
-  filter: CategoryFilterInput
-  id: String
-  data: UpdateCategoryDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
-}
-
-input UpsertCategoryInput{
-  filter: CategoryFilterInput
-  id: String
-  data: UpdateCategoryDataInput!
-  # An identifier to name the mutation's execution context
-  contextName: String
-}
-
-input UpdateCategoryDataInput {
-  name: String 
-  slug: String 
-}
-
-input CategoryFilterInput {
-  _and: [CategoryFilterInput]
-  _not: CategoryFilterInput
-  _or: [CategoryFilterInput]
-
-
-  _id: String_Selector
-  name: String_Selector
-  slug: String_Selector
-  pagePath: String_Selector
-  pageUrl: String_Selector
-}
-
-input CategorySortInput {
-  _id: SortOptions
-  name: SortOptions
-  slug: SortOptions
-  pagePath: SortOptions
-  pageUrl: SortOptions
-}
-
-input CategorySelectorInput {
-  _and: [CategorySelectorInput]
-  _or: [CategorySelectorInput]
-
-}
-
-input CategorySelectorUniqueInput {
   _id: String
   documentId: String # OpenCRUD backwards compatibility
   slug: String
@@ -2321,6 +2321,172 @@ input KGTeamTeamsSortInput {
 }
 
 
+# Type for KGChats
+type KGChat {
+  _id: String 
+  createdAt: Date 
+  updatedAt: Date 
+  userId: String 
+  user: User 
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  text: String 
+  readBy: [String] 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+  updatedAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteKGChatInput{
+  filter: KGChatFilterInput
+  id: String
+}
+
+input SingleKGChatInput {
+  # filtering
+  filter: KGChatFilterInput
+  sort: KGChatSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: KGChatSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiKGChatInput {
+
+  # filtering
+  filter: KGChatFilterInput
+  sort: KGChatSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleKGChatOutput{
+  result: KGChat
+}
+
+type  MultiKGChatOutput{
+  results: [KGChat]
+  totalCount: Int
+}
+
+type KGChatMutationOutput{
+  data: KGChat
+}
+
+input CreateKGChatInput {
+  data: CreateKGChatDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateKGChatDataInput {
+  userId: String 
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  text: String 
+  readBy: [String] 
+}
+
+input UpdateKGChatInput{
+  filter: KGChatFilterInput
+  id: String
+  data: UpdateKGChatDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertKGChatInput{
+  filter: KGChatFilterInput
+  id: String
+  data: UpdateKGChatDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateKGChatDataInput {
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  title: String 
+  text: String 
+  readBy: [String] 
+}
+
+input KGChatFilterInput {
+  _and: [KGChatFilterInput]
+  _not: KGChatFilterInput
+  _or: [KGChatFilterInput]
+
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  updatedAt: Date_Selector
+  userId: String_Selector
+  programId: String_Selector
+  sectionId: String_Selector
+  subsection: String_Selector
+  title: String_Selector
+  text: String_Selector
+  readBy: String_Array_Selector
+}
+
+input KGChatSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  updatedAt: SortOptions
+  userId: SortOptions
+  programId: SortOptions
+  sectionId: SortOptions
+  subsection: SortOptions
+  title: SortOptions
+  text: SortOptions
+  readBy: SortOptions
+}
+
+input KGChatSelectorInput {
+  _and: [KGChatSelectorInput]
+  _or: [KGChatSelectorInput]
+
+}
+
+input KGChatSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
 
 
 type Query {
@@ -2352,6 +2518,12 @@ type Query {
   # A list of Program documents matching a set of query terms
   programs(input: MultiProgramInput):  MultiProgramOutput
   
+  # A single Category document fetched by ID or slug
+  category(input: SingleCategoryInput!): SingleCategoryOutput
+  
+  # A list of Category documents matching a set of query terms
+  categories(input: MultiCategoryInput):  MultiCategoryOutput
+  
   # A single SimpleText document fetched by ID or slug
   simpleText(input: SingleSimpleTextInput!): SingleSimpleTextOutput
   
@@ -2363,12 +2535,6 @@ type Query {
   
   # A list of SimpleDiagram documents matching a set of query terms
   simpleDiagrams(input: MultiSimpleDiagramInput):  MultiSimpleDiagramOutput
-  
-  # A single Category document fetched by ID or slug
-  category(input: SingleCategoryInput!): SingleCategoryOutput
-  
-  # A list of Category documents matching a set of query terms
-  categories(input: MultiCategoryInput):  MultiCategoryOutput
   
   # A single CFAsyncSession document fetched by ID or slug
   cFAsyncSession(input: SingleCFAsyncSessionInput!): SingleCFAsyncSessionOutput
@@ -2393,6 +2559,12 @@ type Query {
   
   # A list of KGTeam documents matching a set of query terms
   kGTeams(input: MultiKGTeamInput):  MultiKGTeamOutput
+  
+  # A single KGChat document fetched by ID or slug
+  kGChat(input: SingleKGChatInput!): SingleKGChatOutput
+  
+  # A list of KGChat documents matching a set of query terms
+  kGChats(input: MultiKGChatInput):  MultiKGChatOutput
   
 }
   
@@ -2550,6 +2722,38 @@ type Mutation {
   selector: ProgramSelectorUniqueInput
 ) : ProgramMutationOutput
 
+  # Mutation for creating new Category documents
+  createCategory(
+  input: CreateCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateCategoryDataInput
+) : CategoryMutationOutput
+
+  # Mutation for updating a Category document
+  updateCategory(
+  input: UpdateCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CategorySelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCategoryDataInput 
+) : CategoryMutationOutput
+
+  # Mutation for upserting a Category document
+  upsertCategory(
+  input: UpsertCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CategorySelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateCategoryDataInput
+) : CategoryMutationOutput
+
+  # Mutation for deleting a Category document
+  deleteCategory(
+  input: DeleteCategoryInput,
+  "Deprecated (use 'input' field instead)."
+  selector: CategorySelectorUniqueInput
+) : CategoryMutationOutput
+
   # Mutation for creating new SimpleText documents
   createSimpleText(
   input: CreateSimpleTextInput,
@@ -2613,38 +2817,6 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: SimpleDiagramSelectorUniqueInput
 ) : SimpleDiagramMutationOutput
-
-  # Mutation for creating new Category documents
-  createCategory(
-  input: CreateCategoryInput,
-  "Deprecated (use 'input' field instead)."
-  data: CreateCategoryDataInput
-) : CategoryMutationOutput
-
-  # Mutation for updating a Category document
-  updateCategory(
-  input: UpdateCategoryInput,
-  "Deprecated (use 'input' field instead)."
-  selector: CategorySelectorUniqueInput,
-  "Deprecated (use 'input' field instead)."
-  data: UpdateCategoryDataInput 
-) : CategoryMutationOutput
-
-  # Mutation for upserting a Category document
-  upsertCategory(
-  input: UpsertCategoryInput,
-  "Deprecated (use 'input' field instead)."
-  selector: CategorySelectorUniqueInput,
-  "Deprecated (use 'input' field instead)."
-  data: UpdateCategoryDataInput
-) : CategoryMutationOutput
-
-  # Mutation for deleting a Category document
-  deleteCategory(
-  input: DeleteCategoryInput,
-  "Deprecated (use 'input' field instead)."
-  selector: CategorySelectorUniqueInput
-) : CategoryMutationOutput
 
   # Mutation for creating new CFAsyncSession documents
   createCFAsyncSession(
@@ -2773,6 +2945,38 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: KGTeamSelectorUniqueInput
 ) : KGTeamMutationOutput
+
+  # Mutation for creating new KGChat documents
+  createKGChat(
+  input: CreateKGChatInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateKGChatDataInput
+) : KGChatMutationOutput
+
+  # Mutation for updating a KGChat document
+  updateKGChat(
+  input: UpdateKGChatInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGChatSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateKGChatDataInput 
+) : KGChatMutationOutput
+
+  # Mutation for upserting a KGChat document
+  upsertKGChat(
+  input: UpsertKGChatInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGChatSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateKGChatDataInput
+) : KGChatMutationOutput
+
+  # Mutation for deleting a KGChat document
+  deleteKGChat(
+  input: DeleteKGChatInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGChatSelectorUniqueInput
+) : KGChatMutationOutput
 
 }
 

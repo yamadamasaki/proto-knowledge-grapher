@@ -69,13 +69,6 @@ addRoute([
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
   },
-  /// SimpleChatSection (test)
-  {
-    name: 'test.simpleChatSection',
-    path: '/SimpleChatSection',
-    componentName: 'SimpleChatSection',
-    layoutName: 'EJ2Layout',
-  },
 
   // users
   {name: 'users.profile', path: '/users/:slug', componentName: 'UsersProfile'},
