@@ -5,6 +5,7 @@ registerFragment(/*gql*/`
         _id
         title
         text
+        userId
     }
 `)
 
@@ -12,6 +13,7 @@ registerFragment(/*gql*/`
     fragment KGChatAllFragment on KGChat {
         _id
         createdAt
+        userId
         title
         programId
         sectionId

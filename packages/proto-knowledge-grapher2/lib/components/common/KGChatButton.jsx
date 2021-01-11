@@ -17,8 +17,7 @@ const KGChatButton = ({match, sectionName}) => {
   return (
       <React.Fragment>
         <DialogComponent width='500px' visible={visible} close={closeDialog}
-                         header='Chat' allowDragging={true} showCloseIcon={true}
-                         enableResize={true} resizeHandles={['All']}>
+                         header='Chat' allowDragging={true} showCloseIcon={true}>
           <Components.KGChatSection match={match}/>
         </DialogComponent>
         <style>{commentIcon}></style>

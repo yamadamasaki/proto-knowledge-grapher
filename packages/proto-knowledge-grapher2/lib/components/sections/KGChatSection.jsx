@@ -1,7 +1,9 @@
 import React, {useRef, useState} from 'react'
-import {Components, registerComponent, useCreate2, useMulti2, useUpdate2} from 'meteor/vulcan:core'
+import {Components, registerComponent, useCreate2, useMulti2, useUpdate2, withCurrentUser} from 'meteor/vulcan:core'
 import {TextBoxComponent} from '@syncfusion/ej2-react-inputs'
 import {ButtonComponent} from '@syncfusion/ej2-react-buttons'
+import Users from 'meteor/vulcan:users'
+import * as timeago from 'timeago.js'
 
 const CHAT_CSS = `
 .line-bc {
@@ -14,7 +16,6 @@ const CHAT_CSS = `
 
 }
 
-/*以下、②左側のコメント*/
 .balloon6 {
   width: 100%;
   margin: 10px 0;
@@ -62,7 +63,6 @@ const CHAT_CSS = `
   padding: 0;
 }
 
-/*以下、③右側の緑コメント*/
 .mycomment {
   margin: 10px 0;
 }
@@ -89,7 +89,7 @@ const CHAT_CSS = `
 }
 `
 
-const KGChatSection = ({match}) => {
+const KGChatSection = ({match, currentUser}) => {
   const {
     collectionName = 'KGChats',
     programId,
@@ -111,6 +111,10 @@ const KGChatSection = ({match}) => {
   })
   const messages = results || []
 
+  const {results: users, loading: loading_users} = useMulti2(
+      {collection: Users, fragmentName: 'UsersMinimumInfo', input: {filter: {username: {_is_null: false}}}},
+  )
+
   const [updateDocument, {loading: loading_update}] = useUpdate2({collectionName, fragmentName: 'KGChatFragment'})
   const [createDocument, {loading: loading_create}] = useCreate2({collectionName, fragmentName: 'KGChatFragment'})
   const [error, setError] = useState()
@@ -119,6 +123,7 @@ const KGChatSection = ({match}) => {
   const button = useRef()
   const onClick = () => {
     const text = textBox.current.value
+    if (!value) return
     try {
       createDocument({input: {data: {programId, sectionId, subsection, text}}})
     } catch (e) {
@@ -132,12 +137,42 @@ const KGChatSection = ({match}) => {
       <Components.IfIHave permission={isReadable}>
         {
           error ? <Components.Flash message={error}/> :
-              [loading_create, loading_update].some(it => it === true) ? <Components.Loading/> :
+              [loading_create, loading_update, loading_users].some(it => it === true) ? <Components.Loading/> :
                   <React.Fragment>
                     <style>{CHAT_CSS}</style>
-                    {
-                      messages.map((it, index) => <div key={index}>{it.text}</div>)
-                    }
+                    <div className="line-bc">
+                      {
+                        messages.map((it, index) => {
+                          const user = users.find(user => user._id === it.userId)
+                          return (
+                              it.userId === currentUser._id ?
+                                  <div key={index}>
+                                    <div className="mycomment"><p>{it.text}</p></div>
+                                    <div style={{fontStyle: 'italic', fontSize: 'smaller'}}>
+                                      {timeago.format(it.createdAt)}
+                                    </div>
+                                  </div> :
+                                  <div key={index} className="balloon6">
+                                    {
+                                      user &&
+                                      <div className="faceicon">
+                                        <img src={user.avatarUrl} alt={user.username}/>
+                                      </div>
+                                    }
+                                    <div className="chatting">
+                                      <div className="says">
+                                        <p>{it.text}</p>
+                                      </div>
+                                      <div style={{fontStyle: 'italic', fontSize: 'smaller'}}>
+                                        {user && <p>{user.username}, </p>}
+                                        <p>{timeago.format(it.createdAt)}</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                          )
+                        })
+                      }
+                    </div>
                     <Components.IfIHave permission={isChattable}>
                       <TextBoxComponent placeholder="Chat Text" floatLabelType="Auto" multiline={true} ref={textBox}/>
                       <ButtonComponent onClick={onClick} ref={button}>Say</ButtonComponent>
@@ -148,4 +183,4 @@ const KGChatSection = ({match}) => {
   )
 }
 
-registerComponent({name: 'KGChatSection', component: KGChatSection})
+registerComponent({name: 'KGChatSection', component: KGChatSection, hocs: [withCurrentUser]})
