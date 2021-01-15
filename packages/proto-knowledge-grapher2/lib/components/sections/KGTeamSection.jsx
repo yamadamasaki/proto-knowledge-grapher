@@ -1,21 +1,13 @@
 import React, {useRef, useState} from 'react'
 import {Components, registerComponent, useCreate2, useMulti2, useUpdate2, withCurrentUser} from 'meteor/vulcan:core'
 import Users from 'meteor/vulcan:users'
-import mapValues from 'lodash/mapValues'
-import omit from 'lodash/omit'
 import {TextBoxComponent} from '@syncfusion/ej2-react-inputs'
 import {MultiSelectComponent} from '@syncfusion/ej2-react-dropdowns'
 import {Link} from 'react-router-dom'
 import {ButtonComponent} from '@syncfusion/ej2-react-buttons'
 import {v1 as uuidv1} from 'uuid'
 import {isPermitted} from '../common/IfIHave'
-
-const removeTypename = obj => {
-  if (!obj) return obj
-  if (typeof obj !== 'object') return obj
-  if (Array.isArray(obj)) return obj.map(it => removeTypename(it))
-  return mapValues(omit(obj, '__typename'), val => removeTypename(val))
-}
+import {removeTypename} from '../utils/removeTypename'
 
 const generateTeamId = () => uuidv1()
 

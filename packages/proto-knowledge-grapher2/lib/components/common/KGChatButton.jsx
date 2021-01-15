@@ -9,7 +9,7 @@ const commentIcon = `
   }
 `
 
-const KGChatButton = ({match, sectionName}) => {
+const KGChatButton = ({match}) => {
   const [visible, isVisible] = useState(false)
   const openDialog = useCallback(() => (isVisible(true)), [])
   const closeDialog = useCallback(() => (isVisible(false)), [])

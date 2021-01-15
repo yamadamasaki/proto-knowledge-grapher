@@ -3,20 +3,27 @@ import {registerFragment} from 'meteor/vulcan:core'
 registerFragment(/*gql*/`
     fragment KGChatFragment on KGChat {
         _id
-        title
-        text
-        userId
+        messages {
+          who
+          when
+          text
+        }
     }
 `)
 
 registerFragment(/*gql*/`
-    fragment KGChatAllFragment on KGChat {
+    fragment KGChatFullFragment on KGChat {
         _id
         createdAt
         userId
         title
         programId
         sectionId
-        text
+        subsection
+        messages {
+          who
+          when
+          text
+        }
     }
 `)

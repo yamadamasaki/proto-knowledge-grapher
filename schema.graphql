@@ -2332,8 +2332,7 @@ type KGChat {
   sectionId: String 
   subsection: String 
   title: String 
-  text: String 
-  readBy: [String] 
+  messages: [KGChatMessages] 
   createdAtFormatted(format: String = "YYYY/MM/DD"): String 
   updatedAtFormatted(format: String = "YYYY/MM/DD"): String 
 }
@@ -2413,8 +2412,7 @@ input CreateKGChatDataInput {
   sectionId: String 
   subsection: String 
   title: String 
-  text: String 
-  readBy: [String] 
+  messages: [CreateKGChatMessagesDataInput] 
 }
 
 input UpdateKGChatInput{
@@ -2438,8 +2436,7 @@ input UpdateKGChatDataInput {
   sectionId: String 
   subsection: String 
   title: String 
-  text: String 
-  readBy: [String] 
+  messages: [UpdateKGChatMessagesDataInput] 
 }
 
 input KGChatFilterInput {
@@ -2456,8 +2453,7 @@ input KGChatFilterInput {
   sectionId: String_Selector
   subsection: String_Selector
   title: String_Selector
-  text: String_Selector
-  readBy: String_Array_Selector
+
 }
 
 input KGChatSortInput {
@@ -2469,8 +2465,7 @@ input KGChatSortInput {
   sectionId: SortOptions
   subsection: SortOptions
   title: SortOptions
-  text: SortOptions
-  readBy: SortOptions
+  messages: SortOptions
 }
 
 input KGChatSelectorInput {
@@ -2480,6 +2475,223 @@ input KGChatSelectorInput {
 }
 
 input KGChatSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
+type KGChatMessages {
+  who: String 
+  when: Date 
+  text: String 
+  whenFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input CreateKGChatMessagesInput {
+  data: CreateKGChatMessagesDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateKGChatMessagesDataInput {
+  who: String 
+  when: Date 
+  text: String 
+}
+
+input UpdateKGChatMessagesInput{
+  filter: KGChatMessagesFilterInput
+  id: String
+  data: UpdateKGChatMessagesDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertKGChatMessagesInput{
+  filter: KGChatMessagesFilterInput
+  id: String
+  data: UpdateKGChatMessagesDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateKGChatMessagesDataInput {
+  who: String 
+  when: Date 
+  text: String 
+}
+
+input KGChatMessagesFilterInput {
+  _and: [KGChatMessagesFilterInput]
+  _not: KGChatMessagesFilterInput
+  _or: [KGChatMessagesFilterInput]
+
+
+  who: String_Selector
+  when: Date_Selector
+  text: String_Selector
+}
+
+input KGChatMessagesSortInput {
+  who: SortOptions
+  when: SortOptions
+  text: SortOptions
+}
+
+
+# Type for KGChatLogs
+type KGChatLog {
+  _id: String 
+  createdAt: Date 
+  updatedAt: Date 
+  userId: String 
+  user: User 
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  lastAccessedAt: Date 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+  updatedAtFormatted(format: String = "YYYY/MM/DD"): String 
+  lastAccessedAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteKGChatLogInput{
+  filter: KGChatLogFilterInput
+  id: String
+}
+
+input SingleKGChatLogInput {
+  # filtering
+  filter: KGChatLogFilterInput
+  sort: KGChatLogSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: KGChatLogSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiKGChatLogInput {
+
+  # filtering
+  filter: KGChatLogFilterInput
+  sort: KGChatLogSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleKGChatLogOutput{
+  result: KGChatLog
+}
+
+type  MultiKGChatLogOutput{
+  results: [KGChatLog]
+  totalCount: Int
+}
+
+type KGChatLogMutationOutput{
+  data: KGChatLog
+}
+
+input CreateKGChatLogInput {
+  data: CreateKGChatLogDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateKGChatLogDataInput {
+  userId: String 
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  lastAccessedAt: Date 
+}
+
+input UpdateKGChatLogInput{
+  filter: KGChatLogFilterInput
+  id: String
+  data: UpdateKGChatLogDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertKGChatLogInput{
+  filter: KGChatLogFilterInput
+  id: String
+  data: UpdateKGChatLogDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateKGChatLogDataInput {
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  lastAccessedAt: Date 
+}
+
+input KGChatLogFilterInput {
+  _and: [KGChatLogFilterInput]
+  _not: KGChatLogFilterInput
+  _or: [KGChatLogFilterInput]
+
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  updatedAt: Date_Selector
+  userId: String_Selector
+  programId: String_Selector
+  sectionId: String_Selector
+  subsection: String_Selector
+  lastAccessedAt: Date_Selector
+}
+
+input KGChatLogSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  updatedAt: SortOptions
+  userId: SortOptions
+  programId: SortOptions
+  sectionId: SortOptions
+  subsection: SortOptions
+  lastAccessedAt: SortOptions
+}
+
+input KGChatLogSelectorInput {
+  _and: [KGChatLogSelectorInput]
+  _or: [KGChatLogSelectorInput]
+
+}
+
+input KGChatLogSelectorUniqueInput {
   _id: String
   documentId: String # OpenCRUD backwards compatibility
   slug: String
@@ -2565,6 +2777,12 @@ type Query {
   
   # A list of KGChat documents matching a set of query terms
   kGChats(input: MultiKGChatInput):  MultiKGChatOutput
+  
+  # A single KGChatLog document fetched by ID or slug
+  kGChatLog(input: SingleKGChatLogInput!): SingleKGChatLogOutput
+  
+  # A list of KGChatLog documents matching a set of query terms
+  kGChatLogs(input: MultiKGChatLogInput):  MultiKGChatLogOutput
   
 }
   
@@ -2977,6 +3195,38 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: KGChatSelectorUniqueInput
 ) : KGChatMutationOutput
+
+  # Mutation for creating new KGChatLog documents
+  createKGChatLog(
+  input: CreateKGChatLogInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateKGChatLogDataInput
+) : KGChatLogMutationOutput
+
+  # Mutation for updating a KGChatLog document
+  updateKGChatLog(
+  input: UpdateKGChatLogInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGChatLogSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateKGChatLogDataInput 
+) : KGChatLogMutationOutput
+
+  # Mutation for upserting a KGChatLog document
+  upsertKGChatLog(
+  input: UpsertKGChatLogInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGChatLogSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateKGChatLogDataInput
+) : KGChatLogMutationOutput
+
+  # Mutation for deleting a KGChatLog document
+  deleteKGChatLog(
+  input: DeleteKGChatLogInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGChatLogSelectorUniqueInput
+) : KGChatLogMutationOutput
 
 }
 

@@ -4,6 +4,7 @@ import {TextBoxComponent} from '@syncfusion/ej2-react-inputs'
 import {ButtonComponent} from '@syncfusion/ej2-react-buttons'
 import Users from 'meteor/vulcan:users'
 import * as timeago from 'timeago.js'
+import {removeTypename} from '../utils/removeTypename'
 
 const CHAT_CSS = `
 .line-bc {
@@ -102,14 +103,13 @@ const KGChatSection = ({match, currentUser}) => {
   const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
   if (subsection) selector.push({subsection: {_eq: subsection}})
   const filter = (id && {_id: {_eq: id}}) || {_and: selector}
-  const sort = {createdAt: 'asc'}
-  const {results, refetch} = useMulti2({
+  const {results, refetch, loading: loading_chats} = useMulti2({
     collectionName,
-    fragmentName: 'KGChatAllFragment',
-    input: {filter, sort},
+    fragmentName: 'KGChatFullFragment',
+    input: {filter},
     //pollInterval: 500,
   })
-  const messages = results || []
+  if (results && results.length === 0) results[0] = {programId, sectionId, subsection}
 
   const {results: users, loading: loading_users} = useMulti2(
       {collection: Users, fragmentName: 'UsersMinimumInfo', input: {filter: {username: {_is_null: false}}}},
@@ -119,13 +119,19 @@ const KGChatSection = ({match, currentUser}) => {
   const [createDocument, {loading: loading_create}] = useCreate2({collectionName, fragmentName: 'KGChatFragment'})
   const [error, setError] = useState()
 
+  const document = results && results[0] || {}
+
   const textBox = useRef()
   const button = useRef()
-  const onClick = () => {
+  const onClick = async () => {
     const text = textBox.current.value
-    if (!value) return
+    if (!text) return
+    if (!document.messages) document.messages = []
+    document.messages.unshift({who: currentUser._id, when: new Date().toISOString(), text})
     try {
-      createDocument({input: {data: {programId, sectionId, subsection, text}}})
+      document._id ?
+        await updateDocument({input: {id: document._id, data: {messages: removeTypename(document.messages)}}}) :
+        await createDocument({input: {data: document}})
     } catch (e) {
       setError(e)
     }
@@ -137,19 +143,24 @@ const KGChatSection = ({match, currentUser}) => {
       <Components.IfIHave permission={isReadable}>
         {
           error ? <Components.Flash message={error}/> :
-              [loading_create, loading_update, loading_users].some(it => it === true) ? <Components.Loading/> :
+              [loading_chats, loading_users, loading_create, loading_update].some(it => it === true) ? <Components.Loading/> :
                   <React.Fragment>
                     <style>{CHAT_CSS}</style>
+                    <Components.IfIHave permission={isChattable}>
+                      <TextBoxComponent placeholder="Chat Text" floatLabelType="Auto" multiline={true} ref={textBox}/>
+                      <ButtonComponent onClick={onClick} ref={button}>Say</ButtonComponent>
+                    </Components.IfIHave>
                     <div className="line-bc">
                       {
-                        messages.map((it, index) => {
-                          const user = users.find(user => user._id === it.userId)
+                        document.messages &&
+                        document.messages.map((message, index) => {
+                          const user = users.find(user => user._id === message.who)
                           return (
-                              it.userId === currentUser._id ?
+                              message.who === currentUser._id ?
                                   <div key={index}>
-                                    <div className="mycomment"><p>{it.text}</p></div>
+                                    <div className="mycomment"><p>{message.text}</p></div>
                                     <div style={{fontStyle: 'italic', fontSize: 'smaller'}}>
-                                      {timeago.format(it.createdAt)}
+                                      {timeago.format(message.when)}
                                     </div>
                                   </div> :
                                   <div key={index} className="balloon6">
@@ -161,11 +172,11 @@ const KGChatSection = ({match, currentUser}) => {
                                     }
                                     <div className="chatting">
                                       <div className="says">
-                                        <p>{it.text}</p>
+                                        <p>{message.text}</p>
                                       </div>
                                       <div style={{fontStyle: 'italic', fontSize: 'smaller'}}>
                                         {user && <p>{user.username}, </p>}
-                                        <p>{timeago.format(it.createdAt)}</p>
+                                        <p>{timeago.format(message.when)}</p>
                                       </div>
                                     </div>
                                   </div>
@@ -173,10 +184,6 @@ const KGChatSection = ({match, currentUser}) => {
                         })
                       }
                     </div>
-                    <Components.IfIHave permission={isChattable}>
-                      <TextBoxComponent placeholder="Chat Text" floatLabelType="Auto" multiline={true} ref={textBox}/>
-                      <ButtonComponent onClick={onClick} ref={button}>Say</ButtonComponent>
-                    </Components.IfIHave>
                   </React.Fragment>
         }
       </Components.IfIHave>

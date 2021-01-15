@@ -2,6 +2,32 @@
  * @summary KGChats schema
  * @type {Object}
  */
+import {createSchema} from 'meteor/vulcan:core'
+
+const messageSchema = createSchema({
+  who: {
+    type: String,
+    optional: false,
+    canRead: ['members'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
+  },
+  when: {
+    type: Date,
+    optional: false,
+    canRead: ['members'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
+  },
+  text: {
+    type: String,
+    optional: true,
+    canRead: ['members'],
+    canCreate: ['members'],
+    canUpdate: ['members'],
+  },
+})
+
 const schema = {
   /**
    ID
@@ -89,31 +115,17 @@ const schema = {
     canUpdate: ['members'],
   },
   /**
-   * Text
+   * Messages
    */
-  text: {
-    type: String,
-    optional: true,
-    canRead: ['members'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
-  },
-  /**
-   * ReadBy
-   */
-  readBy: {
+  messages: {
     type: Array,
     optional: true,
     canRead: ['members'],
     canCreate: ['members'],
     canUpdate: ['members'],
   },
-  'readBy.$': {
-    type: String,
-    optional: true,
-    canRead: ['members'],
-    canCreate: ['members'],
-    canUpdate: ['members'],
+  'messages.$': {
+    type: messageSchema,
   },
 }
 
