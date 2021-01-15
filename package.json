@@ -20,6 +20,7 @@
     "@babel/runtime": "^7.9.6",
     "@syncfusion/ej2-diagrams": "^18.3.44",
     "@syncfusion/ej2-layouts": "^18.3.53",
+    "@syncfusion/ej2-notifications": "^18.4.34",
     "@syncfusion/ej2-react-base": "^18.3.37",
     "@syncfusion/ej2-react-buttons": "^18.3.40",
     "@syncfusion/ej2-react-diagrams": "^18.3.44",

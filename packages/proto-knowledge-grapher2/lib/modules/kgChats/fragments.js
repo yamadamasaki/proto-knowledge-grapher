@@ -27,3 +27,9 @@ registerFragment(/*gql*/`
         }
     }
 `)
+
+registerFragment(/*gql*/`
+    fragment KGChatUpdatedAtFragment on KGChat {
+        updatedAt
+    }
+`)

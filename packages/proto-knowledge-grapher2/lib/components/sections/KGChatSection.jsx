@@ -130,8 +130,8 @@ const KGChatSection = ({match, currentUser}) => {
     document.messages.unshift({who: currentUser._id, when: new Date().toISOString(), text})
     try {
       document._id ?
-        await updateDocument({input: {id: document._id, data: {messages: removeTypename(document.messages)}}}) :
-        await createDocument({input: {data: document}})
+          await updateDocument({input: {id: document._id, data: {messages: removeTypename(document.messages)}}}) :
+          await createDocument({input: {data: document}})
     } catch (e) {
       setError(e)
     }
@@ -143,7 +143,8 @@ const KGChatSection = ({match, currentUser}) => {
       <Components.IfIHave permission={isReadable}>
         {
           error ? <Components.Flash message={error}/> :
-              [loading_chats, loading_users, loading_create, loading_update].some(it => it === true) ? <Components.Loading/> :
+              [loading_chats, loading_users, loading_create, loading_update].some(it => it === true) ?
+                  <Components.Loading/> :
                   <React.Fragment>
                     <style>{CHAT_CSS}</style>
                     <Components.IfIHave permission={isChattable}>

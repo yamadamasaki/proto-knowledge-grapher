@@ -2542,8 +2542,8 @@ input KGChatMessagesSortInput {
 }
 
 
-# Type for KGChatLogs
-type KGChatLog {
+# Type for KGTouches
+type KGTouch {
   _id: String 
   createdAt: Date 
   updatedAt: Date 
@@ -2559,21 +2559,21 @@ type KGChatLog {
 }
 
 
-input DeleteKGChatLogInput{
-  filter: KGChatLogFilterInput
+input DeleteKGTouchInput{
+  filter: KGTouchFilterInput
   id: String
 }
 
-input SingleKGChatLogInput {
+input SingleKGTouchInput {
   # filtering
-  filter: KGChatLogFilterInput
-  sort: KGChatLogSortInput
+  filter: KGTouchFilterInput
+  sort: KGTouchSortInput
   search: String
   id: String
 
   # backwards-compatibility
   "Deprecated (use 'filter/id' fields instead)."
-  selector: KGChatLogSelectorUniqueInput
+  selector: KGTouchSelectorUniqueInput
 
   # options (backwards-compatibility)
   # Whether to enable caching for this query
@@ -2584,11 +2584,11 @@ input SingleKGChatLogInput {
   contextName: String
 }
 
-input MultiKGChatLogInput {
+input MultiKGTouchInput {
 
   # filtering
-  filter: KGChatLogFilterInput
-  sort: KGChatLogSortInput
+  filter: KGTouchFilterInput
+  sort: KGTouchSortInput
   search: String
   offset: Int
   limit: Int
@@ -2608,26 +2608,26 @@ input MultiKGChatLogInput {
   
 }
 
-type SingleKGChatLogOutput{
-  result: KGChatLog
+type SingleKGTouchOutput{
+  result: KGTouch
 }
 
-type  MultiKGChatLogOutput{
-  results: [KGChatLog]
+type  MultiKGTouchOutput{
+  results: [KGTouch]
   totalCount: Int
 }
 
-type KGChatLogMutationOutput{
-  data: KGChatLog
+type KGTouchMutationOutput{
+  data: KGTouch
 }
 
-input CreateKGChatLogInput {
-  data: CreateKGChatLogDataInput!
+input CreateKGTouchInput {
+  data: CreateKGTouchDataInput!
   # An identifier to name the mutation's execution context
   contextName: String
 }
 
-input CreateKGChatLogDataInput {
+input CreateKGTouchDataInput {
   userId: String 
   programId: String 
   sectionId: String 
@@ -2635,33 +2635,33 @@ input CreateKGChatLogDataInput {
   lastAccessedAt: Date 
 }
 
-input UpdateKGChatLogInput{
-  filter: KGChatLogFilterInput
+input UpdateKGTouchInput{
+  filter: KGTouchFilterInput
   id: String
-  data: UpdateKGChatLogDataInput!
+  data: UpdateKGTouchDataInput!
   # An identifier to name the mutation's execution context
   contextName: String
 }
 
-input UpsertKGChatLogInput{
-  filter: KGChatLogFilterInput
+input UpsertKGTouchInput{
+  filter: KGTouchFilterInput
   id: String
-  data: UpdateKGChatLogDataInput!
+  data: UpdateKGTouchDataInput!
   # An identifier to name the mutation's execution context
   contextName: String
 }
 
-input UpdateKGChatLogDataInput {
+input UpdateKGTouchDataInput {
   programId: String 
   sectionId: String 
   subsection: String 
   lastAccessedAt: Date 
 }
 
-input KGChatLogFilterInput {
-  _and: [KGChatLogFilterInput]
-  _not: KGChatLogFilterInput
-  _or: [KGChatLogFilterInput]
+input KGTouchFilterInput {
+  _and: [KGTouchFilterInput]
+  _not: KGTouchFilterInput
+  _or: [KGTouchFilterInput]
 
 
   _id: String_Selector
@@ -2674,7 +2674,7 @@ input KGChatLogFilterInput {
   lastAccessedAt: Date_Selector
 }
 
-input KGChatLogSortInput {
+input KGTouchSortInput {
   _id: SortOptions
   createdAt: SortOptions
   updatedAt: SortOptions
@@ -2685,13 +2685,13 @@ input KGChatLogSortInput {
   lastAccessedAt: SortOptions
 }
 
-input KGChatLogSelectorInput {
-  _and: [KGChatLogSelectorInput]
-  _or: [KGChatLogSelectorInput]
+input KGTouchSelectorInput {
+  _and: [KGTouchSelectorInput]
+  _or: [KGTouchSelectorInput]
 
 }
 
-input KGChatLogSelectorUniqueInput {
+input KGTouchSelectorUniqueInput {
   _id: String
   documentId: String # OpenCRUD backwards compatibility
   slug: String
@@ -2778,11 +2778,11 @@ type Query {
   # A list of KGChat documents matching a set of query terms
   kGChats(input: MultiKGChatInput):  MultiKGChatOutput
   
-  # A single KGChatLog document fetched by ID or slug
-  kGChatLog(input: SingleKGChatLogInput!): SingleKGChatLogOutput
+  # A single KGTouch document fetched by ID or slug
+  kGTouch(input: SingleKGTouchInput!): SingleKGTouchOutput
   
-  # A list of KGChatLog documents matching a set of query terms
-  kGChatLogs(input: MultiKGChatLogInput):  MultiKGChatLogOutput
+  # A list of KGTouch documents matching a set of query terms
+  kGTouches(input: MultiKGTouchInput):  MultiKGTouchOutput
   
 }
   
@@ -3196,37 +3196,37 @@ type Mutation {
   selector: KGChatSelectorUniqueInput
 ) : KGChatMutationOutput
 
-  # Mutation for creating new KGChatLog documents
-  createKGChatLog(
-  input: CreateKGChatLogInput,
+  # Mutation for creating new KGTouch documents
+  createKGTouch(
+  input: CreateKGTouchInput,
   "Deprecated (use 'input' field instead)."
-  data: CreateKGChatLogDataInput
-) : KGChatLogMutationOutput
+  data: CreateKGTouchDataInput
+) : KGTouchMutationOutput
 
-  # Mutation for updating a KGChatLog document
-  updateKGChatLog(
-  input: UpdateKGChatLogInput,
+  # Mutation for updating a KGTouch document
+  updateKGTouch(
+  input: UpdateKGTouchInput,
   "Deprecated (use 'input' field instead)."
-  selector: KGChatLogSelectorUniqueInput,
+  selector: KGTouchSelectorUniqueInput,
   "Deprecated (use 'input' field instead)."
-  data: UpdateKGChatLogDataInput 
-) : KGChatLogMutationOutput
+  data: UpdateKGTouchDataInput 
+) : KGTouchMutationOutput
 
-  # Mutation for upserting a KGChatLog document
-  upsertKGChatLog(
-  input: UpsertKGChatLogInput,
+  # Mutation for upserting a KGTouch document
+  upsertKGTouch(
+  input: UpsertKGTouchInput,
   "Deprecated (use 'input' field instead)."
-  selector: KGChatLogSelectorUniqueInput,
+  selector: KGTouchSelectorUniqueInput,
   "Deprecated (use 'input' field instead)."
-  data: UpdateKGChatLogDataInput
-) : KGChatLogMutationOutput
+  data: UpdateKGTouchDataInput
+) : KGTouchMutationOutput
 
-  # Mutation for deleting a KGChatLog document
-  deleteKGChatLog(
-  input: DeleteKGChatLogInput,
+  # Mutation for deleting a KGTouch document
+  deleteKGTouch(
+  input: DeleteKGTouchInput,
   "Deprecated (use 'input' field instead)."
-  selector: KGChatLogSelectorUniqueInput
-) : KGChatLogMutationOutput
+  selector: KGTouchSelectorUniqueInput
+) : KGTouchMutationOutput
 
 }
 
