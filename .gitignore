@@ -20,18 +20,18 @@ dump/
 dump/*
 
 production.settings.json
-settings.json
+#settings.json
 settings.json.not-used
 .idea
 
 scratch
 
-.deploy
-.deploy/*
+#.deploy
+#.deploy/*
 ### Meteor template
 .meteor/local
 .meteor/meteorite
-mup.json
+#mup.json
 
 packages_update.py
 

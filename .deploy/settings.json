@@ -1,0 +1,14 @@
+{
+  "public": {
+
+    "version": "v0.1.2",
+
+    "title": "KnowledgeGrapher",
+    "tagline": "make a network of knowledge by dialog",
+
+    "faviconUrl": "/vulcan-logo-border.svg",
+
+    "locale": "en"
+
+  }
+}
