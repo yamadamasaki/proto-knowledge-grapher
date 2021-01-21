@@ -11,6 +11,7 @@ import {
 } from '@syncfusion/ej2-react-diagrams'
 import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
 import {isPermitted} from '../common/IfIHave'
+import {DialogComponent} from '@syncfusion/ej2-react-popups'
 
 const basicShapes = [
   {
@@ -161,10 +162,15 @@ const CFFrameworkDiagramSection = ({match, currentUser}) => {
           margin: {left: 10, top: 10, bottom: 10, right: 10},
         })
         break
+      case 'overview':
+        setVisibleOverview(true)
+        break
       default:
         break
     }
   }
+
+  const [visibleOverview, setVisibleOverview] = useState(true)
 
   return (
       <React.Fragment>
@@ -176,14 +182,18 @@ const CFFrameworkDiagramSection = ({match, currentUser}) => {
         {
           error ? <Components.Flash message={error}/> :
               [loading_c, loading_u].some(it => it === true) ? <Components.Loading/> :
-                  <React.Fragment>
+                  <div id='fragment'>
                     <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
                                       contextMenuSettings={{show: true}}>
                       <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
                     </DiagramComponent>
-                    <OverviewComponent id="overview" style={{top: '30px'}} sourceID="diagram" width={'100%'}
-                                       height={'150px'}/>
-                  </React.Fragment>
+                    <DialogComponent width='500px' visible={visibleOverview} header='Overview' allowDragging={true}
+                                     showCloseIcon={true} close={() => setVisibleOverview(false)}
+                                     enableResize={true} resizeHandles={['All']} target='#fragment'>
+                      <OverviewComponent id="overview" style={{top: '30px'}} sourceID="diagram" width={'100%'}
+                                         height={'150px'}/>
+                    </DialogComponent>
+                  </div>
         }
         <ToolbarComponent id='toolbar' onClick={e => {
           onToolbarClicked(e.target.textContent)
@@ -197,6 +207,8 @@ const CFFrameworkDiagramSection = ({match, currentUser}) => {
             }
             <ItemDirective text='export'/>
             <ItemDirective text='print'/>
+            <ItemDirective type="Separator"/>
+            <ItemDirective text='overview'/>
           </ItemsDirective>
         </ToolbarComponent>
       </React.Fragment>
