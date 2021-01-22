@@ -13,6 +13,7 @@ import {
 import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
 import {v1 as uuidv1} from 'uuid'
 import {isPermitted} from '../common/IfIHave'
+import ErrorBoundary from '../common/ErrorBoundary'
 import {DialogComponent} from '@syncfusion/ej2-react-popups'
 
 const findParams = (children, sectionId) => {
@@ -80,13 +81,13 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
   const diagram = useRef()
 
   useEffect(() => {
-    setTimeout(() => renderComplete(), 0)
-  })
+    const timer = setTimeout(() => renderComplete(), 0)
+    return () => clearTimeout(timer) // cleanup
+  }, [doc.diagram])
 
   const renderComplete = () => {
     if (!diagram || !diagram.current) return
     if (doc && doc.diagram) diagram.current.loadDiagram(doc.diagram)
-
   }
 
   const saveDiagram = async () => {/*ToDo*/
@@ -96,6 +97,7 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
           await updateDocument({input: {id: doc._id, data: {diagram: doc.diagram}}}) :
           await createDocument({input: {data: doc}})
       refetch()
+      renderComplete()
     } catch (e) {
       setError(e)
     }
@@ -132,6 +134,9 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
         break
       case 'overview':
         setVisibleOverview(true)
+        break
+      case 'palette':
+        setVisiblePalette(true)
         break
       default:
         break
@@ -176,30 +181,39 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
   }
 
   const [visibleOverview, setVisibleOverview] = useState(true)
+  const [visiblePalette, setVisiblePalette] = useState(true)
+  const closeOverview = () => setVisibleOverview(false)
+  const closePalette = () => setVisiblePalette(false)
 
   return (
       <React.Fragment>
         {
           error ? <Components.Flash message={error}/> :
               [loading_c, loading_u, loading_program].some(it => it === true) ? <Components.Loading/> :
-                  <React.Fragment>
-                    {doc.title && <h2>{doc.title}</h2>}
-                    <SymbolPaletteComponent id='palette' expandMode='Multiple' symbolHeight={80} symbolWidth={80}
-                                            scrollSettings={{horizontalOffset: 100, verticalOffset: 50}}
-                                            palettes={palettes}
-                                            getSymbolInfo={symbol => symbol.symbolInfo}/>
-                    <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
-                                      contextMenuSettings={contextMenuSettings} contextMenuClick={addEdge}
-                                      contextMenuOpen={menuOpened}>
-                      <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
-                    </DiagramComponent>
-                    <DialogComponent width='500px' visible={visibleOverview} header='Overview' allowDragging={true}
-                                     showCloseIcon={true} close={() => setVisibleOverview(false)}
-                                     enableResize={true} resizeHandles={['All']} target='#diagram'>
-                      <OverviewComponent id="overview" style={{top: '30px'}} sourceID="diagram" width={'100%'}
-                                         height={'150px'}/>
-                    </DialogComponent>
-                  </React.Fragment>
+                  <ErrorBoundary>
+                    <React.Fragment>
+                      {doc.title && <h2>{doc.title}</h2>}
+                      <DialogComponent width='500px' visible={visiblePalette} header='Palette' allowDragging={true}
+                                       showCloseIcon={true} close={closePalette}
+                                       enableResize={true} resizeHandles={['All']}>
+                        <SymbolPaletteComponent id='palette' expandMode='Multiple' symbolHeight={80} symbolWidth={80}
+                                                scrollSettings={{horizontalOffset: 100, verticalOffset: 50}}
+                                                palettes={palettes}
+                                                getSymbolInfo={symbol => symbol.symbolInfo}/>
+                      </DialogComponent>
+                      <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
+                                        contextMenuSettings={contextMenuSettings} contextMenuClick={addEdge}
+                                        contextMenuOpen={menuOpened}>
+                        <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
+                      </DiagramComponent>
+                      <DialogComponent width='500px' visible={visibleOverview} header='Overview' allowDragging={true}
+                                       showCloseIcon={true} close={closeOverview}
+                                       enableResize={true} resizeHandles={['All']}>
+                        <OverviewComponent id="overview" style={{top: '30px'}} sourceID="diagram" width={'100%'}
+                                           height={'150px'}/>
+                      </DialogComponent>
+                    </React.Fragment>
+                  </ErrorBoundary>
         }
         <ToolbarComponent id='toolbar' onClick={e => {
           onToolbarClicked(e.target.textContent)
@@ -215,6 +229,7 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
             <ItemDirective text='print'/>
             <ItemDirective type="Separator"/>
             <ItemDirective text='overview'/>
+            <ItemDirective text='palette'/>
           </ItemsDirective>
         </ToolbarComponent>
       </React.Fragment>
