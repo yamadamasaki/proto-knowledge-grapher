@@ -23,6 +23,9 @@ const findParams = (children, sectionId) => {
   return children.map(it => findParams(it.children, sectionId)).find(it => it != null)
 }
 
+const globalMenuItems = ['save', 'export', 'print']
+const popupMenuItems = ['overview', 'palette']
+
 const CFNetworkDiagramSection = ({match, currentUser}) => {
   const {params} = match
   const collectionName = params.collectionName || 'CFNetworkDiagrams'
@@ -143,11 +146,22 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
     }
   }
 
+  const menuItems = () => {
+    const menuItems = []
+    const addItem = item => menuItems.push({text: item, id: item, target: '.e-diagramcontent'})
+    const addSeparator = () => menuItems.push({separator: true})
+    addSeparator()
+    if (edgeLabels) edgeLabels.forEach(addItem)
+    addSeparator()
+    globalMenuItems.forEach(addItem)
+    addSeparator()
+    popupMenuItems.forEach(addItem)
+    return menuItems
+  }
+
   const contextMenuSettings = {
     show: true,
-    items: edgeLabels ?
-        edgeLabels.map(edgeLabel => ({text: edgeLabel, id: edgeLabel, target: '.e-diagramcontent'})) :
-        [],
+    items: menuItems(),
     showCustomMenuOnly: false,
   }
 
@@ -175,7 +189,13 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
     )
   }
 
-  const menuOpened = event => {
+  const menuClicked = event => {
+    const item = event.item.id
+    if (edgeLabels.includes(item)) addEdge(event)
+    else onToolbarClicked(item)
+  }
+
+  const menuWillOpen = event => {
     if (diagram.current.selectedItems.nodes[0]) return
     edgeLabels.forEach(item => event.hiddenItems.push(item))
   }
@@ -202,8 +222,8 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
                                                 getSymbolInfo={symbol => symbol.symbolInfo}/>
                       </DialogComponent>
                       <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
-                                        contextMenuSettings={contextMenuSettings} contextMenuClick={addEdge}
-                                        contextMenuOpen={menuOpened}>
+                                        contextMenuSettings={contextMenuSettings} contextMenuClick={menuClicked}
+                                        contextMenuOpen={menuWillOpen}>
                         <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
                       </DiagramComponent>
                       <DialogComponent width='500px' visible={visibleOverview} header='Overview' allowDragging={true}
