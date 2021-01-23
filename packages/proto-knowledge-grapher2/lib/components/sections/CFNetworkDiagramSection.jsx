@@ -53,7 +53,7 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
       {collectionName: 'Programs', fragmentName: 'ProgramFragment', input: {filter: {_id: {_eq: programId}}}},
   )
   const program = programs && programs[0] && programs[0].structure
-  const {nodeLabels, edgeLabels} = findParams((program || []).children, sectionId) || {}
+  const {nodeLabels, edgeLabels, type} = findParams((program || []).children, sectionId) || {}
 
   const basicShapes = (nodeLabels || []).map(nodeLabel => (
       {
@@ -174,7 +174,10 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
         {x: selectedNode.offsetX, y: selectedNode.offsetY + selectedNode.actualSize.height / 2 + 40} :
         {x: x + 40, y: y + 40}
     const edge = {
-      id: `edge-${item}-${uuidv1()}`, type: 'Straight', targetDecorator: {shape: 'Arrow'},
+      id: `edge-${item}-${uuidv1()}`,
+      type: 'Straight',
+      [type === 'association' ? 'targetDecorator' : 'sourceDecorator']: {shape: 'Arrow'},
+      [type === 'association' ? 'sourceDecorator' : 'targetDecorator']: {shape: 'None'},
       annotations: [
         {
           content: item, constraints: AnnotationConstraints.ReadOnly,

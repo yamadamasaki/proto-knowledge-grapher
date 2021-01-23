@@ -27,7 +27,8 @@
           "collectionName": "CFAsyncSessions",
           "componentName": "CFAsyncSession",
           "nodeLabels": ["論点", "意見", "根拠"],
-          "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"]
+          "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"],
+          "type": "abstraction"
         },
         {
           "name": "フォローアップ同期セッション",
@@ -63,7 +64,8 @@
               "collectionName": "CFAsyncSessions",
               "componentName": "CFAsyncSession",
               "nodeLabels": ["論点", "意見", "根拠"],
-              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"]
+              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"],
+              "type": "abstraction"
             },
             {
               "name": "フォローアップ同期セッション",
@@ -95,7 +97,8 @@
               "collectionName": "CFAsyncSessions",
               "componentName": "CFAsyncSession",
               "nodeLabels": ["論点", "意見", "根拠"],
-              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"]
+              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"],
+              "type": "association"
             },
             {
               "name": "フォローアップ同期セッション",
@@ -129,7 +132,8 @@
           "collectionName": "CFAsyncSessions",
           "componentName": "CFAsyncSession",
           "nodeLabels": ["論点", "意見", "根拠"],
-          "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"]
+          "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"],
+          "type": "association"
         },
         {
           "name": "フォローアップ同期セッション",
@@ -165,7 +169,8 @@
               "collectionName": "CFAsyncSessions",
               "componentName": "CFAsyncSession",
               "nodeLabels": ["論点", "意見", "根拠"],
-              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"]
+              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"],
+              "type": "abstraction"
             },
             {
               "name": "フォローアップ同期セッション",
@@ -197,7 +202,8 @@
               "collectionName": "CFAsyncSessions",
               "componentName": "CFAsyncSession",
               "nodeLabels": ["論点", "意見", "根拠"],
-              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"]
+              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"],
+              "type": "association"
             },
             {
               "name": "フォローアップ同期セッション",
@@ -229,7 +235,8 @@
               "collectionName": "CFAsyncSessions",
               "componentName": "CFAsyncSession",
               "nodeLabels": ["論点", "意見", "根拠"],
-              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"]
+              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"],
+              "type": "abstraction"
             },
             {
               "name": "フォローアップ同期セッション",
@@ -267,7 +274,8 @@
               "collectionName": "CFAsyncSessions",
               "componentName": "CFAsyncSession",
               "nodeLabels": ["論点", "意見", "根拠"],
-              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"]
+              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"],
+              "type": "abstraction"
             },
             {
               "name": "フォローアップ同期セッション",
@@ -299,7 +307,8 @@
               "collectionName": "CFAsyncSessions",
               "componentName": "CFAsyncSession",
               "nodeLabels": ["論点", "意見", "根拠"],
-              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"]
+              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"],
+              "type": "abstraction"
             },
             {
               "name": "フォローアップ同期セッション",
@@ -333,7 +342,8 @@
           "collectionName": "CFAsyncSessions",
           "componentName": "CFAsyncSession",
           "nodeLabels": ["論点", "意見", "根拠"],
-          "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"]
+          "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"],
+          "type": "abstraction"
         },
         {
           "name": "フォローアップ同期セッション",
@@ -369,7 +379,8 @@
               "collectionName": "CFAsyncSessions",
               "componentName": "CFAsyncSession",
               "nodeLabels": ["論点", "意見", "根拠"],
-              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"]
+              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"],
+              "type": "association"
             },
             {
               "name": "フォローアップ同期セッション",
@@ -401,7 +412,8 @@
               "collectionName": "CFAsyncSessions",
               "componentName": "CFAsyncSession",
               "nodeLabels": ["論点", "意見", "根拠"],
-              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"]
+              "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"],
+              "type": "abstraction"
             },
             {
               "name": "フォローアップ同期セッション",
@@ -435,7 +447,8 @@
           "collectionName": "CFAsyncSessions",
           "componentName": "CFAsyncSession",
           "nodeLabels": ["論点", "意見", "根拠"],
-          "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"]
+          "edgeLabels": ["賛成", "中立", "反対", "問題提起", "別の視点", "質問", "答え"],
+          "type": "association"
         },
         {
           "name": "フォローアップ同期セッション",
