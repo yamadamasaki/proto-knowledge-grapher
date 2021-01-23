@@ -88,6 +88,9 @@ const palettes = [
   {id: 'connectors', expanded: true, symbols: connectors, title: 'Connectors', iconCss: 'e-ddb-icons e-connector'},
 ]
 
+const globalMenuItems = ['save', 'export', 'print']
+const popupMenuItems = ['overview', 'palette']
+
 const CFFrameworkDiagramSection = ({match, currentUser}) => {
   const {params} = match
   const collectionName = params.collectionName || 'SimpleDiagrams'
@@ -176,6 +179,25 @@ const CFFrameworkDiagramSection = ({match, currentUser}) => {
     }
   }
 
+  const menuItems = () => {
+    const menuItems = []
+    const addItem = item => menuItems.push({text: item, id: item, target: '.e-diagramcontent'})
+    const addSeparator = () => menuItems.push({separator: true})
+    addSeparator()
+    globalMenuItems.forEach(addItem)
+    addSeparator()
+    popupMenuItems.forEach(addItem)
+    return menuItems
+  }
+
+  const contextMenuSettings = {
+    show: true,
+    items: menuItems(),
+    showCustomMenuOnly: false,
+  }
+
+  const menuClicked = event => onToolbarClicked(event.item.id)
+
   const [visibleOverview, setVisibleOverview] = useState(true)
   const [visiblePalette, setVisiblePalette] = useState(true)
   const closeOverview = () => setVisibleOverview(false)
@@ -198,7 +220,7 @@ const CFFrameworkDiagramSection = ({match, currentUser}) => {
                                                 getSymbolInfo={symbol => symbol.symbolInfo}/>
                       </DialogComponent>
                       <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
-                                        contextMenuSettings={{show: true}}>
+                                        contextMenuSettings={contextMenuSettings} contextMenuClick={menuClicked}>
                         <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
                       </DiagramComponent>
                       <DialogComponent width='500px' visible={visibleOverview} header='Overview' allowDragging={true}
