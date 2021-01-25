@@ -27,8 +27,8 @@ module.exports = {
       // TODO: Change to your app's url
       // If you are using ssl, it needs to start with https://
       ROOT_URL: 'https://demo.knowledge-grapher.cloud',
-      //MONGO_URL: 'mongodb://mongodb/meteor',
-      MONGO_OPLOG_URL: 'mongodb://mongodb/local',
+      MONGO_URL: 'mongodb://yamadamasaki:5B8-TSu-YAM-qQo@kg-dev-shard-00-00.hb9rw.mongodb.net:27017,kg-dev-shard-00-01.hb9rw.mongodb.net:27017,kg-dev-shard-00-02.hb9rw.mongodb.net:27017/demo-knowledge-grapher?ssl=true&replicaSet=atlas-12w2s4-shard-0&authSource=admin&retryWrites=true&w=majority',
+      MONGO_OPLOG_URL: 'mongodb://yamadamasaki:5B8-TSu-YAM-qQo@kg-dev-shard-00-00.hb9rw.mongodb.net:27017,kg-dev-shard-00-01.hb9rw.mongodb.net:27017,kg-dev-shard-00-02.hb9rw.mongodb.net:27017/local?ssl=true&replicaSet=atlas-12w2s4-shard-0&authSource=admin&retryWrites=true&w=majority',
     },
 
     docker: {
@@ -43,13 +43,13 @@ module.exports = {
     enableUploadProgressBar: true
   },
 
-  mongo: {
-    version: '4.2.5',
-    dbName: 'proto-knowledge-grapher',
-    servers: {
-      one: {}
-    }
-  },
+  // mongo: {
+  //   version: '4.2.5',
+  //   dbName: 'proto-knowledge-grapher',
+  //   servers: {
+  //     one: {}
+  //   }
+  // },
 
   // (Optional)
   // Use the proxy to setup ssl or to route requests to the correct
