@@ -18,17 +18,17 @@ const basicShapes = [
   {
     id: 'Rectangle-top',
     shape: {type: 'Basic', shape: 'Rectangle'},
-    annotations: [{offset: {x: 0.5, y: 0.1}, verticalAlignment: 'Top'}],
+    annotations: [{offset: {x: 0.5, y: 0.1}, verticalAlignment: 'Top', style: {textWrapping: 'Wrap'}}],
     symbolInfo: {description: {text: 'Top'}},
   }, {
     id: 'Rectangle-center',
     shape: {type: 'Basic', shape: 'Rectangle'},
-    annotations: [{offset: {x: 0.5, y: 0.5}, verticalAlignment: 'Center'}],
+    annotations: [{offset: {x: 0.5, y: 0.5}, verticalAlignment: 'Center', style: {textWrapping: 'Wrap'}}],
     symbolInfo: {description: {text: 'Center'}},
   }, {
     id: 'Rectangle-bottom',
     shape: {type: 'Basic', shape: 'Rectangle'},
-    annotations: [{offset: {x: 0.5, y: 0.9}, verticalAlignment: 'Bottom'}],
+    annotations: [{offset: {x: 0.5, y: 0.9}, verticalAlignment: 'Bottom', style: {textWrapping: 'Wrap'}}],
     symbolInfo: {description: {text: 'Bottom'}},
   }, {
     id: 'Ellipse',

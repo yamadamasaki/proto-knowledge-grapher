@@ -65,7 +65,7 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
             horizontalAlignment: 'Center', verticalAlignment: 'Bottom', style: {bold: true},
           },
           {
-            offset: {x: 0.5, y: 0.5}, content: '発言',
+            offset: {x: 0.5, y: 0.5}, content: '発言', style: {textWrapping: 'Wrap'},
             horizontalAlignment: 'Center', verticalAlignment: 'Center',
           },
           {
