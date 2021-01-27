@@ -123,6 +123,7 @@ const CFFrameworkDiagramSection = ({match, currentUser}) => {
 
   const renderComplete = () => {
     if (!diagram || !diagram.current) return
+    if (doc && !doc._id) diagram.current.loadDiagram(diagram.current.saveDiagram())
     if (doc && doc.diagram) diagram.current.loadDiagram(doc.diagram)
   }
 
@@ -223,11 +224,11 @@ const CFFrameworkDiagramSection = ({match, currentUser}) => {
                                         contextMenuSettings={contextMenuSettings} contextMenuClick={menuClicked}>
                         <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
                       </DiagramComponent>
-                      <DialogComponent width='500px' visible={visibleOverview} header='Overview' allowDragging={true}
+                      <DialogComponent width='300px' visible={visibleOverview} header='Overview' allowDragging={true}
                                        showCloseIcon={true} close={closeOverview}
                                        enableResize={true} resizeHandles={['All']}>
                         <OverviewComponent id="overview" style={{top: '30px'}} sourceID="diagram" width={'100%'}
-                                           height={'150px'}/>
+                                           height={'300px'}/>
                       </DialogComponent>
                     </React.Fragment>
                   </ErrorBoundary>
