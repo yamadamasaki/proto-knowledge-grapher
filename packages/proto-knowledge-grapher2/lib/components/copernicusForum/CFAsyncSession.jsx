@@ -47,7 +47,6 @@ const CFAsyncSession = ({match}) => {
             sectionId,
             subsection: 'teams',
             isEditable: {groups: ['admins']},
-            delegatedCollectionName: 'CFNetworkDiagrams',
             delegatedComponentName: 'CFNetworkDiagramSubsession',
             subsessionName: `${sessionName} - チーム・グラフィティ`,
           },

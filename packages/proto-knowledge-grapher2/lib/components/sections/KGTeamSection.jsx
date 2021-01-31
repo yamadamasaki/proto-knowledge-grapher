@@ -16,7 +16,7 @@ const KGTeamSection = ({match, currentUser}) => {
   const collectionName = params.collectionName || 'KGTeams'
   const {programId, sectionId, subsection} = params
   const {id} = params
-  const {delegatedCollectionName, delegatedComponentName, subsessionName} = params
+  const {delegatedComponentName, subsessionName} = params
   const {isEditable} = params
   const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
   if (subsection) selector.push({subsection: {_eq: subsection}})
@@ -81,7 +81,7 @@ const KGTeamSection = ({match, currentUser}) => {
         players.current.value = []
       }
     }
-    const url = `/sections/${programId}/${delegatedCollectionName}/${sectionId}/${team.teamId}/${delegatedComponentName}/`
+    const url = `/sections/${programId}/${sectionId}/${team.teamId}/${delegatedComponentName}/`
     const readonly = !isPermitted(currentUser, isEditable)
 
     return (

@@ -15,7 +15,7 @@ const children2array = (children, programId) => {
       iconCss: 'icon-circle-thin icon',
     }
     if (node.componentName) Object.assign(template,
-        {navigateUrl: `/sections/${programId}/${node.collectionName}/${node.id}/${node.componentName}`})
+        {navigateUrl: `/sections/${programId}/${node.id}/${node.componentName}`})
     if (node.children) template.nodeChild = children2array(node.children, programId)
     return template
   })

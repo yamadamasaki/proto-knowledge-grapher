@@ -26,7 +26,7 @@ addRoute([
   /// CFPrepSession
   {
     name: 'sessions.cfPrepSession',
-    path: '/sections/:programId/:collectionName/:sectionId/CFPrepSession/',
+    path: '/sections/:programId/:sectionId/CFPrepSession/',
     componentName: 'CFPrepSession',
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
@@ -34,14 +34,14 @@ addRoute([
   /// CFSyncSession
   {
     name: 'sessions.cfSyncSession',
-    path: '/sections/:programId/:collectionName/:sectionId/CFSyncSession/',
+    path: '/sections/:programId/:sectionId/CFSyncSession/',
     componentName: 'CFSyncSession',
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
   },
   {
     name: 'sessions.csFrameworkDiagramSubsession',
-    path: '/sections/:programId/:collectionName/:sectionId/:teamId/CFFrameworkDiagramSubsession/',
+    path: '/sections/:programId/:sectionId/:teamId/CFFrameworkDiagramSubsession/',
     componentName: 'CFFrameworkDiagramSubsession',
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
@@ -49,14 +49,14 @@ addRoute([
   /// CFAsyncSession
   {
     name: 'sessions.cfAsyncSession',
-    path: '/sections/:programId/:collectionName/:sectionId/CFAsyncSession/',
+    path: '/sections/:programId/:sectionId/CFAsyncSession/',
     componentName: 'CFAsyncSession',
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
   },
   {
     name: 'sessions.cfNetworkDiagramSubsession',
-    path: '/sections/:programId/:collectionName/:sectionId/:teamId/CFNetworkDiagramSubsession/',
+    path: '/sections/:programId/:sectionId/:teamId/CFNetworkDiagramSubsession/',
     componentName: 'CFNetworkDiagramSubsession',
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
@@ -64,7 +64,7 @@ addRoute([
   /// CFFollowupSession
   {
     name: 'sessions.cfFollowupSession',
-    path: '/sections/:programId/:collectionName/:sectionId/CFFollowupSession/',
+    path: '/sections/:programId/:sectionId/CFFollowupSession/',
     componentName: 'CFFollowupSession',
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
