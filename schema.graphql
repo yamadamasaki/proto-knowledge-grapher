@@ -2699,6 +2699,162 @@ input KGTouchSelectorUniqueInput {
 }
 
 
+# Type for KGSessionSpecs
+type KGSessionSpec {
+  _id: String 
+  createdAt: Date 
+  updatedAt: Date 
+  userId: String 
+  user: User 
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  specs: JSON 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+  updatedAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteKGSessionSpecInput{
+  filter: KGSessionSpecFilterInput
+  id: String
+}
+
+input SingleKGSessionSpecInput {
+  # filtering
+  filter: KGSessionSpecFilterInput
+  sort: KGSessionSpecSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: KGSessionSpecSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiKGSessionSpecInput {
+
+  # filtering
+  filter: KGSessionSpecFilterInput
+  sort: KGSessionSpecSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleKGSessionSpecOutput{
+  result: KGSessionSpec
+}
+
+type  MultiKGSessionSpecOutput{
+  results: [KGSessionSpec]
+  totalCount: Int
+}
+
+type KGSessionSpecMutationOutput{
+  data: KGSessionSpec
+}
+
+input CreateKGSessionSpecInput {
+  data: CreateKGSessionSpecDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateKGSessionSpecDataInput {
+  userId: String 
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  specs: JSON 
+}
+
+input UpdateKGSessionSpecInput{
+  filter: KGSessionSpecFilterInput
+  id: String
+  data: UpdateKGSessionSpecDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertKGSessionSpecInput{
+  filter: KGSessionSpecFilterInput
+  id: String
+  data: UpdateKGSessionSpecDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateKGSessionSpecDataInput {
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  specs: JSON 
+}
+
+input KGSessionSpecFilterInput {
+  _and: [KGSessionSpecFilterInput]
+  _not: KGSessionSpecFilterInput
+  _or: [KGSessionSpecFilterInput]
+
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  updatedAt: Date_Selector
+  userId: String_Selector
+  programId: String_Selector
+  sectionId: String_Selector
+  subsection: String_Selector
+
+}
+
+input KGSessionSpecSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  updatedAt: SortOptions
+  userId: SortOptions
+  programId: SortOptions
+  sectionId: SortOptions
+  subsection: SortOptions
+  specs: SortOptions
+}
+
+input KGSessionSpecSelectorInput {
+  _and: [KGSessionSpecSelectorInput]
+  _or: [KGSessionSpecSelectorInput]
+
+}
+
+input KGSessionSpecSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
 
 
 type Query {
@@ -2783,6 +2939,12 @@ type Query {
   
   # A list of KGTouch documents matching a set of query terms
   kGTouches(input: MultiKGTouchInput):  MultiKGTouchOutput
+  
+  # A single KGSessionSpec document fetched by ID or slug
+  kGSessionSpec(input: SingleKGSessionSpecInput!): SingleKGSessionSpecOutput
+  
+  # A list of KGSessionSpec documents matching a set of query terms
+  kGSessionSpecs(input: MultiKGSessionSpecInput):  MultiKGSessionSpecOutput
   
 }
   
@@ -3227,6 +3389,38 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: KGTouchSelectorUniqueInput
 ) : KGTouchMutationOutput
+
+  # Mutation for creating new KGSessionSpec documents
+  createKGSessionSpec(
+  input: CreateKGSessionSpecInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateKGSessionSpecDataInput
+) : KGSessionSpecMutationOutput
+
+  # Mutation for updating a KGSessionSpec document
+  updateKGSessionSpec(
+  input: UpdateKGSessionSpecInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGSessionSpecSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateKGSessionSpecDataInput 
+) : KGSessionSpecMutationOutput
+
+  # Mutation for upserting a KGSessionSpec document
+  upsertKGSessionSpec(
+  input: UpsertKGSessionSpecInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGSessionSpecSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateKGSessionSpecDataInput
+) : KGSessionSpecMutationOutput
+
+  # Mutation for deleting a KGSessionSpec document
+  deleteKGSessionSpec(
+  input: DeleteKGSessionSpecInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGSessionSpecSelectorUniqueInput
+) : KGSessionSpecMutationOutput
 
 }
 
