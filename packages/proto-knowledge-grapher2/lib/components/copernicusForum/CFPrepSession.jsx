@@ -5,12 +5,11 @@ import {Helmet} from 'react-helmet'
 const sessionName = '準備セッション'
 
 const spec = {
-  purpose: {
+  guidance: {
     sectionName: 'ねらい',
     isTextEditable: {groups: ['admins']},
     isTextReadable: {groups: ['members']},
     isDiagramSavable: {groups: ['admins']},
-    subsessionName: '',
   },
   questionnaire: {
     sectionName: '課題',
