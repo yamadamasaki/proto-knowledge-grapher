@@ -3,10 +3,10 @@ import {Components, registerComponent, useCreate2} from 'meteor/vulcan:core'
 import {ButtonComponent} from '@syncfusion/ej2-react-buttons'
 import {findSingleDocument} from '../utils/documents'
 
-const KGSessionStart = ({programId, sectionId, spec, children}) => {
-  const collectionName = 'KGSessionSpecs'
-  const fragmentName = 'KGSessionSpecsFragment'
+const collectionName = 'KGSessionSpecs'
+const fragmentName = 'KGSessionSpecsFragment'
 
+const KGSessionStart = ({programId, sectionId, spec, children}) => {
   const loadings = {}
   const [error, setError] = useState()
 
