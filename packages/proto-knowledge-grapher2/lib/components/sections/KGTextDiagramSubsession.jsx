@@ -67,6 +67,7 @@ const KGTextDiagramSubsession = ({match}) => {
                     sectionId,
                     subsection,
                     isSavable: mySpec.isDiagramSavable,
+                    isReadable: mySpec.isDiagramReadable,
                   },
                 },
               },

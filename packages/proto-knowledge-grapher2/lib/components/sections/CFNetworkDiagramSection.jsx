@@ -31,7 +31,10 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
   const collectionName = params.collectionName || 'CFNetworkDiagrams'
   const {programId, sectionId, subsection} = params
   const {id} = params
-  const {isSavable} = params
+  const {isSavable, isReadable} = params
+
+  if ((!isSavable || !isSavable.length) && (!isReadable || isReadable.length)) return <div/>
+
   const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
   if (subsection) selector.push({subsection: {_eq: subsection}})
   const filter = (id && {_id: {_eq: id}}) || {_and: selector}
@@ -209,36 +212,35 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
   const closeOverview = () => setVisibleOverview(false)
   const closePalette = () => setVisiblePalette(false)
 
+  if (error) return <Components.Flash message={error}/>
+  if ([loading_c, loading_u, loading_program].some(it => it === true)) return <Components.Loading/>
+
   return (
       <React.Fragment>
-        {
-          error ? <Components.Flash message={error}/> :
-              [loading_c, loading_u, loading_program].some(it => it === true) ? <Components.Loading/> :
-                  <ErrorBoundary>
-                    <React.Fragment>
-                      {doc.title && <h2>{doc.title}</h2>}
-                      <DialogComponent width='500px' visible={visiblePalette} header='Palette' allowDragging={true}
-                                       showCloseIcon={true} close={closePalette}
-                                       enableResize={true} resizeHandles={['All']}>
-                        <SymbolPaletteComponent id='palette' expandMode='Multiple' symbolHeight={80} symbolWidth={80}
-                                                scrollSettings={{horizontalOffset: 100, verticalOffset: 50}}
-                                                palettes={palettes}
-                                                getSymbolInfo={symbol => symbol.symbolInfo}/>
-                      </DialogComponent>
-                      <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
-                                        contextMenuSettings={contextMenuSettings} contextMenuClick={menuClicked}
-                                        contextMenuOpen={menuWillOpen}>
-                        <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
-                      </DiagramComponent>
-                      <DialogComponent width='300px' visible={visibleOverview} header='Overview' allowDragging={true}
-                                       showCloseIcon={true} close={closeOverview}
-                                       enableResize={true} resizeHandles={['All']}>
-                        <OverviewComponent id="overview" style={{top: '30px'}} sourceID="diagram" width={'100%'}
-                                           height={'300px'}/>
-                      </DialogComponent>
-                    </React.Fragment>
-                  </ErrorBoundary>
-        }
+        <ErrorBoundary>
+          <React.Fragment>
+            {doc.title && <h2>{doc.title}</h2>}
+            <DialogComponent width='500px' visible={visiblePalette} header='Palette' allowDragging={true}
+                             showCloseIcon={true} close={closePalette}
+                             enableResize={true} resizeHandles={['All']}>
+              <SymbolPaletteComponent id='palette' expandMode='Multiple' symbolHeight={80} symbolWidth={80}
+                                      scrollSettings={{horizontalOffset: 100, verticalOffset: 50}}
+                                      palettes={palettes}
+                                      getSymbolInfo={symbol => symbol.symbolInfo}/>
+            </DialogComponent>
+            <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
+                              contextMenuSettings={contextMenuSettings} contextMenuClick={menuClicked}
+                              contextMenuOpen={menuWillOpen}>
+              <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>
+            </DiagramComponent>
+            <DialogComponent width='300px' visible={visibleOverview} header='Overview' allowDragging={true}
+                             showCloseIcon={true} close={closeOverview}
+                             enableResize={true} resizeHandles={['All']}>
+              <OverviewComponent id="overview" style={{top: '30px'}} sourceID="diagram" width={'100%'}
+                                 height={'300px'}/>
+            </DialogComponent>
+          </React.Fragment>
+        </ErrorBoundary>
         <ToolbarComponent id='toolbar' onClick={e => {
           onToolbarClicked(e.target.textContent)
         }}>

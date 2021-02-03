@@ -10,6 +10,7 @@ const spec = {
     isTextEditable: {groups: ['admins']},
     isTextReadable: {groups: ['members']},
     isDiagramSavable: {groups: ['admins']},
+      isDiagramReadable: {groups: ['members']},
   },
   questionnaire: {
     sectionName: '課題',
@@ -20,6 +21,7 @@ const spec = {
     isTextEditable: {groups: ['admin']},
     isTextReadable: {groups: ['members']},
     isDiagramSavable: {groups: ['admin']},
+      isDiagramReadable: {groups: ['members']},
     // 課題成果物の permission はその先で決める
   },
 }

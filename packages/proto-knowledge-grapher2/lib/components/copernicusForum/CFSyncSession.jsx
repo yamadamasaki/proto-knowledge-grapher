@@ -22,6 +22,7 @@ const spec = {
   mobGraffiti: {
     sectionName: 'モブグラフィティ',
     isSavable: {groups: ['admin']},
+    isReadable: {groups: ['members']},
   },
 }
 
@@ -71,6 +72,7 @@ const CFSyncSession = ({match}) => {
                 sectionId,
                 subsection: 'mobWork',
                 isSavable: {groups: ['admins']},
+                isReadable: {groups: ['members']},
               },
             }}/>
 

@@ -43,6 +43,7 @@ const CFFrameworkDiagramSubsession = ({match}) => {
                         sectionId,
                         subsection: teamId,
                         isSavable: {groups: ['admins'], users: team && team.players},
+                        isReadable: {groups: ['members']},
                       },
                     }}/>
                   </React.Fragment>

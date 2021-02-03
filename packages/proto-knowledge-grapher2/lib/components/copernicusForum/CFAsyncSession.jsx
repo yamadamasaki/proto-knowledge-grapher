@@ -24,6 +24,7 @@ const spec = {
     isTeamDefinable: {groups: ['admins']},
     isTeamAnswerable: {groups: ['members']},
     isSavable: {groups: ['admin']},
+    isReadable: {groups: ['members']},
   },
 }
 

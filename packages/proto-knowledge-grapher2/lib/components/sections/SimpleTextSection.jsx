@@ -26,6 +26,9 @@ const SimpleTextSection = ({match, currentUser}) => {
   const {programId, sectionId, subsection} = params
   const {id} = params
   const {isEditable, isReadable} = params
+
+  if ((!isEditable || !isEditable.length) && (!isReadable || isReadable.length)) return <div/>
+
   const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
   if (subsection) selector.push({subsection: {_eq: subsection}})
   const filter = (id && {_id: {_eq: id}}) || {_and: selector}
@@ -58,20 +61,21 @@ const SimpleTextSection = ({match, currentUser}) => {
     }
   }
 
+  if (error) return <Components.Flash message={error}/>
+  if ([loading_c, loading_u].some(it => it === true)) return <Components.Loading/>
+
   return (
-      error ? <Components.Flash message={error}/> :
-          [loading_c, loading_u].some(it => it === true) ? <Components.Loading/> :
-              <React.Fragment>
-                <Components.IfIHave permission={isEditable}>
-                  <RichTextEditorComponent value={document.htmlText} ref={editor}>
-                    <Inject services={[Toolbar, Image, Link, HtmlEditor, QuickToolbar]}/>
-                  </RichTextEditorComponent>
-                  <ButtonComponent onClick={onClick}>Save</ButtonComponent>
-                </Components.IfIHave>
-                <Components.IfIHave permission={isReadable}>
-                  <div style={boxStyle} dangerouslySetInnerHTML={{__html: document.htmlText}}/>
-                </Components.IfIHave>
-              </React.Fragment>
+      <React.Fragment>
+        <Components.IfIHave permission={isEditable}>
+          <RichTextEditorComponent value={document.htmlText} ref={editor}>
+            <Inject services={[Toolbar, Image, Link, HtmlEditor, QuickToolbar]}/>
+          </RichTextEditorComponent>
+          <ButtonComponent onClick={onClick}>Save</ButtonComponent>
+        </Components.IfIHave>
+        <Components.IfIHave permission={isReadable}>
+          <div style={boxStyle} dangerouslySetInnerHTML={{__html: document.htmlText}}/>
+        </Components.IfIHave>
+      </React.Fragment>
   )
 }
 
