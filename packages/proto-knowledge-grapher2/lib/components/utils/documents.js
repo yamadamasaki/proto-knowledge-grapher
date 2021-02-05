@@ -1,8 +1,9 @@
 import {useMulti2} from 'meteor/vulcan:core'
 
-const getDocuments = ({programId, sectionId, subsection, collectionName, fragmentName, pollInterval = 500}) => {
-  const filter = {_and: [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]}
-  if (subsection) filter.push({subsection: {_eq: subsection}})
+const getDocuments = ({id, programId, sectionId, subsection, collectionName, fragmentName, pollInterval = 500}) => {
+  const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
+  if (subsection) selector.push({subsection: {_eq: subsection}})
+  const filter = (id && {_id: {_eq: id}}) || {_and: selector}
   return useMulti2({
     collectionName,
     fragmentName,
@@ -11,7 +12,7 @@ const getDocuments = ({programId, sectionId, subsection, collectionName, fragmen
   })
 }
 
-// args = {programId, sectionId, subsection, collectionName, fragmentName, pollInterval = 500}
+// args = {id, programId, sectionId, subsection, collectionName, fragmentName, pollInterval = 500}
 // return {loading, error, document, refetch}
 const findSingleDocument = args => {
   const {results, loading, refetch, error} = getDocuments(args)
