@@ -28,6 +28,7 @@ const KGAnswerSubsession = ({match}) => {
     subsection,
     collectionName: 'KGTeams',
     fragmentName: 'KGTeamFragment',
+    pollInterval: 0,
   })
   if (l_teams) loadings.spec = l_teams
   if (e_teams) setError(e_teams)

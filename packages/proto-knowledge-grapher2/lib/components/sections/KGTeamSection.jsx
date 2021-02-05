@@ -28,7 +28,7 @@ const KGTeamSection = ({match, currentUser}) => {
     //pollInterval: 500,
   })
 
-  if (results && results.length === 0) results[0] = {programId, sectionId, subsection, title: subsessionName}
+  if (results && results.length === 0) results[0] = {programId, sectionId, subsection: `${subsection}-answer`, title: subsessionName}
 
   const {results: users, loading: loading_users} = useMulti2(
       {collection: Users, fragmentName: 'UsersMinimumInfo', input: {filter: {username: {_is_null: false}}}},
@@ -82,7 +82,7 @@ const KGTeamSection = ({match, currentUser}) => {
       }
     }
     const url = subsection ?
-        `/sections/${programId}/${sectionId}/${subsection}/${team.teamId}/${delegatedComponentName}/` :
+        `/sections/${programId}/${sectionId}/${subsection}-answer/${team.teamId}/${delegatedComponentName}/` :
         `/sections/${programId}/${sectionId}/${team.teamId}/${delegatedComponentName}/` // for downward compatibility
     const readonly = !isPermitted(currentUser, isEditable)
 
