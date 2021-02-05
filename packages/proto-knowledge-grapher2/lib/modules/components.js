@@ -36,6 +36,8 @@ import '../components/copernicusForum/CFFollowupSession'
 import '../components/copernicusForum/CFFrameworkDiagramSubsession'
 import '../components/copernicusForum/CFNetworkDiagramSubsession'
 import '../components/sections/KGTextDiagramSubsession'
+import '../components/sections/KGAssignmentSubsession'
+import '../components/sections/KGAnswerSubsession'
 
 // users
 import '../components/users/UsersAccount.jsx'

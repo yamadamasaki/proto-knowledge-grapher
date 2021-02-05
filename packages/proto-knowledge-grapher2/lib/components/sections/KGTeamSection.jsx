@@ -81,7 +81,9 @@ const KGTeamSection = ({match, currentUser}) => {
         players.current.value = []
       }
     }
-    const url = `/sections/${programId}/${sectionId}/${team.teamId}/${delegatedComponentName}/`
+    const url = subsection ?
+        `/sections/${programId}/${sectionId}/${subsection}/${team.teamId}/${delegatedComponentName}/` :
+        `/sections/${programId}/${sectionId}/${team.teamId}/${delegatedComponentName}/` // for downward compatibility
     const readonly = !isPermitted(currentUser, isEditable)
 
     return (
@@ -112,12 +114,12 @@ const KGTeamSection = ({match, currentUser}) => {
   return (
       <React.Fragment>
         {
-                  document.teams.map((team, index) => (
-                      <div key={index}>
+          document.teams.map((team, index) => (
+              <div key={index}>
                 <TeamComponent team={team} users={participatableUsers} onSave={onSave(index)}
                                onDelete={onDelete(index)}/>
-                      </div>
-                  ))
+              </div>
+          ))
         }
         <Components.IfIHave permission={isEditable}>
           <hr/>
