@@ -69,6 +69,30 @@ addRoute([
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
   },
+  /// KGTextDiagramSubsession
+  {
+    name: 'sessions.kgTextDiagramSubsession',
+    path: '/sections/:programId/:sectionId/:subsection/KGTextDiagramSubsession/',
+    componentName: 'KGTextDiagramSubsession',
+    layoutName: 'EJ2Layout',
+    access: memberAccessOptions,
+  },
+  /// KGAssignmentSubsession
+  {
+    name: 'sessions.kgAssignmentSubsession',
+    path: '/sections/:programId/:sectionId/:subsection/KGAssignmentSubsession/',
+    componentName: 'KGAssignmentSubsession',
+    layoutName: 'EJ2Layout',
+    access: memberAccessOptions,
+  },
+  /// KGAnswerSubsession
+  {
+    name: 'sessions.kgAnswerSubsession',
+    path: '/sections/:programId/:sectionId/:subsection/:teamId/KGAnswerSubsession/',
+    componentName: 'KGAnswerSubsession',
+    layoutName: 'EJ2Layout',
+    access: memberAccessOptions,
+  },
 
   // users
   {name: 'users.profile', path: '/users/:slug', componentName: 'UsersProfile'},
