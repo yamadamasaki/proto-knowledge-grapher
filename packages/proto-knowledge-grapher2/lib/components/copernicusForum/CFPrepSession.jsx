@@ -39,6 +39,14 @@ const CFPrepSession = ({match}) => {
       isDiagramReadable: {groups: ['members']},
       // 課題成果物の permission はその先で teamId で決める
     },
+    'prep-questionnaire-answer': {
+      sectionName: '課題',
+      diagramComponentName: 'CFFrameworkDiagramSection',
+      isTextEditable: {groups: ['admin']},
+      isTextReadable: {groups: ['members']},
+      isDiagramSavable: {groups: ['admin']},
+      isDiagramReadable: {groups: ['members']},
+    },
   }
 
   return (
@@ -49,7 +57,6 @@ const CFPrepSession = ({match}) => {
 
         <Components.KGSessionStart programId={programId} sectionId={sectionId} spec={spec}>
           <React.Fragment>
-
             <Components.KGSectionMenu sections={sections}/>
 
             <Components.KGChatButton match={{

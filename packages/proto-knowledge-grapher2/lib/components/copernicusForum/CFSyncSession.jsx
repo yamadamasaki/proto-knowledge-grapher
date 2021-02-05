@@ -3,32 +3,58 @@ import {Components, registerComponent} from 'meteor/vulcan:core'
 import {Helmet} from 'react-helmet'
 
 const sessionName = '同期セッション'
-
-const spec = {
-  guidance: {
-    sessionName: '解説',
-    isTextEditable: {groups: ['admins']},
-    isTextReadable: {groups: ['members']},
-    isDiagramSavable: {groups: ['admins']},
-  },
-  questionnaire: {
-    sectionName: '課題',
-    isTeamDefinable: {groups: ['admins']},
-    isTeamAnswerable: {groups: ['members']},
-    isTextEditable: {groups: ['admin']},
-    isTextReadable: {groups: ['members']},
-    isDiagramSavable: {groups: ['admin']},
-  },
-  mobGraffiti: {
-    sectionName: 'モブグラフィティ',
-    isSavable: {groups: ['admin']},
-    isReadable: {groups: ['members']},
-  },
-}
+const sessionComponentName = 'CFSyncSession'
 
 const CFSyncSession = ({match}) => {
   const {params} = match
   const {programId, sectionId} = params
+
+  const sections = [
+    {name: '解説', programId, sectionId, subsection:'sync-guidance', componentName: 'KGTextDiagramSubsession'},
+    {name: '課題', programId, sectionId, subsection:'sync-questionnaire', componentName: 'KGAssignmentSubsession'},
+    {name: 'モブグラフィティ', programId, sectionId, subsection:'sync-mob', componentName: 'KGTextDiagramSubsession'},
+  ]
+
+  const spec = {
+    sessionName,
+    sessionComponentName,
+    sections,
+    'sync-guidance': {
+      sectionName: '解説',
+      diagramComponentName: 'CFFrameworkDiagramSection',
+      isTextEditable: {groups: ['admins']},
+      isTextReadable: {groups: ['members']},
+      isDiagramSavable: {groups: ['admins']},
+      isDiagramReadable: {groups: ['members']},
+    },
+    'sync-questionnaire': {
+      sectionName: '課題',
+      diagramComponentName: 'CFFrameworkDiagramSection',
+      isTeamDefinable: {groups: ['admins']},
+      isTeamAnswerable: {groups: ['members']},
+      delegatedComponentName: 'KGAnswerSubsession',
+      isTextEditable: {groups: ['admin']},
+      isTextReadable: {groups: ['members']},
+      isDiagramSavable: {groups: ['admin']},
+      isDiagramReadable: {groups: ['members']},
+    },
+    'sync-questionnaire-answer': {
+      sectionName: '課題',
+      diagramComponentName: 'CFFrameworkDiagramSection',
+      isTextEditable: {groups: ['admin']},
+      isTextReadable: {groups: ['members']},
+      isDiagramSavable: {groups: ['admin']},
+      isDiagramReadable: {groups: ['members']},
+    },
+    'sync-mob': {
+      sectionName: 'モブグラフィティ',
+      diagramComponentName: 'CFFrameworkDiagramSection',
+      isTextEditable: {groups: ['admins']},
+      isTextReadable: {groups: ['members']},
+      isDiagramSavable: {groups: ['admins']},
+      isDiagramReadable: {groups: ['members']},
+    },
+  }
 
   return (
       <React.Fragment>
@@ -36,58 +62,19 @@ const CFSyncSession = ({match}) => {
         <Components.KGBreadCrumbs programId={programId} sectionId={sectionId}/>
         <Components.KGSessionHeader sessionName={sessionName}/>
 
-        <Components.KGSectionMenu sectionNames={[
-          '解説', 'お題', 'モブ・グラフィティ', '(ソロ｜ペア）・グラフィティ',
-        ]}/>
-
         <Components.KGSessionStart programId={programId} sectionId={sectionId} spec={spec}>
           <React.Fragment>
+            <Components.KGSectionMenu sections={sections}/>
 
-            <Components.KGSectionHeader sectionName='解説'/>
-            <Components.SimpleTextSection match={{
+            <Components.KGChatButton match={{
               params: {
                 programId,
                 sectionId,
-                subsection: 'introduction',
-                isEditable: {groups: ['admins']},
+                subsection: 'sync-chat',
+                isChattable: {groups: ['members']},
                 isReadable: {groups: ['members']},
               },
             }}/>
-
-            <Components.KGSectionHeader sectionName='お題'/>
-            <Components.GoogleFormsSection match={{
-              params: {
-                programId,
-                sectionId,
-                subsection: 'questionnaire',
-                isDefinable: {groups: ['admins']},
-                isAnswerable: {groups: ['members']},
-              },
-            }}/>
-
-            <Components.KGSectionHeader sectionName='モブ・グラフィティ'/>
-            <Components.CFFrameworkDiagramSection match={{
-              params: {
-                programId,
-                sectionId,
-                subsection: 'mobWork',
-                isSavable: {groups: ['admins']},
-                isReadable: {groups: ['members']},
-              },
-            }}/>
-
-            <Components.KGSectionHeader sectionName='(ソロ｜ペア）・グラフィティ'/>
-            <Components.KGTeamSection match={{
-              params: {
-                programId,
-                sectionId,
-                subsection: 'soloWork',
-                isEditable: {groups: ['admins']},
-                delegatedComponentName: 'CFFrameworkDiagramSubsession',
-                subsessionName: `${sessionName} - (ソロ｜ペア）・グラフィティ`,
-              },
-            }}/>
-
           </React.Fragment>
         </Components.KGSessionStart>
       </React.Fragment>
