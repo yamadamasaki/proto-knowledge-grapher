@@ -17,7 +17,7 @@ const KGTeamSection = ({match, currentUser}) => {
   const {programId, sectionId, subsection} = params
   const {id} = params
   const {delegatedComponentName, subsessionName} = params
-  const {isEditable} = params
+  const {isEditable, isParticipatable} = params
   const selector = [{programId: {_eq: programId}}, {sectionId: {_eq: sectionId}}]
   if (subsection) selector.push({subsection: {_eq: subsection}})
   const filter = (id && {_id: {_eq: id}}) || {_and: selector}
@@ -104,21 +104,25 @@ const KGTeamSection = ({match, currentUser}) => {
     )
   }
 
+  if (error) return <Components.Flash message={error}/>
+  if ([loading_c, loading_u, loading_r, loading_users].some(it => it === true)) return <Components.Loading/>
+
+  const participatableUsers = users.filter(user => isPermitted(user._id, isParticipatable))
+
   return (
       <React.Fragment>
         {
-          error ? <Components.Flash message={error}/> :
-              [loading_c, loading_u, loading_r, loading_users].some(it => it === true) ? <Components.Loading/> :
                   document.teams.map((team, index) => (
                       <div key={index}>
-                        <TeamComponent team={team} users={users} onSave={onSave(index)} onDelete={onDelete(index)}/>
+                <TeamComponent team={team} users={participatableUsers} onSave={onSave(index)}
+                               onDelete={onDelete(index)}/>
                       </div>
                   ))
         }
         <Components.IfIHave permission={isEditable}>
           <hr/>
           <h4>チームを追加する</h4>
-          <TeamComponent team={{}} users={users} onSave={onSave(nTeams)} placeholder={true}/>
+          <TeamComponent team={{}} users={participatableUsers} onSave={onSave(nTeams)} placeholder={true}/>
         </Components.IfIHave>
       </React.Fragment>
   )
