@@ -31,7 +31,7 @@ const KGTextDiagramSubsession = ({match}) => {
   if (Object.values(loadings).some(it => !!it)) return <Components.Loading/>
 
   const specs = sessionSpec && sessionSpec.specs
-  const {sessionName, sections} = specs
+  const {sessionName, sessionComponentName, sections} = specs
   const mySpec = specs[subsection] || {}
   const diagramComponent = diagramComponents[mySpec.diagramComponentName]
 
@@ -41,7 +41,7 @@ const KGTextDiagramSubsession = ({match}) => {
   return (
       <React.Fragment>
         <Helmet><title>{sessionName} ({mySpec.sectionName})</title></Helmet>
-        <Components.KGBreadCrumbs programId={programId} sectionId={sectionId}/>
+        <Components.KGBreadCrumbs programId={programId} sectionId={sectionId} sessionComponent={sessionComponentName} sessionName={sessionName}/>
         <Components.KGSessionHeader sessionName={sessionName}/>
 
         <Components.KGSectionMenu sections={sections}/>
