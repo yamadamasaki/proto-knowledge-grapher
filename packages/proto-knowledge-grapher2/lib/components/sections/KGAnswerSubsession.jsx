@@ -25,7 +25,7 @@ const KGAnswerSubsession = ({match}) => {
   const {document: teams, loading: l_teams, error: e_teams} = findSingleDocument({
     programId,
     sectionId,
-    subsection,
+    subsection: subsection.replace(/-answer$/, ''),
     collectionName: 'KGTeams',
     fragmentName: 'KGTeamFragment',
     pollInterval: 0,
@@ -38,7 +38,7 @@ const KGAnswerSubsession = ({match}) => {
 
   const diagramComponents = {
     CFFrameworkDiagramSection: Components.CFFrameworkDiagramSection,
-    CFNetworkDiagramFragment: Components.CFNetworkDiagramSection,
+    CFNetworkDiagramSection: Components.CFNetworkDiagramSection,
   }
 
   const specs = sessionSpec && sessionSpec.specs
@@ -67,7 +67,7 @@ const KGAnswerSubsession = ({match}) => {
           params: {
             programId,
             sectionId,
-            teamId,
+            subsection: teamId,
             isEditable: {groups: ['admins'], users: team && team.players},
             isReadable: mySpec.isTextReadable,
           },
@@ -81,7 +81,7 @@ const KGAnswerSubsession = ({match}) => {
                   params: {
                     programId,
                     sectionId,
-                    teamId,
+                    subsection: teamId,
                     isSavable: {groups: ['admins'], users: team && team.players},
                     isReadable: mySpec.isDiagramReadable,
                   },
@@ -94,7 +94,7 @@ const KGAnswerSubsession = ({match}) => {
           params: {
             programId,
             sectionId,
-            teamId,
+            subsection: teamId,
             isChattable: {groups: ['members']},
             isReadable: {groups: ['members']},
           },
