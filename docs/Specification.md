@@ -8,7 +8,8 @@ date: Sun, 07 Feb 2021 17:36:25 +0900
 
 - SubmittedTo: 株式会社レジリエンス
 - SubmittedFrom: 有限会社メタボリックス
-- Author: 山田正樹 (有限会社メタボリックス)
+- Author: 山田正樹
+- Organization: 有限会社メタボリックス
 - CreatedAt: 2020 年 10 月 1 日
 - UpdatedAt: 2020 年 12 月 1 日
 
@@ -67,7 +68,9 @@ member ユーザは, KnowledgetGrapher の `Edit Account` メニューから自�
 
 admin ユーザは,  KnowledgetGrapher の `Users (admin)` メニューからすべてのユーザのアカウントの情報の一部を変更したり, 削除することができる.
 
-## プログラム [2]
+## ブック [2]
+
+ブックは, プログラムの集まりである. プログラムは, コンサルティングやトレーニングのコース内容を定義している.
 
 admin ユーザは, プログラムを定義, 編集することができる.
 
@@ -228,4 +231,5 @@ KnowledgeGapher では, プログラム/セッション/サブセッション/�
 
 ## ガイダンス [9]
 
-ユーザが KnowledgeGrapher を利用するためのガイダンス情報を Web 上で提供する.
+ユーザが KnowledgeGrapher を利用するためのガイダンスを Web 上で提供する.
+
