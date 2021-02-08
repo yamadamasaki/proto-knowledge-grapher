@@ -20,7 +20,7 @@ const CFAsyncSession = ({match}) => {
     sessionComponentName,
     sections,
     'async-guidance': { // なくてもいいんじゃない?
-      sessionName: '解説',
+      sectionName: '解説',
       diagramComponentName: 'CFFrameworkDiagramSection',
       isTextEditable: {groups: ['admins']},
       isTextReadable: {groups: ['members']},
