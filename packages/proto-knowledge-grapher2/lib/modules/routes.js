@@ -39,25 +39,11 @@ addRoute([
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
   },
-  {
-    name: 'sessions.csFrameworkDiagramSubsession',
-    path: '/sections/:programId/:sectionId/:teamId/CFFrameworkDiagramSubsession/',
-    componentName: 'CFFrameworkDiagramSubsession',
-    layoutName: 'EJ2Layout',
-    access: memberAccessOptions,
-  },
   /// CFAsyncSession
   {
     name: 'sessions.cfAsyncSession',
     path: '/sections/:programId/:sectionId/CFAsyncSession/',
     componentName: 'CFAsyncSession',
-    layoutName: 'EJ2Layout',
-    access: memberAccessOptions,
-  },
-  {
-    name: 'sessions.cfNetworkDiagramSubsession',
-    path: '/sections/:programId/:sectionId/:teamId/CFNetworkDiagramSubsession/',
-    componentName: 'CFNetworkDiagramSubsession',
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
   },
