@@ -217,6 +217,7 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
 
   return (
       <React.Fragment>
+        <div><Components.KGWatchers match={{params: {programId, sectionId, subsection}}}/></div>
         <ErrorBoundary>
           <React.Fragment>
             {doc.title && <h2>{doc.title}</h2>}

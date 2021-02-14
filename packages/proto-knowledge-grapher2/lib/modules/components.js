@@ -14,6 +14,7 @@ import '../components/common/ErrorBoundary'
 import '../components/common/IfIHave'
 import '../components/common/KGChatButton'
 import '../components/common/KGSessionStart'
+import '../components/common/KGWatchers'
 
 // programs
 import '../components/programs/KnowledgeGrapherHome'

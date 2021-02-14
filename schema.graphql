@@ -2855,6 +2855,162 @@ input KGSessionSpecSelectorUniqueInput {
 }
 
 
+# Type for KGWatchers
+type KGWatcher {
+  _id: String 
+  createdAt: Date 
+  updatedAt: Date 
+  userId: String 
+  user: User 
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  watchers: [String] 
+  createdAtFormatted(format: String = "YYYY/MM/DD"): String 
+  updatedAtFormatted(format: String = "YYYY/MM/DD"): String 
+}
+
+
+input DeleteKGWatcherInput{
+  filter: KGWatcherFilterInput
+  id: String
+}
+
+input SingleKGWatcherInput {
+  # filtering
+  filter: KGWatcherFilterInput
+  sort: KGWatcherSortInput
+  search: String
+  id: String
+
+  # backwards-compatibility
+  "Deprecated (use 'filter/id' fields instead)."
+  selector: KGWatcherSelectorUniqueInput
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Return null instead of throwing MissingDocumentError
+  allowNull: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+}
+
+input MultiKGWatcherInput {
+
+  # filtering
+  filter: KGWatcherFilterInput
+  sort: KGWatcherSortInput
+  search: String
+  offset: Int
+  limit: Int
+
+  # backwards-compatibility
+  # A JSON object that contains the query terms used to fetch data
+  "Deprecated (use 'filter/id' fields instead)."
+  terms: JSON
+
+  # options (backwards-compatibility)
+  # Whether to enable caching for this query
+  enableCache: Boolean
+  # Whether to calculate totalCount for this query
+  enableTotal: Boolean
+  # An identifier to name the query's execution context
+  contextName: String
+  
+}
+
+type SingleKGWatcherOutput{
+  result: KGWatcher
+}
+
+type  MultiKGWatcherOutput{
+  results: [KGWatcher]
+  totalCount: Int
+}
+
+type KGWatcherMutationOutput{
+  data: KGWatcher
+}
+
+input CreateKGWatcherInput {
+  data: CreateKGWatcherDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input CreateKGWatcherDataInput {
+  userId: String 
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  watchers: [String] 
+}
+
+input UpdateKGWatcherInput{
+  filter: KGWatcherFilterInput
+  id: String
+  data: UpdateKGWatcherDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpsertKGWatcherInput{
+  filter: KGWatcherFilterInput
+  id: String
+  data: UpdateKGWatcherDataInput!
+  # An identifier to name the mutation's execution context
+  contextName: String
+}
+
+input UpdateKGWatcherDataInput {
+  programId: String 
+  sectionId: String 
+  subsection: String 
+  watchers: [String] 
+}
+
+input KGWatcherFilterInput {
+  _and: [KGWatcherFilterInput]
+  _not: KGWatcherFilterInput
+  _or: [KGWatcherFilterInput]
+
+
+  _id: String_Selector
+  createdAt: Date_Selector
+  updatedAt: Date_Selector
+  userId: String_Selector
+  programId: String_Selector
+  sectionId: String_Selector
+  subsection: String_Selector
+  watchers: String_Array_Selector
+}
+
+input KGWatcherSortInput {
+  _id: SortOptions
+  createdAt: SortOptions
+  updatedAt: SortOptions
+  userId: SortOptions
+  programId: SortOptions
+  sectionId: SortOptions
+  subsection: SortOptions
+  watchers: SortOptions
+}
+
+input KGWatcherSelectorInput {
+  _and: [KGWatcherSelectorInput]
+  _or: [KGWatcherSelectorInput]
+
+}
+
+input KGWatcherSelectorUniqueInput {
+  _id: String
+  documentId: String # OpenCRUD backwards compatibility
+  slug: String
+
+}
+
+
 
 
 type Query {
@@ -2945,6 +3101,12 @@ type Query {
   
   # A list of KGSessionSpec documents matching a set of query terms
   kGSessionSpecs(input: MultiKGSessionSpecInput):  MultiKGSessionSpecOutput
+  
+  # A single KGWatcher document fetched by ID or slug
+  kGWatcher(input: SingleKGWatcherInput!): SingleKGWatcherOutput
+  
+  # A list of KGWatcher documents matching a set of query terms
+  kGWatchers(input: MultiKGWatcherInput):  MultiKGWatcherOutput
   
 }
   
@@ -3421,6 +3583,38 @@ type Mutation {
   "Deprecated (use 'input' field instead)."
   selector: KGSessionSpecSelectorUniqueInput
 ) : KGSessionSpecMutationOutput
+
+  # Mutation for creating new KGWatcher documents
+  createKGWatcher(
+  input: CreateKGWatcherInput,
+  "Deprecated (use 'input' field instead)."
+  data: CreateKGWatcherDataInput
+) : KGWatcherMutationOutput
+
+  # Mutation for updating a KGWatcher document
+  updateKGWatcher(
+  input: UpdateKGWatcherInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGWatcherSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateKGWatcherDataInput 
+) : KGWatcherMutationOutput
+
+  # Mutation for upserting a KGWatcher document
+  upsertKGWatcher(
+  input: UpsertKGWatcherInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGWatcherSelectorUniqueInput,
+  "Deprecated (use 'input' field instead)."
+  data: UpdateKGWatcherDataInput
+) : KGWatcherMutationOutput
+
+  # Mutation for deleting a KGWatcher document
+  deleteKGWatcher(
+  input: DeleteKGWatcherInput,
+  "Deprecated (use 'input' field instead)."
+  selector: KGWatcherSelectorUniqueInput
+) : KGWatcherMutationOutput
 
 }
 
