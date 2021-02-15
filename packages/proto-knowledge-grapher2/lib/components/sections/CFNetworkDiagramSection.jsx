@@ -23,9 +23,6 @@ const findParams = (children, sectionId) => {
   return children.map(it => findParams(it.children, sectionId)).find(it => it != null)
 }
 
-const globalMenuItems = ['save', 'export', 'print']
-const popupMenuItems = ['overview', 'palette']
-
 const CFNetworkDiagramSection = ({match, currentUser}) => {
   const {params} = match
   const collectionName = params.collectionName || 'CFNetworkDiagrams'
@@ -149,6 +146,10 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
         break
     }
   }
+
+  const globalMenuItems = ['export', 'print']
+  if (isPermitted(currentUser, isSavable)) globalMenuItems.unshift('save')
+  const popupMenuItems = ['overview', 'palette']
 
   const menuItems = () => {
     const menuItems = []

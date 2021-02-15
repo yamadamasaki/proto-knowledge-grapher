@@ -88,9 +88,6 @@ const palettes = [
   {id: 'connectors', expanded: true, symbols: connectors, title: 'Connectors', iconCss: 'e-ddb-icons e-connector'},
 ]
 
-const globalMenuItems = ['save', 'export', 'print']
-const popupMenuItems = ['overview', 'palette']
-
 const CFFrameworkDiagramSection = ({match, currentUser}) => {
   const {params} = match
   const collectionName = params.collectionName || 'SimpleDiagrams'
@@ -182,6 +179,10 @@ const CFFrameworkDiagramSection = ({match, currentUser}) => {
         break
     }
   }
+
+  const globalMenuItems = ['export', 'print']
+  if (isPermitted(currentUser, isSavable)) globalMenuItems.unshift('save')
+  const popupMenuItems = ['overview', 'palette']
 
   const menuItems = () => {
     const menuItems = []
