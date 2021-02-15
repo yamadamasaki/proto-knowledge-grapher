@@ -10,9 +10,9 @@ const CFFollowupSession = ({match}) => {
   const {programId, sectionId} = params
 
   const sections = [
-    {name: '解説', programId, sectionId, subsection:'followup-guidance', componentName: 'KGTextDiagramSubsession'},
-    {name: '課題', programId, sectionId, subsection:'followup-questionnaire', componentName: 'KGAssignmentSubsession'},
-    {name: 'モブグラフィティ', programId, sectionId, subsection:'followup-mob', componentName: 'KGTextDiagramSubsession'},
+    {name: '解説', programId, sectionId, subsection: 'followup-guidance', componentName: 'KGTextDiagramSubsession'},
+    {name: '課題', programId, sectionId, subsection: 'followup-questionnaire', componentName: 'KGAssignmentSubsession'},
+    {name: 'モブグラフィティ', programId, sectionId, subsection: 'followup-mob', componentName: 'KGTextDiagramSubsession'},
   ]
 
   const spec = {
@@ -62,7 +62,8 @@ const CFFollowupSession = ({match}) => {
         <Components.KGBreadCrumbs programId={programId} sectionId={sectionId}/>
         <Components.KGSessionHeader sessionName={sessionName}/>
 
-        <Components.KGSessionStart programId={programId} sectionId={sectionId} spec={spec}>
+        <Components.KGSessionStart programId={programId} sectionId={sectionId} spec={spec}
+                                   isStartable={{groups: ['admins']}}>
           <React.Fragment>
             <Components.KGSectionMenu sections={sections}/>
 

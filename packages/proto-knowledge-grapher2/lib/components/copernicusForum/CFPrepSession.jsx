@@ -55,7 +55,8 @@ const CFPrepSession = ({match}) => {
         <Components.KGBreadCrumbs programId={programId} sectionId={sectionId}/>
         <Components.KGSessionHeader sessionName={sessionName}/>
 
-        <Components.KGSessionStart programId={programId} sectionId={sectionId} spec={spec}>
+        <Components.KGSessionStart programId={programId} sectionId={sectionId} spec={spec}
+                                   isStartable={{groups: ['admins']}}>
           <React.Fragment>
             <Components.KGSectionMenu sections={sections}/>
 
@@ -68,7 +69,7 @@ const CFPrepSession = ({match}) => {
                 isReadable: {groups: ['members']},
               },
             }}/>
-         </React.Fragment>
+          </React.Fragment>
         </Components.KGSessionStart>
 
       </React.Fragment>

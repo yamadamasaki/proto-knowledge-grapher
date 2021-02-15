@@ -10,9 +10,9 @@ const CFSyncSession = ({match}) => {
   const {programId, sectionId} = params
 
   const sections = [
-    {name: '解説', programId, sectionId, subsection:'sync-guidance', componentName: 'KGTextDiagramSubsession'},
-    {name: '課題', programId, sectionId, subsection:'sync-questionnaire', componentName: 'KGAssignmentSubsession'},
-    {name: 'モブグラフィティ', programId, sectionId, subsection:'sync-mob', componentName: 'KGTextDiagramSubsession'},
+    {name: '解説', programId, sectionId, subsection: 'sync-guidance', componentName: 'KGTextDiagramSubsession'},
+    {name: '課題', programId, sectionId, subsection: 'sync-questionnaire', componentName: 'KGAssignmentSubsession'},
+    {name: 'モブグラフィティ', programId, sectionId, subsection: 'sync-mob', componentName: 'KGTextDiagramSubsession'},
   ]
 
   const spec = {
@@ -62,7 +62,8 @@ const CFSyncSession = ({match}) => {
         <Components.KGBreadCrumbs programId={programId} sectionId={sectionId}/>
         <Components.KGSessionHeader sessionName={sessionName}/>
 
-        <Components.KGSessionStart programId={programId} sectionId={sectionId} spec={spec}>
+        <Components.KGSessionStart programId={programId} sectionId={sectionId} spec={spec}
+                                   isStartable={{groups: ['admins']}}>
           <React.Fragment>
             <Components.KGSectionMenu sections={sections}/>
 

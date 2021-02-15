@@ -6,7 +6,7 @@ import {findSingleDocument} from '../utils/documents'
 const collectionName = 'KGSessionSpecs'
 const fragmentName = 'KGSessionSpecsFragment'
 
-const KGSessionStart = ({programId, sectionId, spec, children}) => {
+const KGSessionStart = ({programId, sectionId, spec, isStartable, children}) => {
   const loadings = {}
   const [error, setError] = useState()
 
@@ -33,19 +33,20 @@ const KGSessionStart = ({programId, sectionId, spec, children}) => {
     }
   }
 
+  if (error) return <Components.Flash message={error}/>
+  if (Object.values(loadings).some(it => !!it)) return <Components.Loading/>
+
   return (
-      error ? <Components.Flash message={error}/> :
-          Object.values(loadings).some(it => !!it) ? <Components.Loading/> :
-              <React.Fragment>
-                <div>
-                  {
-                    document && !document._id ?
-                        <ButtonComponent onClick={startSession}>Start the Session</ButtonComponent> :
-                        children
-                  }
-                  <br/>
-                </div>
-              </React.Fragment>
+      <React.Fragment>
+          {
+            document && !document._id ?
+                <Components.IfIHave permission={isStartable}>
+                  <ButtonComponent onClick={startSession}>Start the Session</ButtonComponent>
+                </Components.IfIHave> :
+                children
+          }
+          <br/>
+      </React.Fragment>
   )
 }
 

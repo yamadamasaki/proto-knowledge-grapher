@@ -10,9 +10,9 @@ const CFAsyncSession = ({match}) => {
   const {programId, sectionId} = params
 
   const sections = [
-    {name: '解説', programId, sectionId, subsection:'async-guidance', componentName: 'KGTextDiagramSubsession'},
-    {name: '対話', programId, sectionId, subsection:'async-dialogue', componentName: 'KGAssignmentSubsession'},
-    {name: 'モブグラフィティ', programId, sectionId, subsection:'async-mob', componentName: 'KGTextDiagramSubsession'},
+    {name: '解説', programId, sectionId, subsection: 'async-guidance', componentName: 'KGTextDiagramSubsession'},
+    {name: '対話', programId, sectionId, subsection: 'async-dialogue', componentName: 'KGAssignmentSubsession'},
+    {name: 'モブグラフィティ', programId, sectionId, subsection: 'async-mob', componentName: 'KGTextDiagramSubsession'},
   ]
 
   const spec = {
@@ -61,7 +61,8 @@ const CFAsyncSession = ({match}) => {
         <Components.KGBreadCrumbs programId={programId} sectionId={sectionId}/>
         <Components.KGSessionHeader sessionName={sessionName}/>
 
-        <Components.KGSessionStart programId={programId} sectionId={sectionId} spec={spec}>
+        <Components.KGSessionStart programId={programId} sectionId={sectionId} spec={spec}
+                                   isStartable={{groups: ['admins']}}>
           <React.Fragment>
             <Components.KGSectionMenu sections={sections}/>
 
