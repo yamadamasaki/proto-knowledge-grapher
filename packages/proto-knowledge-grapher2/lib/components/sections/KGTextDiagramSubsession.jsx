@@ -47,6 +47,16 @@ const KGTextDiagramSubsession = ({match}) => {
         <Components.KGSectionMenu sections={sections}/>
         <Components.KGSectionHeader sectionName={mySpec.sectionName}/>
 
+        <Components.KGChatButton match={{
+          params: {
+            programId,
+            sectionId,
+            subsection: `${subsection}-chat`,
+            isChattable: {groups: ['members']},
+            isReadable: {groups: ['members']},
+          },
+        }}/>
+
         <Components.SimpleTextSection match={{
           params: {
             programId,
@@ -73,16 +83,6 @@ const KGTextDiagramSubsession = ({match}) => {
               },
           )
         }
-
-        <Components.KGChatButton match={{
-          params: {
-            programId,
-            sectionId,
-            subsection: `${subsection}-chat`,
-            isChattable: {groups: ['members']},
-            isReadable: {groups: ['members']},
-          },
-        }}/>
       </React.Fragment>
   )
 }

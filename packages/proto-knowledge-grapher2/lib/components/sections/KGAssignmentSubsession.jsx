@@ -49,6 +49,16 @@ const KGAssignmentSubsession = ({match}) => {
         <Components.KGSectionMenu sections={sections}/>
         <Components.KGSectionHeader sectionName={mySpec.sectionName}/>
 
+        <Components.KGChatButton match={{
+          params: {
+            programId,
+            sectionId,
+            subsection: `${subsection}-chat`,
+            isChattable: {groups: ['members']},
+            isReadable: {groups: ['members']},
+          },
+        }}/>
+
         <Components.SimpleTextSection match={{
           params: {
             programId,
@@ -85,16 +95,6 @@ const KGAssignmentSubsession = ({match}) => {
             isParticipatable: mySpec.isTeamAnswerable,
             delegatedComponentName: mySpec.delegatedComponentName,
             subsessionName: `${sessionName} - ${mySpec.sectionName}`,
-          },
-        }}/>
-
-        <Components.KGChatButton match={{
-          params: {
-            programId,
-            sectionId,
-            subsection: `${subsection}-chat`,
-            isChattable: {groups: ['members']},
-            isReadable: {groups: ['members']},
           },
         }}/>
       </React.Fragment>

@@ -61,7 +61,17 @@ const KGAnswerSubsession = ({match}) => {
         <Components.KGSessionHeader sessionName={sessionName}/>
 
         <Components.KGSectionMenu sections={sections}/>
-        <Components.KGSectionHeader sectionName={mySpec.sectionName}/>
+        <Components.KGSectionHeader sectionName={mySpec.sectionName+"("+team.name+")"}/>
+
+        <Components.KGChatButton match={{
+          params: {
+            programId,
+            sectionId,
+            subsection: teamId,
+            isChattable: {groups: ['members']},
+            isReadable: {groups: ['members']},
+          },
+        }}/>
 
         <Components.SimpleTextSection match={{
           params: {
@@ -89,16 +99,6 @@ const KGAnswerSubsession = ({match}) => {
               },
           )
         }
-
-        <Components.KGChatButton match={{
-          params: {
-            programId,
-            sectionId,
-            subsection: teamId,
-            isChattable: {groups: ['members']},
-            isReadable: {groups: ['members']},
-          },
-        }}/>
       </React.Fragment>
   )
 }
