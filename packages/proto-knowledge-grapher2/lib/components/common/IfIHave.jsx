@@ -3,7 +3,7 @@ import {registerComponent, withCurrentUser} from 'meteor/vulcan:core'
 import Users from 'meteor/vulcan:users'
 
 const isMemberOf = ({user, permission = []}) => Users.isMemberOf(user, permission)
-const isOneOf = ({user, permission = []}) => permission.some(it => it === user.username)
+const isOneOf = ({user, permission = []}) => permission.some(it => it === user._id)
 
 export const isPermitted = (currentUser, permission) =>
     !permission ||
