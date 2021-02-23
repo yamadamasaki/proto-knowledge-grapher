@@ -42,9 +42,9 @@ const CFPrepSession = ({match}) => {
     'prep-questionnaire-answer': {
       sectionName: '課題',
       diagramComponentName: 'CFFrameworkDiagramSection',
-      isTextEditable: {groups: ['admin']},
+      isTextEditable: {groups: ['admins']},
       isTextReadable: {groups: ['members']},
-      isDiagramSavable: {groups: ['admin']},
+      isDiagramSavable: {groups: ['admins']},
       isDiagramReadable: {groups: ['members']},
     },
   }

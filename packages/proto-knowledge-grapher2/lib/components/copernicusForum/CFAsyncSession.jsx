@@ -33,7 +33,7 @@ const CFAsyncSession = ({match}) => {
       isTeamDefinable: {groups: ['admins']},
       isTeamAnswerable: {groups: ['members']},
       delegatedComponentName: 'KGAnswerSubsession',
-      isTextEditable: {groups: ['admin']},
+      isTextEditable: {groups: ['admins']},
       isTextReadable: {groups: ['members']},
       isDiagramSavable: {groups: ['admins']},
       isDiagramReadable: {groups: ['members']},
