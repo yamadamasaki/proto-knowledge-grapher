@@ -36,7 +36,7 @@ const schema = {
     type: String,
     optional: true,
     canRead: ['members'],
-    canCreate: ['admins'],
+    canCreate: ['members'],
     hidden: true,
     resolveAs: {
       fieldName: 'user',
@@ -56,7 +56,7 @@ const schema = {
       kind: 'hasOne',
     },
     canRead: ['members'],
-    canCreate: ['admins'],
+    canCreate: ['members'],
     canUpdate: ['admins'],
   },
   /**
@@ -65,7 +65,7 @@ const schema = {
   sectionId: {
     type: String,
     canRead: ['members'],
-    canCreate: ['admins'],
+    canCreate: ['members'],
     canUpdate: ['admins'],
   },
   /**
@@ -75,7 +75,7 @@ const schema = {
     type: String,
     optional: true,
     canRead: ['members'],
-    canCreate: ['admins'],
+    canCreate: ['members'],
     canUpdate: ['admins'],
   },
 

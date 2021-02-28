@@ -10,14 +10,14 @@ const messageSchema = createSchema({
     optional: false,
     canRead: ['members'],
     canCreate: ['members'],
-    canUpdate: ['members'],
+    //canUpdate: ['members'],
   },
   when: {
     type: Date,
     optional: false,
     canRead: ['members'],
     canCreate: ['members'],
-    canUpdate: ['members'],
+    //canUpdate: ['members'],
   },
   text: {
     type: String,
@@ -64,7 +64,7 @@ const schema = {
     type: String,
     optional: true,
     canRead: ['members'],
-    canCreate: ['admins'],
+    canCreate: ['member'],
     hidden: true,
     resolveAs: {
       fieldName: 'user',
@@ -80,8 +80,8 @@ const schema = {
     type: String,
     optional: false,
     canRead: ['members'],
-    canCreate: ['admins'],
-    canUpdate: ['admins'],
+    canCreate: ['members'],
+    //canUpdate: ['admins'],
   },
   /**
    * Section
@@ -90,8 +90,8 @@ const schema = {
     type: String,
     optional: false,
     canRead: ['members'],
-    canCreate: ['admins'],
-    canUpdate: ['admins'],
+    canCreate: ['members'],
+    //canUpdate: ['admins'],
   },
   /**
    * Subsection
@@ -100,8 +100,8 @@ const schema = {
     type: String,
     optional: true,
     canRead: ['members'],
-    canCreate: ['admins'],
-    canUpdate: ['admins'],
+    canCreate: ['members'],
+    //canUpdate: ['admins'],
   },
 
   /**

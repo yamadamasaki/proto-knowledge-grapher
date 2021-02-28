@@ -38,7 +38,7 @@ const schema = {
     type: String,
     optional: true,
     canRead: ['members'],
-    canCreate: ['admins'],
+    canCreate: ['members'],
     hidden: true,
     resolveAs: {
       fieldName: 'user',
@@ -58,8 +58,8 @@ const schema = {
       kind: 'hasOne',
     },
     canRead: ['members'],
-    canCreate: ['admins'],
-    canUpdate: ['admins'],
+    canCreate: ['members'],
+    //canUpdate: ['admins'],
   },
   /**
    * Section
@@ -67,8 +67,8 @@ const schema = {
   sectionId: {
     type: String,
     canRead: ['members'],
-    canCreate: ['admins'],
-    canUpdate: ['admins'],
+    canCreate: ['members'],
+    //canUpdate: ['admins'],
   },
   /**
    * Subsection
@@ -77,8 +77,8 @@ const schema = {
     type: String,
     optional: true,
     canRead: ['members'],
-    canCreate: ['admins'],
-    canUpdate: ['admins'],
+    canCreate: ['members'],
+    //canUpdate: ['admins'],
   },
 
   // belows are SimpleText-dependent fields

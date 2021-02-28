@@ -40,7 +40,7 @@ const schema = {
     type: String,
     optional: true,
     canRead: ['members'],
-    canCreate: ['admins'],
+    canCreate: ['members'],
     hidden: true,
     resolveAs: {
       fieldName: 'user',
@@ -56,8 +56,8 @@ const schema = {
     type: String,
     optional: false,
     canRead: ['members'],
-    canCreate: ['admins'],
-    canUpdate: ['admins'],
+    canCreate: ['members'],
+    //canUpdate: ['admins'],
   },
   /**
    * Section
@@ -66,8 +66,8 @@ const schema = {
     type: String,
     optional: false,
     canRead: ['members'],
-    canCreate: ['admins'],
-    canUpdate: ['admins'],
+    canCreate: ['members'],
+    //canUpdate: ['admins'],
   },
   /**
    * Subsection
@@ -76,8 +76,8 @@ const schema = {
     type: String,
     optional: true,
     canRead: ['members'],
-    canCreate: ['admins'],
-    canUpdate: ['admins'],
+    canCreate: ['members'],
+    //canUpdate: ['admins'],
   },
   /**
    * Watchers

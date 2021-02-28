@@ -14,9 +14,9 @@ export const Programs = createCollection({
 
   permissions: {
     canRead: ['members'],
-    canCreate: ['members'],
-    canUpdate: ['owners'],
-    canDelete: ['owners'],
+    canCreate: ['admins'],
+    canUpdate: ['admins'],
+    canDelete: ['admins'],
   },
 })
 

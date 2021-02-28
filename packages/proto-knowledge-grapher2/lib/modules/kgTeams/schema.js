@@ -92,8 +92,8 @@ const schema = {
       kind: 'hasOne',
     },
     canRead: ['members'],
-    canCreate: ['admins'],
-    canUpdate: ['admins'],
+    canCreate: ['members'],
+    //canUpdate: ['admins'],
   },
   /**
    * Section
@@ -102,7 +102,7 @@ const schema = {
     type: String,
     canRead: ['members'],
     canCreate: ['admins'],
-    canUpdate: ['admins'],
+    //canUpdate: ['admins'],
   },
   /**
    * Subsection
@@ -112,7 +112,7 @@ const schema = {
     optional: true,
     canRead: ['members'],
     canCreate: ['admins'],
-    canUpdate: ['admins'],
+    //canUpdate: ['admins'],
   },
 
   // belows are SimpleText-dependent fields

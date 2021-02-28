@@ -15,8 +15,8 @@ export const SimpleTexts = createCollection({
   permissions: {
     canRead: ['members'],
     canCreate: ['members'],
-    canUpdate: ['owners'],
-    canDelete: ['owners'],
+    canUpdate: ['members'],
+    canDelete: ['members'],
   },
 })
 

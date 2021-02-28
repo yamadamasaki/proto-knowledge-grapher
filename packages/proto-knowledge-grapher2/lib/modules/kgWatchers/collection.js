@@ -15,8 +15,8 @@ export const KGWatchers = createCollection({
   permissions: {
     canRead: ['members'],
     canCreate: ['members'],
-    canUpdate: ['owners'],
-    canDelete: ['owners'],
+    canUpdate: ['members'],
+    canDelete: ['members'],
   },
 })
 

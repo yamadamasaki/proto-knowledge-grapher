@@ -55,7 +55,7 @@ const schema = {
     optional: false,
     canRead: ['members'],
     canCreate: ['admins'],
-    canUpdate: ['admins'],
+    //canUpdate: ['admins'],
   },
   /**
    * Section
@@ -65,7 +65,7 @@ const schema = {
     optional: false,
     canRead: ['members'],
     canCreate: ['admins'],
-    canUpdate: ['admins'],
+    //canUpdate: ['admins'],
   },
   /**
    * Subsection
@@ -75,7 +75,7 @@ const schema = {
     optional: true,
     canRead: ['members'],
     canCreate: ['admins'],
-    canUpdate: ['admins'],
+    //canUpdate: ['admins'],
   },
 
   /**
