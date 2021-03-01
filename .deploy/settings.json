@@ -10,5 +10,9 @@
 
     "locale": "en"
 
+  },
+
+  "apolloSsr": {
+    "disable": true
   }
 }

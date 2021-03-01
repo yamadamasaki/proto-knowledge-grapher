@@ -61,7 +61,7 @@ const KGAnswerSubsession = ({match}) => {
         <Components.KGSessionHeader sessionName={sessionName}/>
 
         <Components.KGSectionMenu sections={sections}/>
-        <Components.KGSectionHeader sectionName={mySpec.sectionName+"("+team.name+")"}/>
+        <Components.KGSectionHeader sectionName={mySpec.sectionName+" ("+team.name+")"}/>
 
         <Components.KGChatButton match={{
           params: {
