@@ -57,7 +57,7 @@ const KGTextDiagramSubsession = ({match}) => {
           },
         }}/>
 
-        <Components.SimpleTextSection match={{
+        <Components.DraftJSTextSection match={{
           params: {
             programId,
             sectionId,
