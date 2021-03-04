@@ -14,13 +14,13 @@ import {ButtonComponent} from '@syncfusion/ej2-react-buttons'
 const boxStyle = {
   padding: '0.5em 1em',
   margin: '2em 0',
-  color: '#6091d3',/*文字色*/
+  //color: '#6091d3',/*文字色*/
   background: '#FFF',
   border: 'solid 3px #6091d3',/*線*/
   borderRadius: '10px',/*角の丸み*/
 }
 
-const SimpleTextSection = ({match, currentUser}) => {
+const SimpleTextSection = ({match}) => {
   const {params} = match
   const collectionName = params.collectionName || 'SimpleTexts'
   const {programId, sectionId, subsection} = params
