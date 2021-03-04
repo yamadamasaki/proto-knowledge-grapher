@@ -69,22 +69,24 @@ const KGAssignmentSubsession = ({match}) => {
           },
         }}/>
 
-        {
-          React.createElement(
-              diagramComponent,
-              {
-                match: {
-                  params: {
-                    programId,
-                    sectionId,
-                    subsection,
-                    isSavable: mySpec.isDiagramSavable,
-                    isReadable: mySpec.isDiagramReadable,
+        <div>
+          {
+            React.createElement(
+                diagramComponent,
+                {
+                  match: {
+                    params: {
+                      programId,
+                      sectionId,
+                      subsection,
+                      isSavable: mySpec.isDiagramSavable,
+                      isReadable: mySpec.isDiagramReadable,
+                    },
                   },
                 },
-              },
-          )
-        }
+            )
+          }
+        </div>
 
         <Components.KGTeamSection match={{
           params: {

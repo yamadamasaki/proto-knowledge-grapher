@@ -56,6 +56,7 @@ const DraftJSTextSection = ({match}) => {
   if (error) return <Components.Flash message={error}/>
   if ([loading_c, loading_u].some(it => it === true)) return <Components.Loading/>
 
+  console.log("htmlText", document.htmlText, editor.current)
   if (editor && editor.current && document) editor.current.editor.core.setContents(document.htmlText)
 
   return (

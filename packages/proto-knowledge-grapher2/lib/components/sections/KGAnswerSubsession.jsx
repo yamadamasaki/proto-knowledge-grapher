@@ -61,7 +61,7 @@ const KGAnswerSubsession = ({match}) => {
         <Components.KGSessionHeader sessionName={sessionName}/>
 
         <Components.KGSectionMenu sections={sections}/>
-        <Components.KGSectionHeader sectionName={mySpec.sectionName+" ("+team.name+")"}/>
+        <Components.KGSectionHeader sectionName={mySpec.sectionName + ' (' + team.name + ')'}/>
 
         <Components.KGChatButton match={{
           params: {
@@ -83,22 +83,24 @@ const KGAnswerSubsession = ({match}) => {
           },
         }}/>
 
-        {
-          React.createElement(
-              diagramComponent,
-              {
-                match: {
-                  params: {
-                    programId,
-                    sectionId,
-                    subsection: teamId,
-                    isSavable: {groups: ['admins'], users: team && team.players},
-                    isReadable: mySpec.isDiagramReadable,
+        <div>
+          {
+            React.createElement(
+                diagramComponent,
+                {
+                  match: {
+                    params: {
+                      programId,
+                      sectionId,
+                      subsection: teamId,
+                      isSavable: {groups: ['admins'], users: team && team.players},
+                      isReadable: mySpec.isDiagramReadable,
+                    },
                   },
                 },
-              },
-          )
-        }
+            )
+          }
+        </div>
       </React.Fragment>
   )
 }

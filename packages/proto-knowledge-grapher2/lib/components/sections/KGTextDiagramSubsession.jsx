@@ -41,7 +41,8 @@ const KGTextDiagramSubsession = ({match}) => {
   return (
       <React.Fragment>
         <Helmet><title>{sessionName} ({mySpec.sectionName})</title></Helmet>
-        <Components.KGBreadCrumbs programId={programId} sectionId={sectionId} sessionComponent={sessionComponentName} sessionName={sessionName}/>
+        <Components.KGBreadCrumbs programId={programId} sectionId={sectionId} sessionComponent={sessionComponentName}
+                                  sessionName={sessionName}/>
         <Components.KGSessionHeader sessionName={sessionName}/>
 
         <Components.KGSectionMenu sections={sections}/>
@@ -57,7 +58,7 @@ const KGTextDiagramSubsession = ({match}) => {
           },
         }}/>
 
-        <Components.DraftJSTextSection match={{
+        <Components.SimpleTextSection match={{
           params: {
             programId,
             sectionId,
@@ -67,22 +68,24 @@ const KGTextDiagramSubsession = ({match}) => {
           },
         }}/>
 
-        {
-          React.createElement(
-              diagramComponent,
-              {
-                match: {
-                  params: {
-                    programId,
-                    sectionId,
-                    subsection,
-                    isSavable: mySpec.isDiagramSavable,
-                    isReadable: mySpec.isDiagramReadable,
+        <div>
+          {
+            React.createElement(
+                diagramComponent,
+                {
+                  match: {
+                    params: {
+                      programId,
+                      sectionId,
+                      subsection,
+                      isSavable: mySpec.isDiagramSavable,
+                      isReadable: mySpec.isDiagramReadable,
+                    },
                   },
                 },
-              },
-          )
-        }
+            )
+          }
+        </div>
       </React.Fragment>
   )
 }
