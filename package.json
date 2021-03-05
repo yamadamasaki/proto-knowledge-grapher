@@ -7,6 +7,7 @@
   "scripts": {
     "prestart": "node .vulcan/prestart_vulcan.js",
     "start": "meteor --settings settings.json",
+    "debug": "meteor --settings settings.json --inspect",
     "lint": "eslint --cache --ext .jsx,js packages",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -23,7 +24,7 @@
     "@syncfusion/ej2-notifications": "^18.4.34",
     "@syncfusion/ej2-react-base": "^18.3.37",
     "@syncfusion/ej2-react-buttons": "^18.3.40",
-    "@syncfusion/ej2-react-diagrams": "^18.3.53",
+    "@syncfusion/ej2-react-diagrams": "^18.4.46",
     "@syncfusion/ej2-react-dropdowns": "^18.3.53",
     "@syncfusion/ej2-react-inputs": "^18.3.53",
     "@syncfusion/ej2-react-lists": "^18.4.30",

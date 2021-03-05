@@ -89,9 +89,18 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
   }, [doc.diagram])
 
   const renderComplete = () => {
+    const root = '__ROOT__'
+    const rootNode = {
+      id: root,
+      width: 120, height: 40,
+      shape: {type: 'Basic', shape: 'Rectangle'},
+      annotations: [{content: root, constraints: AnnotationConstraints.ReadOnly}],
+      style: {fill: '#6BA5D7', strokeColor: 'white'},
+    }
     if (!diagram || !diagram.current) return
     if (doc && !doc._id) diagram.current.loadDiagram(diagram.current.saveDiagram())
     if (doc && doc.diagram) diagram.current.loadDiagram(doc.diagram)
+    if (!diagram.current.getNodeObject(root).id) diagram.current.add(rootNode)
   }
 
   const saveDiagram = async () => {/*ToDo*/
@@ -152,16 +161,17 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
   const popupMenuItems = ['overview', 'palette']
 
   const menuItems = () => {
-    const menuItems = []
-    const addItem = item => menuItems.push({text: item, id: item, target: '.e-diagramcontent'})
-    const addSeparator = () => menuItems.push({separator: true})
-    addSeparator()
+    const items = []
+    const addItem = item => items.push({text: item, id: item, target: '.e-diagramcontent'})
+    const addSeparator = () => items.push({separator: true})
     if (edgeLabels) edgeLabels.forEach(addItem)
+    addSeparator()
+    if (nodeLabels) nodeLabels.forEach(addItem)
     addSeparator()
     globalMenuItems.forEach(addItem)
     addSeparator()
     popupMenuItems.forEach(addItem)
-    return menuItems
+    return items
   }
 
   const contextMenuSettings = {
@@ -197,15 +207,51 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
     )
   }
 
+  const addNode = event => {
+    const item = event.item.id
+    const {x, y} = event.event
+    const selectedEdge = diagram.current.selectedItems.connectors[0]
+    const nodeId = `node-${item}-${uuidv1()}`
+    const node = {
+      id: nodeId,
+      width: 50, height: 50, offsetX: x, offsetY: y,
+      shape: {type: 'Basic', shape: 'Rectangle'},
+      annotations: [
+        {
+          offset: {x: 0.5, y: 0}, content: event.element.id, constraints: AnnotationConstraints.ReadOnly,
+          horizontalAlignment: 'Center', verticalAlignment: 'Bottom', style: {bold: true},
+        },
+        {
+          offset: {x: 0.5, y: 0.5}, content: '発言', style: {textWrapping: 'Wrap'},
+          horizontalAlignment: 'Center', verticalAlignment: 'Center',
+        },
+        {
+          offset: {x: 0.5, y: 1}, content: currentUser.slug, constraints: AnnotationConstraints.ReadOnly,
+          horizontalAlignment: 'Center', verticalAlignment: 'Top', style: {italic: true},
+        },
+      ],
+    }
+    diagram.current.add(node)
+    if (!selectedEdge.sourceID) selectedEdge.sourceID = nodeId
+    else selectedEdge.targetID = nodeId
+  }
+
   const menuClicked = event => {
     const item = event.item.id
     if (edgeLabels.includes(item)) addEdge(event)
+    else if (nodeLabels.includes(item)) addNode(event)
     else onToolbarClicked(item)
   }
 
   const menuWillOpen = event => {
-    if (diagram.current.selectedItems.nodes[0]) return
-    edgeLabels.forEach(item => event.hiddenItems.push(item))
+    const nNodeSelected = diagram.current.selectedItems.nodes.length
+    const nEdgeSelected = diagram.current.selectedItems.connectors.length
+    if (nNodeSelected !== 1) edgeLabels.forEach(item => event.hiddenItems.push(item))
+    if (nEdgeSelected !== 1) nodeLabels.forEach(item => event.hiddenItems.push(item))
+    if (nNodeSelected === 1 && nEdgeSelected === 1) {
+      edgeLabels.forEach(item => event.hiddenItems.push(item))
+      nodeLabels.forEach(item => event.hiddenItems.push(item))
+    }
   }
 
   const [visibleOverview, setVisibleOverview] = useState(true)
