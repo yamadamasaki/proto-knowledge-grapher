@@ -7,7 +7,6 @@ import {
   Inject,
   OverviewComponent,
   PrintAndExport,
-  SymbolPaletteComponent,
   UndoRedo,
 } from '@syncfusion/ej2-react-diagrams'
 import {ItemDirective, ItemsDirective, ToolbarComponent} from '@syncfusion/ej2-react-navigations'
@@ -55,32 +54,6 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
   const program = programs && programs[0] && programs[0].structure
   const {nodeLabels, edgeLabels, type} = findParams((program || []).children, sectionId) || {}
 
-  const basicShapes = (nodeLabels || []).map(nodeLabel => (
-      {
-        id: `node-template-${nodeLabel}`,
-        shape: {type: 'Basic', shape: 'Rectangle'},
-        annotations: [
-          {
-            offset: {x: 0.5, y: 0}, content: nodeLabel, constraints: AnnotationConstraints.ReadOnly,
-            horizontalAlignment: 'Center', verticalAlignment: 'Bottom', style: {bold: true},
-          },
-          {
-            offset: {x: 0.5, y: 0.5}, content: '発言', style: {textWrapping: 'Wrap'},
-            horizontalAlignment: 'Center', verticalAlignment: 'Center',
-          },
-          {
-            offset: {x: 0.5, y: 1}, content: currentUser.slug, constraints: AnnotationConstraints.ReadOnly,
-            horizontalAlignment: 'Center', verticalAlignment: 'Top', style: {italic: true},
-          },
-        ],
-        symbolInfo: {description: {text: nodeLabel}},
-      }
-  ))
-
-  const palettes = [
-    {id: 'basic', expanded: true, symbols: basicShapes, title: '発言', iconCss: 'e-ddb-icons e-basic'},
-  ]
-
   const diagram = useRef()
 
   useEffect(() => {
@@ -92,7 +65,7 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
     const root = '__ROOT__'
     const rootNode = {
       id: root,
-      width: 120, height: 40,
+      width: 120, height: 40, offsetX: diagram.current.diagramCanvas.clientWidth/2, offsetY: 80,
       shape: {type: 'Basic', shape: 'Rectangle'},
       annotations: [{content: root, constraints: AnnotationConstraints.ReadOnly}],
       style: {fill: '#6BA5D7', strokeColor: 'white'},
@@ -148,9 +121,6 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
       case 'overview':
         setVisibleOverview(true)
         break
-      case 'palette':
-        setVisiblePalette(true)
-        break
       default:
         break
     }
@@ -158,7 +128,7 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
 
   const globalMenuItems = ['export', 'print']
   if (isPermitted(currentUser, isSavable)) globalMenuItems.unshift('save')
-  const popupMenuItems = ['overview', 'palette']
+  const popupMenuItems = ['overview',]
 
   const menuItems = () => {
     const items = []
@@ -187,7 +157,7 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
     const sourcePoint = {x, y}
     const targetPoint = selectedNode ?
         {x: selectedNode.offsetX, y: selectedNode.offsetY + selectedNode.actualSize.height / 2 + 40} :
-        {x: x + 40, y: y + 40}
+        {x: x + 80, y: y + 80}
     const edge = {
       id: `edge-${item}-${uuidv1()}`,
       type: 'Straight',
@@ -255,9 +225,7 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
   }
 
   const [visibleOverview, setVisibleOverview] = useState(true)
-  const [visiblePalette, setVisiblePalette] = useState(true)
   const closeOverview = () => setVisibleOverview(false)
-  const closePalette = () => setVisiblePalette(false)
 
   if (error) return <Components.Flash message={error}/>
   if ([loading_c, loading_u, loading_program].some(it => it === true)) return <Components.Loading/>
@@ -268,14 +236,6 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
         <ErrorBoundary>
           <React.Fragment>
             {doc.title && <h2>{doc.title}</h2>}
-            <DialogComponent width='500px' visible={visiblePalette} header='Palette' allowDragging={true}
-                             showCloseIcon={true} close={closePalette}
-                             enableResize={true} resizeHandles={['All']}>
-              <SymbolPaletteComponent id='palette' expandMode='Multiple' symbolHeight={80} symbolWidth={80}
-                                      scrollSettings={{horizontalOffset: 100, verticalOffset: 50}}
-                                      palettes={palettes}
-                                      getSymbolInfo={symbol => symbol.symbolInfo}/>
-            </DialogComponent>
             <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
                               contextMenuSettings={contextMenuSettings} contextMenuClick={menuClicked}
                               contextMenuOpen={menuWillOpen}>
@@ -303,7 +263,6 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
             <ItemDirective text='print'/>
             <ItemDirective type="Separator"/>
             <ItemDirective text='overview'/>
-            <ItemDirective text='palette'/>
           </ItemsDirective>
         </ToolbarComponent>
       </React.Fragment>
