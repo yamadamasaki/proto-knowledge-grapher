@@ -49,9 +49,9 @@ const CFFollowupSession = ({match}) => {
     'followup-mob': {
       sectionName: 'モブグラフィティ',
       diagramComponentName: 'CFFrameworkDiagramSection',
-      isTextEditable: {groups: ['admins']},
+      isTextEditable: {groups: ['members']},
       isTextReadable: {groups: ['members']},
-      isDiagramSavable: {groups: ['admins']},
+      isDiagramSavable: {groups: ['members']},
       isDiagramReadable: {groups: ['members']},
     },
   }
