@@ -88,17 +88,19 @@ const KGAssignmentSubsession = ({match}) => {
           }
         </div>
 
-        <Components.KGTeamSection match={{
-          params: {
-            programId,
-            sectionId,
-            subsection,
-            isEditable: mySpec.isTeamDefinable,
-            isParticipatable: mySpec.isTeamAnswerable,
-            delegatedComponentName: mySpec.delegatedComponentName,
-            subsessionName: `${sessionName} - ${mySpec.sectionName}`,
-          },
-        }}/>
+        <div>
+          <Components.KGTeamSection match={{
+            params: {
+              programId,
+              sectionId,
+              subsection,
+              isEditable: mySpec.isTeamDefinable,
+              isParticipatable: mySpec.isTeamAnswerable,
+              delegatedComponentName: mySpec.delegatedComponentName,
+              subsessionName: `${sessionName} - ${mySpec.sectionName}`,
+            },
+          }}/>
+        </div>
       </React.Fragment>
   )
 }

@@ -196,7 +196,7 @@ const CFNetworkDiagramSection = ({match, currentUser}) => {
           horizontalAlignment: 'Center', verticalAlignment: 'Center',
         },
         {
-          offset: {x: 0.5, y: 1}, content: currentUser.slug, constraints: AnnotationConstraints.ReadOnly,
+          offset: {x: 0.5, y: 1}, content: currentUser.username, constraints: AnnotationConstraints.ReadOnly,
           horizontalAlignment: 'Center', verticalAlignment: 'Top', style: {italic: true},
         },
       ],
