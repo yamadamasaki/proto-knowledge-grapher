@@ -216,6 +216,7 @@ const CFFrameworkDiagramSection = ({match, currentUser}) => {
         <ErrorBoundary>
           <React.Fragment>
             {doc.title && <h2>{doc.title}</h2>}
+            <div>
             <DialogComponent width='500px' visible={visiblePalette} header='Palette' allowDragging={true}
                              showCloseIcon={true} close={closePalette}
                              enableResize={true} resizeHandles={['All']}>
@@ -224,6 +225,7 @@ const CFFrameworkDiagramSection = ({match, currentUser}) => {
                                       palettes={palettes}
                                       getSymbolInfo={symbol => symbol.symbolInfo}/>
             </DialogComponent>
+            </div>
             <DiagramComponent id='diagram' width='100%' height='1000px' ref={diagram}
                               contextMenuSettings={contextMenuSettings} contextMenuClick={menuClicked}>
               <Inject services={[UndoRedo, DiagramContextMenu, PrintAndExport]}/>

@@ -42,6 +42,7 @@ const KGWatchers = ({match, currentUser}) => {
   const addMe = () => {
     if (watchers.watchers.includes(currentUser._id)) return
     watchers.watchers.push(currentUser._id)
+    console.log({watchers})
     try {
       watchers._id ?
           updateDocument({input: {id: watchers._id, data: {watchers: watchers.watchers}}}) :
