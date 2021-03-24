@@ -12,6 +12,7 @@ const CFSyncSession = ({match}) => {
   const sections = [
     {name: '解説', programId, sectionId, subsection: 'sync-guidance', componentName: 'KGTextDiagramSubsession'},
     {name: '課題', programId, sectionId, subsection: 'sync-questionnaire', componentName: 'KGAssignmentSubsession'},
+    {name: 'チーム', programId, sectionId, subsection: 'sync-questionnaire', componentName: 'KGTeamsSubsession'},
     {name: 'モブグラフィティ', programId, sectionId, subsection: 'sync-mob', componentName: 'KGTextDiagramSubsession'},
   ]
 
