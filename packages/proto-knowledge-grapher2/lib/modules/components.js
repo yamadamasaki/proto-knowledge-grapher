@@ -37,6 +37,7 @@ import '../components/copernicusForum/CFAsyncSession'
 import '../components/copernicusForum/CFFollowupSession'
 import '../components/sections/KGTextDiagramSubsession'
 import '../components/sections/KGAssignmentSubsession'
+import '../components/sections/KGTeamsSubsession'
 import '../components/sections/KGAnswerSubsession'
 
 // users

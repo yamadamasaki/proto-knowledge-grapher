@@ -71,6 +71,14 @@ addRoute([
     layoutName: 'EJ2Layout',
     access: memberAccessOptions,
   },
+  /// KGTeamsSubsession
+  {
+    name: 'sessions.kgTeamsSubsession',
+    path: '/sections/:programId/:sectionId/:subsection/KGTeamsSubsession/',
+    componentName: 'KGTeamsSubsession',
+    layoutName: 'EJ2Layout',
+    access: memberAccessOptions,
+  },
   /// KGAnswerSubsession
   {
     name: 'sessions.kgAnswerSubsession',
