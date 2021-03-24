@@ -12,7 +12,7 @@ const CFPrepSession = ({match}) => {
   const sections = [
     {name: 'ねらい', programId, sectionId, subsection: 'prep-guidance', componentName: 'KGTextDiagramSubsession'},
     {name: '課題', programId, sectionId, subsection: 'prep-questionnaire', componentName: 'KGAssignmentSubsession'},
-    {name: 'チーム', programId, sectionId, subsection: 'prep-questionnaire', componentName: 'KGTeamsSubsession'},
+    {name: 'アサイン', programId, sectionId, subsection: 'prep-questionnaire', componentName: 'KGTeamsSubsession'},
   ]
 
   const spec = {

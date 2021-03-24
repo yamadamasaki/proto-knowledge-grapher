@@ -123,7 +123,7 @@ const KGTeamSection = ({match, currentUser}) => {
         }
         <Components.IfIHave permission={isEditable}>
           <hr/>
-          <h4>チームを追加する</h4>
+          <h4>アサインメントを追加する</h4>
           <TeamComponent team={{}} users={participatableUsers} onSave={onSave(nTeams)} placeholder={true}/>
         </Components.IfIHave>
       </React.Fragment>

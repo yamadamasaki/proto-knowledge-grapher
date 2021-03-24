@@ -12,7 +12,7 @@ const CFFollowupSession = ({match}) => {
   const sections = [
     {name: '解説', programId, sectionId, subsection: 'followup-guidance', componentName: 'KGTextDiagramSubsession'},
     {name: '課題', programId, sectionId, subsection: 'followup-questionnaire', componentName: 'KGAssignmentSubsession'},
-    {name: 'チーム', programId, sectionId, subsection: 'followup-questionnaire', componentName: 'KGTeamsSubsession'},
+    {name: 'アサイン', programId, sectionId, subsection: 'followup-questionnaire', componentName: 'KGTeamsSubsession'},
     {name: 'モブグラフィティ', programId, sectionId, subsection: 'followup-mob', componentName: 'KGTextDiagramSubsession'},
   ]
 

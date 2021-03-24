@@ -12,7 +12,7 @@ const CFAsyncSession = ({match}) => {
   const sections = [
     {name: '解説', programId, sectionId, subsection: 'async-guidance', componentName: 'KGTextDiagramSubsession'},
     {name: '対話', programId, sectionId, subsection: 'async-dialogue', componentName: 'KGAssignmentSubsession'},
-    {name: 'チーム', programId, sectionId, subsection: 'async-dialogue', componentName: 'KGTeamsSubsession'},
+    {name: 'アサイン', programId, sectionId, subsection: 'async-dialogue', componentName: 'KGTeamsSubsession'},
     {name: 'モブグラフィティ', programId, sectionId, subsection: 'async-mob', componentName: 'KGTextDiagramSubsession'},
   ]
 

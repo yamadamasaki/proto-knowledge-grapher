@@ -6,7 +6,7 @@ import {findSingleDocument} from '../utils/documents'
 const sessionSpecCollectionName = 'KGSessionSpecs'
 const sessionSpecFragmentName = 'KGSessionSpecsFragment'
 
-const specialMySpec_SectionName = 'チーム'
+const specialMySpec_SectionName = 'アサイン'
 
 const KGTeamsSubsession = ({match}) => {
   const {programId, sectionId, subsection} = match.params
